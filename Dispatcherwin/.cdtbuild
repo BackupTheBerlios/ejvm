@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?fileVersion 3.0.0?>
+
+<ManagedProjectBuildInfo>
+<project id="Dispatcherwin.cdt.managedbuild.target.gnu.cygwin.exe.466117733" name="Executable (Gnu on Windows)" projectType="cdt.managedbuild.target.gnu.cygwin.exe">
+<configuration artifactExtension="exe" artifactName="Dispatcherwin" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.VCErrorParser" id="cdt.managedbuild.config.gnu.cygwin.exe.debug.1608693817" name="Debug" parent="cdt.managedbuild.config.gnu.cygwin.exe.debug">
+<toolChain id="cdt.managedbuild.toolchain.gnu.cygwin.exe.debug.1588793665" name="GCC Tool Chain" superClass="cdt.managedbuild.toolchain.gnu.cygwin.exe.debug">
+<tool id="cdt.managedbuild.tool.gnu.c.compiler.cygwin.exe.debug.1338358126" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.cygwin.exe.debug">
+<option id="gnu.c.compiler.option.misc.other.1537674251" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0  -stripall" valueType="string"/>
+<option id="gnu.c.compiler.cygwin.exe.debug.option.optimization.level.1806294484" superClass="gnu.c.compiler.cygwin.exe.debug.option.optimization.level" value="gnu.c.optimization.level.none" valueType="enumerated"/>
+<option id="gnu.c.compiler.option.debugging.gprof.965189398" superClass="gnu.c.compiler.option.debugging.gprof" value="false" valueType="boolean"/>
+<option id="gnu.c.compiler.option.debugging.prof.2096864091" superClass="gnu.c.compiler.option.debugging.prof" value="false" valueType="boolean"/>
+<option id="gnu.c.compiler.option.misc.ansi.2077227157" superClass="gnu.c.compiler.option.misc.ansi" value="false" valueType="boolean"/>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.exe.debug.1534156922" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.exe.debug"/>
+<tool id="cdt.managedbuild.tool.gnu.c.linker.cygwin.exe.debug.306680689" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.cygwin.exe.debug">
+<option id="gnu.c.link.option.nostart.772706837" superClass="gnu.c.link.option.nostart" value="false" valueType="boolean"/>
+<option id="gnu.c.link.option.nodeflibs.1609765457" superClass="gnu.c.link.option.nodeflibs" value="false" valueType="boolean"/>
+<option id="gnu.c.link.option.strip.912830662" superClass="gnu.c.link.option.strip" value="false" valueType="boolean"/>
+<option id="gnu.c.link.option.noshared.293566374" superClass="gnu.c.link.option.noshared" value="false" valueType="boolean"/>
+<option id="gnu.c.link.option.shared.1219028380" superClass="gnu.c.link.option.shared" value="false" valueType="boolean"/>
+<option id="gnu.c.link.option.paths.9411030" superClass="gnu.c.link.option.paths"/>
+<option id="gnu.c.link.option.nostdlibs.702132813" superClass="gnu.c.link.option.nostdlibs" value="false" valueType="boolean"/>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.exe.debug.780869747" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.exe.debug"/>
+<tool id="cdt.managedbuild.tool.gnu.assembler.cygwin.exe.debug.521430371" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.cygwin.exe.debug"/>
+<macros/>
+</toolChain>
+</configuration>
+<configuration artifactExtension="exe" artifactName="Dispatcherwin" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.cygwin.exe.release.1975138327" name="Release" parent="cdt.managedbuild.config.gnu.cygwin.exe.release">
+<toolChain id="cdt.managedbuild.toolchain.gnu.cygwin.exe.release.1003158390" name="GCC Tool Chain" superClass="cdt.managedbuild.toolchain.gnu.cygwin.exe.release">
+<tool id="cdt.managedbuild.tool.gnu.c.compiler.cygwin.exe.release.245312448" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.cygwin.exe.release"/>
+<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.exe.release.999932135" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.exe.release"/>
+<tool id="cdt.managedbuild.tool.gnu.c.linker.cygwin.exe.release.952317901" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.cygwin.exe.release"/>
+<tool id="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.exe.release.1819825970" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.exe.release"/>
+<tool id="cdt.managedbuild.tool.gnu.assembler.cygwin.exe.release.95420576" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.cygwin.exe.release"/>
+<macros/>
+</toolChain>
+</configuration>
+<configuration artifactExtension="exe" artifactName="Dispatcherwin" cleanCommand="rm -rf" description="size" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.VCErrorParser" id="cdt.managedbuild.config.gnu.cygwin.exe.release.1410754598" name="custRelease" parent="cdt.managedbuild.config.gnu.cygwin.exe.release">
+<toolChain id="cdt.managedbuild.toolchain.gnu.cygwin.exe.release.1673160393" name="GCC Tool Chain" superClass="cdt.managedbuild.toolchain.gnu.cygwin.exe.release">
+<tool id="cdt.managedbuild.tool.gnu.c.compiler.cygwin.exe.release.675014244" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.cygwin.exe.release">
+<option id="gnu.c.compiler.option.misc.other.1895181994" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -fPIC" valueType="string"/>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.exe.release.36734347" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.exe.release"/>
+<tool id="cdt.managedbuild.tool.gnu.c.linker.cygwin.exe.release.884087523" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.cygwin.exe.release">
+<option id="gnu.c.link.option.strip.1552930067" superClass="gnu.c.link.option.strip" value="true" valueType="boolean"/>
+<option id="gnu.c.link.option.shared.2097878058" superClass="gnu.c.link.option.shared" value="false" valueType="boolean"/>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.exe.release.1649715796" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.exe.release"/>
+<tool id="cdt.managedbuild.tool.gnu.assembler.cygwin.exe.release.2134651966" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.cygwin.exe.release"/>
+<macros expandEnvironmentMacros="true"/>
+</toolChain>
+</configuration>
+<macros/>
+</project>
+</ManagedProjectBuildInfo>
