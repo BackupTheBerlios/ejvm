@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?fileVersion 3.0.0?>
+
+<ManagedProjectBuildInfo>
+<project id="TryMacro.cdt.managedbuild.target.gnu.cygwin.exe.496892779" name="Executable (Gnu on Windows)" projectType="cdt.managedbuild.target.gnu.cygwin.exe">
+<configuration artifactExtension="exe" artifactName="TryMacro" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.cygwin.exe.debug.763574197" name="Debug" parent="cdt.managedbuild.config.gnu.cygwin.exe.debug" postannouncebuildStep="" postbuildStep="" preannouncebuildStep="hay hay" prebuildStep="..\gen.bat">
+<toolChain id="cdt.managedbuild.toolchain.gnu.cygwin.exe.debug.2140330290" name="GCC Tool Chain" superClass="cdt.managedbuild.toolchain.gnu.cygwin.exe.debug">
+<builder id="cdt.managedbuild.target.gnu.builder.cygwin.exe.debug.888055738" name="Gnu Make.Debug" superClass="cdt.managedbuild.target.gnu.builder.cygwin.exe.debug"/>
+<tool id="cdt.managedbuild.tool.gnu.c.compiler.cygwin.exe.debug.23213552" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.cygwin.exe.debug">
+<option id="gnu.c.compiler.option.misc.other.1261414948" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 " valueType="string"/>
+<option id="gnu.c.compiler.option.debugging.prof.1715312489" superClass="gnu.c.compiler.option.debugging.prof" value="false" valueType="boolean"/>
+<option id="gnu.c.compiler.option.preprocessor.preprocess.1040590431" superClass="gnu.c.compiler.option.preprocessor.preprocess" value="false" valueType="boolean"/>
+<option id="gnu.c.compiler.option.debugging.gprof.225111141" superClass="gnu.c.compiler.option.debugging.gprof" value="false" valueType="boolean"/>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.exe.debug.371611196" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.exe.debug"/>
+<tool id="cdt.managedbuild.tool.gnu.c.linker.cygwin.exe.debug.797975318" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.cygwin.exe.debug">
+<option id="gnu.c.link.option.noshared.1229051213" superClass="gnu.c.link.option.noshared" value="false" valueType="boolean"/>
+</tool>
+<tool id="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.exe.debug.1996871051" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.exe.debug"/>
+<tool id="cdt.managedbuild.tool.gnu.assembler.cygwin.exe.debug.1669835722" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.cygwin.exe.debug"/>
+<macros/>
+</toolChain>
+<resourceConfiguration exclude="false" id="cdt.managedbuild.config.gnu.cygwin.exe.debug.763574197./TryMacro/main.c.bak.2" name="main.c.bak.2" rcbsApplicability="disable" resourcePath="/TryMacro/main.c.bak.2" toolsToInvoke=""/>
+<resourceConfiguration exclude="false" id="cdt.managedbuild.config.gnu.cygwin.exe.debug.763574197./TryMacro/main.c" name="main.c" rcbsApplicability="override" resourcePath="/TryMacro/main.c" toolsToInvoke="org.eclipse.cdt.managedbuilder.ui.rcbs.1407783442">
+<tool id="cdt.managedbuild.tool.gnu.c.compiler.cygwin.exe.debug.23213552./TryMacro/main.c" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.cygwin.exe.debug.23213552">
+<option id="gnu.c.compiler.option.preprocessor.preprocess.951158960" superClass="gnu.c.compiler.option.preprocessor.preprocess" value="true" valueType="boolean"/>
+<option id="gnu.c.compiler.option.misc.other.1955861190" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0  -P -obettermain.c termain.c" valueType="string"/>
+</tool>
+<tool announcement="generative Progrmming" command="gcc -E -P -obettermain.c -main.c" customBuildStep="true" id="org.eclipse.cdt.managedbuilder.ui.rcbs.1407783442" name="Resource Custom Build Step">
+<inputType id="org.eclipse.cdt.managedbuilder.ui.rcbs.inputtype.56618974" name="Resource Custom Build Step Input Type">
+<additionalInput kind="additionalinputdependency" paths=""/>
+</inputType>
+<outputType id="org.eclipse.cdt.managedbuilder.ui.rcbs.outputtype.402896020" name="Resource Custom Build Step Output Type" outputNames=""/>
+</tool>
+</resourceConfiguration>
+</configuration>
+<configuration artifactExtension="exe" artifactName="TryMacro" cleanCommand="rm -rf" errorParsers="org.eclipse.cdt.core.MakeErrorParser;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GLDErrorParser;org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.config.gnu.cygwin.exe.release.534551285" name="Release" parent="cdt.managedbuild.config.gnu.cygwin.exe.release">
+<toolChain id="cdt.managedbuild.toolchain.gnu.cygwin.exe.release.917730081" name="GCC Tool Chain" superClass="cdt.managedbuild.toolchain.gnu.cygwin.exe.release">
+<tool id="cdt.managedbuild.tool.gnu.c.compiler.cygwin.exe.release.76384314" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.cygwin.exe.release"/>
+<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.exe.release.1028320519" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.cygwin.exe.release"/>
+<tool id="cdt.managedbuild.tool.gnu.c.linker.cygwin.exe.release.2029319822" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.cygwin.exe.release"/>
+<tool id="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.exe.release.1253504935" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.cygwin.exe.release"/>
+<tool id="cdt.managedbuild.tool.gnu.assembler.cygwin.exe.release.1009517804" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.cygwin.exe.release"/>
+</toolChain>
+</configuration>
+<macros/>
+</project>
+</ManagedProjectBuildInfo>

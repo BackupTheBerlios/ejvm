@@ -1,0 +1,54 @@
+#include<stdio.h>
+
+#define E_INLINE_FUNCTIONS
+
+//DELIMITER
+#ifndef E_INLINE_FUNCTIONS
+
+	#define DELIMITER ;
+	
+#else
+	#define DELIMITER \\
+	
+#endif
+
+/*
+//STARTER
+#ifndef E_INLINE_FUNCTIONS
+
+	#define STARTER \{
+		
+#else
+
+	#define STARTER 
+	
+#endif
+*/
+
+/*
+#ifndef E_INLINE_FUNCTIONS
+#define RETURN_TYPE void
+#else
+#define RETURN_TYPE #define
+#endif
+*/
+
+#ifndef E_INLINE_FUNCTIONS
+	void longmacro() {  
+#else
+	#define  longmacro()  DELIMITER
+	
+#endif
+	int x=0; 			DELIMITER
+#ifndef E_INLINE_FUNCTIONS
+}
+#endif
+	
+	
+
+int main( void ){
+	
+	longmacro();
+	
+	return 0;
+}
