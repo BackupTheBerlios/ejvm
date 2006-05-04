@@ -1,0 +1,7 @@
+Exception: STATUS_ACCESS_VIOLATION at eip=00000000
+eax=00000000 ebx=00431670 ecx=00431670 edx=00000000 esi=00401170 edi=610E21A0
+ebp=0022EE58 esp=0022EE20 program=d:\My_Documents\EclipseWrkSpc\Preprocessor\Debug\Preprocessor.exe, pid 1612, thread main
+cs=001B ds=0023 es=0023 fs=0038 gs=0000 ss=0023
+Stack trace:
+Frame     Function  Args
+End of stack trace
