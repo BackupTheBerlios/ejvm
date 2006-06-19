@@ -20,6 +20,7 @@ private:
     ClassData * myClass;
 	ConstantPool * constantPool;
 	ByteCode * byteCode;
+	u2 *exceptionIndexTable;
 	
 public:
 	Method(const byte inputFile[], int * inputPtr, ConstantPool * cp);	

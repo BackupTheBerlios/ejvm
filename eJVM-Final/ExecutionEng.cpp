@@ -2,8 +2,6 @@
 
 using std::cout;
 using std::endl;
-
-
 ExecutionEng::ExecutionEng()
 {
 	this->mainThread = new Thread();
@@ -111,10 +109,7 @@ void ExecutionEng::executeMethod(Object *object,Method * method,...)
 void ExecutionEng::interpret(Thread * thread)
 {
 	unsigned char* pc=NULL;
-	Stack *tmpStack = NULL;
-	tmpStack = mainThread->getStack();
-	//Frame * currentFrame = mainThread->getStack()->getTopFrame();
-	Frame * currentFrame = tmpStack->getTopFrame();
+	Frame * currentFrame = mainThread->getStack()->getTopFrame();
 	Method * method = currentFrame->getMethod();
 	ByteCode * byteCode = method->getByteCode();
 	ConstantPool * constantPool = method->getConstantPool();
@@ -126,6 +121,9 @@ void ExecutionEng::interpret(Thread * thread)
 	while(true)
 	{
 		switch(*pc) {
+			case NOP:
+				pc++;
+				break;
 			case ACONST_NULL:
 			currentFrame->push((u4)NULL);
 			pc++;
@@ -141,7 +139,20 @@ void ExecutionEng::interpret(Thread * thread)
 				currentFrame->push((*pc -ICONST_0));
 				cout<<"ICONST_"<<(*pc -ICONST_0)<<" : TopOfTheOperandStack= "<<currentFrame->getTopOpStack()<<endl;
 				pc++;	
-				break;                  
+				break;          
+			case FCONST_0:
+			case FCONST_1:      
+			case FCONST_2:
+				{
+					u4 u4num ;
+					u4 * ptr =&u4num;
+					float fnum=(float)*pc - (float)FCONST_0;
+					*(float * )ptr = fnum;
+					currentFrame->push(*ptr);
+					cout<<"FCONST_"<<(*pc -FCONST_0)<<" : TopOfTheOperandStack= "<<*(float *)ptr<<endl;
+				}
+				pc++;
+				break;
 			case ILOAD_0 :  
 			case ILOAD_1 :  
 			case ILOAD_2 :
@@ -152,7 +163,19 @@ void ExecutionEng::interpret(Thread * thread)
 					cout<<"ILOAD_"<<(*pc - ILOAD_0)<<": value at index"<<(*pc - ILOAD_0)<<"="<<(int)temp<<"  value at the top of the stack="<<(int)currentFrame->getTopOpStack()<<endl;
 				}
 				pc++;	
-				break;                
+				break;   
+			case FLOAD_0:             
+			case FLOAD_1:
+			case FLOAD_2:
+			case FLOAD_3:
+				{
+					u4 temp=currentFrame->getAtIndex(*pc - FLOAD_0);
+					currentFrame->push(temp);
+					u4 * ptr=& temp;
+					cout<<"FLOAD_"<<(*pc - FLOAD_0)<<": value at the top of the Stack"<<*(float *)ptr<<endl;
+				}
+				pc++;
+				break;
 			case ALOAD_0 :
 			case ALOAD_1 :
 			case ALOAD_2 :
@@ -174,7 +197,19 @@ void ExecutionEng::interpret(Thread * thread)
 					cout<<"ISTORE_"<<(*pc - ISTORE_0 )<<": "<<"value Poped="<<(int)temp<<" value at index "<<(*pc - ISTORE_0 )<<"="<<(int)currentFrame->getAtIndex((*pc - ISTORE_0 ))<<endl;
 				}
 				pc++;	
-				break;        
+				break;    
+			case FSTORE_0:    
+			case FSTORE_1:
+			case FSTORE_2:
+			case FSTORE_3:
+				{
+					u4 u4num=currentFrame->pop();
+					u4 * ptr = & u4num;
+					currentFrame->setAtIndex((*pc - FSTORE_0 ),u4num);
+					cout<<"FSTORE_"<<(*pc - FSTORE_0 )<<": "<<"value Poped="<<*(float*)ptr<<endl;
+				}
+				pc++;
+				break;
 			case ASTORE_0:
 			case ASTORE_1:        
 			case ASTORE_2:
@@ -186,6 +221,21 @@ void ExecutionEng::interpret(Thread * thread)
 				}
 				pc++;
 				break;
+			case POP:
+				{
+					u4 temp = currentFrame->pop();
+					cout<<"POP: ValuePoped"<<temp<<endl;
+				}
+				pc++;
+				break;
+			case POP2:
+				{
+					u4 value1=currentFrame->pop();
+					u4 value2=currentFrame->pop();
+					cout<<"POP2: Value1="<<value1<<" value2="<<value2<<endl;
+				}
+				pc++;
+				break;
 			case DUP:
 				{
 					u4 temp=currentFrame->getTopOpStack();
@@ -194,36 +244,132 @@ void ExecutionEng::interpret(Thread * thread)
 				}
 				pc++;
 				break;
+			case DUP2:
+				{
+					u4 value1=currentFrame->pop();
+					u4 value2=currentFrame->pop();
+					currentFrame->push(value2); currentFrame->push(value1);
+					currentFrame->push(value2); currentFrame->push(value1);
+					cout<<"DUP2: Value1="<<value1<<" Value2="<<value2<<endl;
+				}
+				pc++;
+				break;
+			case SWAP:
+				{
+					cout<<"SWAP: ";
+					u4 t1 = currentFrame->pop();
+					cout<<"Value1 Poped="<<t1;
+					u4 t2 = currentFrame->pop();
+					cout<<"\tValue2 Poped="<<t2;
+					currentFrame->push(t1);
+					cout<<"\tValueOnTopOfTheStack="<<currentFrame->getTopOpStack();
+					currentFrame->push(t2);
+					cout<<"\tValueOnTopOfTheStack="<<currentFrame->getTopOpStack()<<endl;
+				}
+				pc++;
+				break;
 			case IADD:
 				{
-					u4 temp=currentFrame->pop();
-					u4 temp2=currentFrame->pop();
-					currentFrame->push((int)temp+temp2);                
-					cout<<"IADD: Value1="<<(int)temp<<" Value2="<<(int)temp2<<" Result="<<(int)currentFrame->getTopOpStack()<<endl;
+					u4 value2=currentFrame->pop();
+					u4 value1=currentFrame->pop();
+					currentFrame->push((int)value1+(int)value2);                
+					cout<<"IADD: Value1="<<(int)value1<<" Value2="<<(int)value2<<" Result="<<(int)currentFrame->getTopOpStack()<<endl;
 				}
 				pc++;	
 				break;
-			case RETURN:
+			case ISUB:
 				{
-					if(currentFrame->isTopOfJavaInvoc())
-					{//This is the top of Java invocation. so we must return from 
-						//we must pop this frame from the thread stack and delete it to free location
-						delete mainThread->getStack()->pop();
-						cout<<"RETURN: return void"<<endl;
-						return;
-					}
-					mainThread->getStack()->pop();
-					Frame * invokingFrame = mainThread->getStack()->getTopFrame();
-					delete currentFrame;
-					currentFrame = invokingFrame;
-					method = currentFrame->getMethod();
-					byteCode = method->getByteCode();
-					constantPool = method->getConstantPool();
-					code = byteCode->getCode();
-					pc = currentFrame->PC;
+					u4 value2=currentFrame->pop();
+					u4 value1=currentFrame->pop();
+					int result = (int) value1 - (int) value2;
+					currentFrame->push(result);
+					cout<<"ISUB: Value1="<<(int)value1<<" Value2="<<(int)value2<<" Result="<<(int)currentFrame->getTopOpStack()<<endl;
+				}
+				pc++;
+				break;
+			case IMUL:
+				{
+					u4 value2=currentFrame->pop();
+					u4 value1=currentFrame->pop();
+					int result = (int) value1 * (int) value2;
+					currentFrame->push(result);
+					cout<<"IMUL: Value1="<<(int)value1<<" Value2="<<(int)value2<<" Result="<<(int)currentFrame->getTopOpStack()<<endl;
+				}
+				pc++;
+				break;
+			case IDIV:
+				{
+					u4 value2=currentFrame->pop();
+					u4 value1=currentFrame->pop();
+					currentFrame->push((int)value1/(int)value2);     //note temp2/temp not the reverse order temp/temp2     
+					cout<<"IDIV: Value1="<<(int)value1<<" Value2="<<(int)value2<<" Result="<<(int)currentFrame->getTopOpStack()<<endl;
+				}
+				pc++;
+				break;
+			case FDIV:
+				{
+					u4 value2=currentFrame->pop();
+					u4 * pValue2 = &value2;
+					u4 value1=currentFrame->pop();
+					u4 * pValue1 = &value1;
+					float fresult = *(float *)pValue1 / *(float *)pValue2;
+					u4 result;
+					u4 * pResult = &result;
+					*(float *)pResult = fresult;
+					currentFrame->push(*pResult);
+					cout<<"FDIV: Value1="<<*(float *)pValue1<<" Value2="<<*(float *)pValue2<<" Result="<<*(float *)pResult<<endl;
+					cout<<"REsult in u4="<<*pResult<<endl;
 					
-					cout<<"RETURN: return void"<<endl<<endl;
-					cout<<"continue: "<<method->getName()<<"\t"<<method->getDesc()<<endl;
+				}
+				pc++;
+				break;
+			case IF_ICMPNE:
+				{
+					cout<<"IF_ICMPNE: ";
+					u4 value2 = currentFrame->pop();
+					u4 value1 = currentFrame->pop();
+					if((int)value1 != (int)value2)
+					{//succeed 
+						u1 branchbyte1 = *(pc+1);
+						u1 branchbyte2 = *(pc+2);
+						u2 offset = (branchbyte1 << 8) | branchbyte2;
+						pc =pc+offset;
+						cout<<"offset="<<offset<<endl;
+					}
+					else
+					{ 
+						cout<<"execution proceed noramlly"<<endl;
+						pc+=3;
+					}
+				}
+				break;
+			case IF_ICMPGE:
+				{
+					cout<<"IF_ICMPGE: ";
+					u4 value2 = currentFrame->pop();
+					u4 value1 = currentFrame->pop();
+					if((int)value1 >= (int)value2)
+					{
+						u1 branchbyte1 = *(pc+1);
+						u1 branchbyte2 = *(pc+2);
+						u2 offset = (branchbyte1 << 8) | branchbyte2;
+						pc =pc+offset;
+						cout<<"offset="<<offset<<endl;
+					}
+					else
+					{ 
+						cout<<"execution proceed noramlly"<<endl;
+						pc+=3;
+					}
+				}
+				break;
+			case GOTO:
+				{
+					u1 branchbyte1 = *(pc+1);
+					u1 branchbyte2 = *(pc+2);
+					u2 offset = (branchbyte1 << 8) | branchbyte2;
+					pc = pc+offset;
+					cout<<"GOTO: offset="<<offset<<endl;
 				}
 				break;
 			case IRETURN:
@@ -247,6 +393,29 @@ void ExecutionEng::interpret(Thread * thread)
 					pc = currentFrame->PC;
 					
 					cout<<"IRETURN: return Int="<<currentFrame->getTopOpStack()<<endl<<endl;
+					cout<<"continue: "<<method->getName()<<"\t"<<method->getDesc()<<endl;
+				}
+				break;
+			case RETURN:
+				{
+					if(currentFrame->isTopOfJavaInvoc())
+					{//This is the top of Java invocation. so we must return from 
+						//we must pop this frame from the thread stack and delete it to free location
+						delete mainThread->getStack()->pop();
+						cout<<"RETURN: return void"<<endl;
+						return;
+					}
+					mainThread->getStack()->pop();
+					Frame * invokingFrame = mainThread->getStack()->getTopFrame();
+					delete currentFrame;
+					currentFrame = invokingFrame;
+					method = currentFrame->getMethod();
+					byteCode = method->getByteCode();
+					constantPool = method->getConstantPool();
+					code = byteCode->getCode();
+					pc = currentFrame->PC;
+					
+					cout<<"RETURN: return void"<<endl<<endl;
 					cout<<"continue: "<<method->getName()<<"\t"<<method->getDesc()<<endl;
 				}
 				break;
@@ -487,7 +656,8 @@ void ExecutionEng::interpret(Thread * thread)
 				pc+=3;
 				break;
 			default:      
-				cout<<"Fatal Error : Unrecognised opcode"<<endl     ;
+				cout<<"Fatal Error : Unrecognised opcode"<<endl;
+				exit(1);
 		}
 	}
 	

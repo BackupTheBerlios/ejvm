@@ -7,7 +7,7 @@
 #include "Method.h"
 #include "Field.h"
 #include "ExecutionEng.h"
-
+#include "typeDefs.h"
 
 
 #include <iostream>
@@ -37,7 +37,7 @@ jclass DefineClass(JNIEnv *env, const char *name,jobject loader, const jbyte *bu
  {
  	cout << "JNI Function: DefineClass" << endl;
  	//this method should be modified to return NULL if and only if in case an exception occured during the function
-	ClassData * newClass =gLoader->getClassData(name,buf);
+	ClassData * newClass =gLoader->getClassData(name,(byte*)buf);
 	//check here if an exception occured. If so delete the newClass and return NULL
 	return (jclass)newClass->getClassInstance();
 	

@@ -31,7 +31,7 @@ void testJNI(void);
  void vArg(int a, ...);
 int main(int argc, char** argv){
 //===================================Test JNI functions=======================================
-	testJNI();
+	//testJNI();
 
 
 	

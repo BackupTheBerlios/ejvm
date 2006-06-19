@@ -99,6 +99,20 @@
 #define SWAP                        95
 #define IADD                        96
 
+#define ISUB						100
+
+#define IMUL						104
+
+#define IDIV						108
+
+#define FDIV						110
+
+#define IF_ICMPNE					160
+
+#define IF_ICMPGE					162
+
+#define GOTO						167
+
 #define IRETURN					172
 
 #define RETURN                     177
