@@ -9,6 +9,7 @@
 #include "inst.h"
 #include "ConstantPool.h"
 #include "Heap.h"
+#include "jni.h"
 class ExecutionEng
 {
 public:

@@ -93,10 +93,10 @@ int main(int argc, char** argv){
 		
 		Loader::deleteLoader();
 		Heap::deleteHeap();
-	int * j=NULL;
+	/*int * j=NULL;
 	cout<<u4(j)<<"\t"<<j<<endl;
 	int i=-1000000;
-	vArg(12,123.777,-1,'a',false,&i);
+	vArg(12,123.777,-1,'a',false,&i);*/
 	
 	
 }
