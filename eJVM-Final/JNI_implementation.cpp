@@ -165,13 +165,170 @@ jboolean IsSameObject(JNIEnv *env, jobject ref1,jobject ref2){
 		return JNI_FALSE;
 }
 
+jfieldID GetFieldID(JNIEnv *env, jclass clazz,const char *name, const char *sig){
+	//if not initialized , initialise the clazz       
+	//if(gExceptionThrower->exceptionOccured())   //check for exception during initialization.
+	//	return NULL;
+	Field* field = ((ClassData*)clazz)->lookupField(name,sig);
+	if(gExceptionThrower->exceptionOccured())   //check for exceptions during searching for the field
+		return NULL;
+	return (jfieldID)field;
+	
+		
+}
+ 
+ 
+ 
+//<NativeType> Get<Type>Field(JNIEnv *env,jobject obj, jfieldID fieldID);
+jobject GetObjectField(JNIEnv *env,jobject obj, jfieldID fieldID){
+	u4 word1 ; //least sig word of the value
+	u4 word2 ; //most sig word of the value
+	
+	((Object*)obj)->getField((Field*)fieldID,word1,word2);
+	
+	return  (jobject)word1;
+}
 
+jboolean GetBooleanField(JNIEnv *env,jobject obj, jfieldID fieldID){
+	u4 word1 ; //least sig word of the value
+	u4 word2 ; //most sig word of the value
+	
+	((Object*)obj)->getField((Field*)fieldID,word1,word2);
+	
+	return (jboolean)word1;
+}
+
+jbyte GetByteField(JNIEnv *env,jobject obj, jfieldID fieldID){
+	u4 word1 ; //least sig word of the value
+	u4 word2 ; //most sig word of the value
+	
+	((Object*)obj)->getField((Field*)fieldID,word1,word2);
+	
+	return (jbyte)word1;
+}
  
+jchar GetCharField(JNIEnv *env,jobject obj, jfieldID fieldID){
+	u4 word1 ; //least sig word of the value
+	u4 word2 ; //most sig word of the value
+	
+	((Object*)obj)->getField((Field*)fieldID,word1,word2);
+	
+	return (jchar)word1;
+} 
+
+jshort GetShortField(JNIEnv *env,jobject obj, jfieldID fieldID){
+	u4 word1 ; //least sig word of the value
+	u4 word2 ; //most sig word of the value
+	
+	((Object*)obj)->getField((Field*)fieldID,word1,word2);
+	
+	return (jshort)word1;
+}
+
+jint GetIntField(JNIEnv *env,jobject obj, jfieldID fieldID){
+	u4 word1 ; //least sig word of the value
+	u4 word2 ; //most sig word of the value
+	
+	((Object*)obj)->getField((Field*)fieldID,word1,word2);
+	
+	return (jint)word1;
+}
+
+jlong GetLongField(JNIEnv *env,jobject obj, jfieldID fieldID){
+	u4 longData[2]; 
+	
+	((Object*)obj)->getField((Field*)fieldID,longData[0],longData[1]);
+	
+	
+	return *((jlong*)longData);
+}  
  
- 
- 
- 
- 
+jfloat GetFloatField(JNIEnv *env,jobject obj, jfieldID fieldID){
+	u4 word1 ; //least sig word of the value
+	u4 word2 ; //most sig word of the value
+	
+	((Object*)obj)->getField((Field*)fieldID,word1,word2);
+	
+	return  *((jfloat*)&word1);
+} 
+
+jdouble GetDoubleField(JNIEnv *env,jobject obj, jfieldID fieldID){
+	u4 doubleData[2]; 
+	
+	((Object*)obj)->getField((Field*)fieldID,doubleData[0],doubleData[1]);
+	
+	
+	return *((jdouble*)doubleData);
+}
+
+//void Set<Type>Field(JNIEnv *env, jobject obj,jfieldID fieldID, <NativeType> value);
+
+
+void SetObjectField(JNIEnv *env, jobject obj,jfieldID fieldID, jobject value){
+	((Object*)obj)->putField((Field*)fieldID,(u4)value,0);
+}
+
+void SetBooleanField(JNIEnv *env, jobject obj,jfieldID fieldID, jboolean value){
+	((Object*)obj)->putField((Field*)fieldID,(u4)value,0);
+}
+
+void SetByteField(JNIEnv *env, jobject obj,jfieldID fieldID, jbyte value){
+	((Object*)obj)->putField((Field*)fieldID,(u4)value,0);
+}
+
+
+void SetCharField(JNIEnv *env, jobject obj,jfieldID fieldID, jchar value){
+	((Object*)obj)->putField((Field*)fieldID,(u4)value,0);
+}
+
+void SetShortField(JNIEnv *env, jobject obj,jfieldID fieldID, jshort value){
+	((Object*)obj)->putField((Field*)fieldID,(u4)value,0);
+}
+
+void SetIntField(JNIEnv *env, jobject obj,jfieldID fieldID, jint value){
+	((Object*)obj)->putField((Field*)fieldID,(u4)value,0);
+}
+
+
+void SetLongField(JNIEnv *env, jobject obj,jfieldID fieldID, jlong value){
+	u4 longData[2];
+	*((jlong*)longData) = value;
+	
+	((Object*)obj)->putField((Field*)fieldID,longData[0],longData[1]);
+}
+
+void SetFloatField(JNIEnv *env, jobject obj,jfieldID fieldID, jfloat value){
+	u4 word1;
+	*((jfloat*)&word1) = value;
+	((Object*)obj)->putField((Field*)fieldID,word1,0);
+}
+
+
+void SetDoubleField(JNIEnv *env, jobject obj,jfieldID fieldID, jdouble value){
+	u4 doubleData[2];
+	*((jdouble*)doubleData) = value;
+	
+	((Object*)obj)->putField((Field*)fieldID,doubleData[0],doubleData[1]);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
  
 /**
@@ -211,9 +368,87 @@ JNINativeInterface functionTable = {
 /*29*/  NULL,
 /*30*/  NULL,
 /*31*/  GetObjectClass,
-/*32*/  IsInstanceOf
-
-
+/*32*/  IsInstanceOf,
+/*33*/  NULL,
+/*34*/  NULL,
+/*35*/  NULL,
+/*36*/  NULL,
+/*37*/  NULL,
+/*38*/  NULL,
+/*39*/  NULL,
+/*40*/  NULL,
+/*41*/  NULL,
+/*42*/  NULL,
+/*43*/  NULL,
+/*44*/  NULL,
+/*45*/  NULL,
+/*46*/  NULL,
+/*47*/  NULL,
+/*48*/  NULL,
+/*49*/  NULL,
+/*50*/  NULL,
+/*51*/  NULL,
+/*52*/  NULL,
+/*53*/  NULL,
+/*54*/  NULL,
+/*55*/  NULL,
+/*56*/  NULL,
+/*57*/  NULL,
+/*58*/  NULL,
+/*59*/  NULL,
+/*60*/  NULL,
+/*61*/  NULL,
+/*62*/  NULL,
+/*63*/  NULL,
+/*64*/  NULL,
+/*65*/  NULL,
+/*66*/  NULL,
+/*67*/  NULL,
+/*68*/  NULL,
+/*69*/  NULL,
+/*70*/  NULL,
+/*71*/  NULL,
+/*72*/  NULL,
+/*73*/  NULL,
+/*74*/  NULL,
+/*75*/  NULL,
+/*76*/  NULL,
+/*77*/  NULL,
+/*78*/  NULL,
+/*79*/  NULL,
+/*80*/  NULL,
+/*81*/  NULL,
+/*82*/  NULL,
+/*83*/  NULL,
+/*84*/  NULL,
+/*85*/  NULL,
+/*86*/  NULL,
+/*87*/  NULL,
+/*88*/  NULL,
+/*89*/  NULL,
+/*90*/  NULL,
+/*91*/  NULL,
+/*92*/  NULL,
+/*93*/  NULL,
+/*94*/  GetFieldID,
+/*95*/  GetObjectField,
+/*96*/  GetBooleanField,
+/*97*/  GetByteField,
+/*98*/  GetCharField,
+/*99*/  GetShortField,
+/*100*/  GetIntField,
+/*101*/  GetLongField,
+/*102*/  GetFloatField,
+/*103*/  GetDoubleField,
+/*104*/  SetObjectField,
+/*105*/  SetBooleanField,
+/*106*/  SetByteField,
+/*107*/  SetCharField,
+/*108*/  SetShortField,
+/*109*/  SetIntField,
+/*110*/  SetLongField,
+/*111*/  SetFloatField,
+/*112*/  SetDoubleField,
 
 
 
