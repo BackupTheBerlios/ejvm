@@ -462,6 +462,8 @@ jmethodID GetMethodID(JNIEnv *env, jclass clazz,const char *name, const char *si
 	return (jmethodID)method;
 }
 
+void nextFunction(){
+}
 
 
 

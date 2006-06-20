@@ -38,10 +38,12 @@ public:
 	*/
 	void executeMethod(Object *object,Method * method,...);
 	/*This version of executeMethod takes Valist as an argumetn instead of the ...
-	 */
+	*/
 	void executeMethod(Object *object,Method * method,va_list args){
 		//This method should be implemented , for now it is empty...
 	}
+	
+	void executeMethod(Object *object,Method * method,jvalue* args);
 
 	/**
 	* @brief This method takes a thread which is active now and ready to execute (i.e have a new frame pushed in its 
