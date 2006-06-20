@@ -312,16 +312,155 @@ void SetDoubleField(JNIEnv *env, jobject obj,jfieldID fieldID, jdouble value){
 }
 
 
+jfieldID GetStaticFieldID(JNIEnv *env,jclass clazz, const char *name,const char *sig){
+	//if not initialized , initialise the clazz       
+	//if(gExceptionThrower->exceptionOccured())   //check for exception during initialization.
+	//	return NULL;
+	Field* field = ((ClassData*)clazz)->lookupField(name,sig);
+	if(gExceptionThrower->exceptionOccured())   //check for exceptions during searching for the field
+		return NULL;
+	return (jfieldID)field;
+	
+}
+
+
+//<NativeType> GetStatic<Type>Field(JNIEnv *env,jclass clazz, jfieldID fieldID);
+jobject GetStaticObjectField(JNIEnv *env,jclass clazz, jfieldID fieldID){
+	u4 word1 ; //least sig word of the value
+	u4 word2 ; //most sig word of the value
+	
+	((Field*)fieldID)->getStaticValue(word1,word2);
+	
+	return  (jobject)word1;
+}
 
 
 
+jboolean GetStaticBooleanField(JNIEnv *env,jclass clazz, jfieldID fieldID){
+	u4 word1 ; //least sig word of the value
+	u4 word2 ; //most sig word of the value
+	
+	((Field*)fieldID)->getStaticValue(word1,word2);
+	
+	return  (jboolean)word1;
+}
 
 
+jbyte GetStaticByteField(JNIEnv *env,jclass clazz, jfieldID fieldID){
+	u4 word1 ; //least sig word of the value
+	u4 word2 ; //most sig word of the value
+	
+	((Field*)fieldID)->getStaticValue(word1,word2);
+	
+	return  (jbyte)word1;
+}
 
 
+jchar GetStaticCharField(JNIEnv *env,jclass clazz, jfieldID fieldID){
+	u4 word1 ; //least sig word of the value
+	u4 word2 ; //most sig word of the value
+	
+	((Field*)fieldID)->getStaticValue(word1,word2);
+	
+	return  (jchar)word1;
+}
 
 
+jshort GetStaticShortField(JNIEnv *env,jclass clazz, jfieldID fieldID){
+	u4 word1 ; //least sig word of the value
+	u4 word2 ; //most sig word of the value
+	
+	((Field*)fieldID)->getStaticValue(word1,word2);
+	
+	return  (jshort)word1;
+}
 
+
+jint GetStaticIntField(JNIEnv *env,jclass clazz, jfieldID fieldID){
+	u4 word1 ; //least sig word of the value
+	u4 word2 ; //most sig word of the value
+	
+	((Field*)fieldID)->getStaticValue(word1,word2);
+	
+	return  (jint)word1;
+}
+
+
+jlong GetStaticLongtField(JNIEnv *env,jclass clazz, jfieldID fieldID){
+	u4 longData[2]; 
+	
+	((Field*)fieldID)->getStaticValue(longData[0],longData[1]);
+	
+	return *((jlong*)longData);
+}
+
+
+jfloat GetStaticFloatField(JNIEnv *env,jclass clazz, jfieldID fieldID){
+	u4 word1 ; //least sig word of the value
+	u4 word2 ; //most sig word of the value
+	
+	((Field*)fieldID)->getStaticValue(word1,word2);
+	
+	return  *((jfloat*)&word1);
+}
+
+
+jdouble GetStaticDoubleField(JNIEnv *env,jclass clazz, jfieldID fieldID){
+	u4 doubleData[2]; 
+	
+	((Field*)fieldID)->getStaticValue(doubleData[0],doubleData[1]);
+	
+	return *((jdouble*)doubleData);
+}
+
+
+//void SetStatic<Type>Field(JNIEnv *env,jclass clazz, jfieldID fieldID,<NativeType> value);
+void SetStaticObjectField(JNIEnv *env, jclass clazz,jfieldID fieldID, jobject value){
+	((Field*)fieldID)->putStaticValue((u4)value,0);
+}
+
+void SetStaticBooleanField(JNIEnv *env, jclass clazz,jfieldID fieldID, jboolean value){
+	((Field*)fieldID)->putStaticValue((u4)value,0);
+}
+void SetStaticByteField(JNIEnv *env, jclass clazz,jfieldID fieldID, jbyte value){
+	((Field*)fieldID)->putStaticValue((u4)value,0);
+}
+void SetStaticCharField(JNIEnv *env, jclass clazz,jfieldID fieldID, jchar value){
+	((Field*)fieldID)->putStaticValue((u4)value,0);
+}
+void SetStaticShortField(JNIEnv *env, jclass clazz,jfieldID fieldID, jshort value){
+	((Field*)fieldID)->putStaticValue((u4)value,0);
+}
+void SetStaticIntField(JNIEnv *env, jclass clazz,jfieldID fieldID, jint value){
+	((Field*)fieldID)->putStaticValue((u4)value,0);
+}
+void SetStaticLongField(JNIEnv *env, jclass clazz,jfieldID fieldID, jlong value){
+	u4 longData[2];
+	*((jlong*)longData) = value;
+	((Field*)fieldID)->putStaticValue(longData[0],longData[1]);
+}
+
+void SetStaticFloatField(JNIEnv *env, jclass clazz,jfieldID fieldID, jfloat value){
+	u4 word1;
+	*((jfloat*)&word1) = value;
+	((Field*)fieldID)->putStaticValue(word1,0);
+}
+void SetStaticDoubleField(JNIEnv *env, jclass clazz,jfieldID fieldID, jdouble value){
+	u4 doubleData[2];
+	*((jdouble*)doubleData) = value;
+	((Field*)fieldID)->putStaticValue(doubleData[0],doubleData[1]);
+}
+
+
+jmethodID GetMethodID(JNIEnv *env, jclass clazz,const char *name, const char *sig){
+	//if not initialized , initialise the clazz       
+	//if(gExceptionThrower->exceptionOccured())   //check for exception during initialization.
+	//	return NULL;
+	Method* method = ((ClassData*)clazz)->lookupMethod(name,sig);
+	if(gExceptionThrower->exceptionOccured())   //check for exceptions during searching for the field
+		return NULL;
+	return (jmethodID)method;
+}
 
 
 
@@ -369,7 +508,7 @@ JNINativeInterface functionTable = {
 /*30*/  NULL,
 /*31*/  GetObjectClass,
 /*32*/  IsInstanceOf,
-/*33*/  NULL,
+/*33*/  GetMethodID,
 /*34*/  NULL,
 /*35*/  NULL,
 /*36*/  NULL,
@@ -449,6 +588,56 @@ JNINativeInterface functionTable = {
 /*110*/  SetLongField,
 /*111*/  SetFloatField,
 /*112*/  SetDoubleField,
+/*113*/  NULL,
+/*114*/  NULL,
+/*115*/  NULL,
+/*116*/  NULL,
+/*117*/  NULL,
+/*118*/  NULL,
+/*119*/  NULL,
+/*120*/  NULL,
+/*121*/  NULL,
+/*122*/  NULL,
+/*123*/  NULL,
+/*124*/  NULL,
+/*125*/  NULL,
+/*126*/  NULL,
+/*127*/  NULL,
+/*128*/  NULL,
+/*129*/  NULL,
+/*130*/  NULL,
+/*131*/  NULL,
+/*132*/  NULL,
+/*133*/  NULL,
+/*134*/  NULL,
+/*135*/  NULL,
+/*136*/  NULL,
+/*137*/  NULL,
+/*138*/  NULL,
+/*139*/  NULL,
+/*140*/  NULL,
+/*141*/  NULL,
+/*142*/  NULL,
+/*143*/  NULL,
+/*144*/  GetStaticFieldID,
+/*145*/  GetStaticObjectField,
+/*146*/  GetStaticBooleanField,
+/*147*/  GetStaticByteField,
+/*148*/  GetStaticCharField,
+/*149*/  GetStaticShortField,
+/*150*/  GetStaticIntField,
+/*151*/  GetStaticLongtField,
+/*152*/  GetStaticFloatField,
+/*153*/  GetStaticDoubleField,
+/*154*/  SetStaticObjectField,
+/*155*/  SetStaticBooleanField,
+/*156*/  SetStaticByteField,
+/*157*/  SetStaticCharField,
+/*158*/  SetStaticShortField,
+/*159*/  SetStaticIntField,
+/*160*/  SetStaticLongField,
+/*161*/  SetStaticFloatField,
+/*162*/  SetStaticDoubleField,
 
 
 
