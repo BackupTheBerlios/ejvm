@@ -439,7 +439,7 @@ printf("get the class data of the class that owns this field\n");
 		{
 			bool priv = theField->isPrivate(); 
 			bool pkpriv = (!pub && !prot && !priv);
-			bool samerunpk;
+			bool samerunpk=true;
 			if( !((prot||pkpriv) && samerunpk) ) 
 			{
 				if( !( priv&&(currentClass==declaringClass) ) )
@@ -468,7 +468,7 @@ printf("get the class data of the class that owns this method\n");
 		{
 			bool priv = theMethod->isPrivate(); 
 			bool pkpriv = (!pub && !prot && !priv);
-			bool samerunpk;
+			bool samerunpk=true;
 			if( !((prot||pkpriv) && samerunpk) ) 
 			{
 				if( !( priv&&(currentClass==declaringClass) ) )
@@ -486,7 +486,7 @@ void ConstantPool:: getWord(u2 index,u4 &word)
 {
 printf("inside ConstantPool-- getWord\n");
 	/* CONSTANT_Integer_info */
-	if(entryTable[index][0]!=3)
+	if(entryTable[index][0]!=3&&entryTable[index][0]!=4)
 	/* exception(); */ ;
 	u4 temp = entryTable[index][2];
 	word = ( ((u4)entryTable[index][1])<<24) +
@@ -498,7 +498,7 @@ void ConstantPool:: get2Words(u2 index,u4 &word1,u4 &word2)
 {
 printf("inside ConstantPool-- get2Words\n");
 	/* CONSTANT_Long_info */
-	if(entryTable[index][0]!=5)
+	if(entryTable[index][0]!=5&&entryTable[index][0]!=6)
 	/* exception(); */ ;
 	u4 temp = entryTable[index][2];
 	word2 = ( ((u4)entryTable[index][1])<<24) +
