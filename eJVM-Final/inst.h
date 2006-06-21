@@ -102,6 +102,7 @@
 #define ISUB						100
 
 #define IMUL						104
+#define LMUL						105
 
 #define IDIV						108
 

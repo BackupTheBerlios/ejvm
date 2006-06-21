@@ -243,13 +243,34 @@ void ExecutionEng::interpret(Thread * thread)
 					u4 longOrDouble[2] ; 
 					longOrDouble[0]=word1;
 					longOrDouble[1]=word2;
-					//push the least significant bits first, where word1 is the least significant bit
+					//push the least significant bits first, where word1 is the least significant bit,then push the most significant bits
+					//operandStack: ...=> ...,word1,word2
 					currentFrame->push(word1);
+					//operandStack: ...=> ...,word1
 					currentFrame->push(word2);
+					//operandStack: ...=> ...,word1,word2
 					cout<<"LDC2_W: value="<<*(long long *)longOrDouble<<endl;
 					
 				}
 				pc+=3;
+				break;
+			case LLOAD:
+				{
+					u1 index = *(pc+1);
+					u4 word1 = currentFrame->getAtIndex(index);
+					u4 word2 = currentFrame->getAtIndex(index+1);
+					u4 longValue[2];
+					longValue[0]=word1;
+					longValue[1]=word2;
+					//push the least significant bits first, where word1 is the least significant bit,then push the most significant bits
+					//operandStack: ...=> ...,word1,word2
+					currentFrame->push(word1);
+					//operandStack: ...=> ...,word1
+					currentFrame->push(word2);
+					//operandStack: ...=> ...,word1,word2
+					cout<<"LLOAD: theLongValue="<<*(long long *)longValue<<endl;
+				}
+				pc+=2;
 				break;
 			case ILOAD_0 :  
 			case ILOAD_1 :  
@@ -262,6 +283,22 @@ void ExecutionEng::interpret(Thread * thread)
 				}
 				pc++;	
 				break;   
+			case LLOAD_0:
+			case LLOAD_1:
+			case LLOAD_2:
+			case LLOAD_3:
+				{
+					u4 word1 = currentFrame->getAtIndex(*pc - LLOAD_0);
+					u4 word2 = currentFrame->getAtIndex((*pc - LLOAD_0)+1);
+					u4 longValue[2];
+					longValue[0]=word1;
+					longValue[1]=word2;
+					currentFrame->push(word1);
+					currentFrame->push(word2);
+					cout<<"LLOAD_"<<(*pc - LLOAD_0)<<": theLongValue="<<*(long long *)longValue<<endl;
+				}
+				pc++;
+				break;
 			case FLOAD_0:             
 			case FLOAD_1:
 			case FLOAD_2:
@@ -284,7 +321,27 @@ void ExecutionEng::interpret(Thread * thread)
 					cout<<"ALOAD_"<<(*pc - ALOAD_0)<<": value at index"<<(*pc - ALOAD_0)<<"="<<(Object *)temp<<"  value at the top of the stack="<<(Object *)currentFrame->getTopOpStack()<<endl;
 				}
 				pc++;
-				break;                 
+				break;     
+			case LSTORE:
+				{
+					u1 index = *(pc+1);
+					//operandStack: ...,word1,word2=>...
+					u4 word2= currentFrame->pop();
+					//operandStack: ...,word1
+					u4 word1= currentFrame->pop();
+					//operandStack: ...
+					u4 longValue[2] ; 
+					longValue[0]=word1;
+					longValue[1]=word2;
+					//we will put at index  the least significant bit(word1) then we will put at index+1 the most significant bits (word2)
+					//localVariable[index]=word1
+					//localVariable[index+1]=word2
+					currentFrame->setAtIndex(index,word1);
+					currentFrame->setAtIndex(index+1,word2);
+					cout<<"LSTORE: theLongValue-"<<*(long long *)longValue<<endl;
+				}
+				pc+=2;
+				break;            
 			case ISTORE_0:  
 			case ISTORE_1:
 			case ISTORE_2: 
@@ -296,6 +353,28 @@ void ExecutionEng::interpret(Thread * thread)
 				}
 				pc++;	
 				break;    
+			case LSTORE_0:
+			case LSTORE_1:
+			case LSTORE_2:
+			case LSTORE_3:
+				{
+					//operandStack: ...,word1,word2=>...
+					u4 word2= currentFrame->pop();
+					//operandStack: ...,word1
+					u4 word1= currentFrame->pop();
+					//operandStack: ...
+					u4 longValue[2] ; 
+					longValue[0]=word1;
+					longValue[1]=word2;
+					//we will put at index  the least significant bit(word1) then we will put at index+1 the most significant bits (word2)
+					//localVariable[index]=word1
+					//localVariable[index+1]=word2
+					currentFrame->setAtIndex((*pc - LSTORE_0 ),word1);
+					currentFrame->setAtIndex(((*pc - LSTORE_0)+1),word2);
+					cout<<"LSTORE_"<<(*pc - LSTORE_0 )<<": theLongValue-"<<*(long long *)longValue<<endl;
+				}
+				pc++;
+				break;
 			case FSTORE_0:    
 			case FSTORE_1:
 			case FSTORE_2:
@@ -392,6 +471,28 @@ void ExecutionEng::interpret(Thread * thread)
 					int result = (int) value1 * (int) value2;
 					currentFrame->push(result);
 					cout<<"IMUL: Value1="<<(int)value1<<" Value2="<<(int)value2<<" Result="<<(int)currentFrame->getTopOpStack()<<endl;
+				}
+				pc++;
+				break;
+			case LMUL:
+				{
+					u4 word2=currentFrame->pop();
+					u4 word1=currentFrame->pop();
+					u4 value2[2];
+					value2[0]=word1;
+					value2[1]=word2;
+					word2=currentFrame->pop();
+					word1=currentFrame->pop();
+					u4 value1[2];
+					value1[0]=word1;
+					value1[1]=word2;
+					u4 result[2];
+					*(long long *)result=(*(long long *)value1) * (*(long long *)value2);
+					word1=result[0];
+					word2=result[1];
+					currentFrame->push(word1);
+					currentFrame->push(word2);
+					cout<<"LMUL: Value1="<<*(long long *)value1<<" Value2="<<*(long long *)value2<<" Result="<<*(long long *)result<<endl;
 				}
 				pc++;
 				break;
