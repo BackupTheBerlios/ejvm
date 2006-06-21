@@ -701,6 +701,485 @@ jdouble CallDoubleMethodV(JNIEnv *env,jobject obj, jmethodID methodID, va_list a
 
 
 
+
+//=====================================CallNonvirtualVoidMethod(A|V| )=============================
+void CallNonvirtualVoidMethod(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+}
+void CallNonvirtualVoidMethodA(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+}
+void CallNonvirtualVoidMethodV(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+}
+//==========================================================================================
+
+
+//=====================================CallNonvirtualObjectMethod(A|V| )=============================
+jobject CallNonvirtualObjectMethod(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return (jobject)retWord1;
+	
+}
+jobject CallNonvirtualObjectMethodA(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jobject)retWord1;
+	
+}
+jobject CallNonvirtualObjectMethodV(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jobject)retWord1;
+}
+//===========================================================================================
+
+
+//=====================================CallNonvirtualBooleanMethod(A|V| )=============================
+jboolean CallNonvirtualBooleanMethod(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return (jboolean)retWord1;
+	
+}
+jboolean CallNonvirtualBooleanMethodA(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jboolean)retWord1;
+	
+}
+jboolean CallNonvirtualBooleanMethodV(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jboolean)retWord1;
+}
+//==========================================================================================
+
+
+//=====================================CallNonvirtualByteMethod(A|V| )=============================
+jbyte CallNonvirtualByteMethod(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return (jbyte)retWord1;
+	
+}
+jbyte CallNonvirtualByteMethodA(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jbyte)retWord1;
+	
+}
+jbyte CallNonvirtualByteMethodV(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jbyte)retWord1;
+}
+//==========================================================================================
+
+//=====================================CallNonvirtualCharMethod(A|V| )=============================
+jchar CallNonvirtualCharMethod(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return (jchar)retWord1;
+	
+}
+jchar CallNonvirtualCharMethodA(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jchar)retWord1;
+	
+}
+jchar CallNonvirtualCharMethodV(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jchar)retWord1;
+}
+//==========================================================================================
+
+//=====================================CallNonvirtualShortMethod(A|V| )=============================
+jshort CallNonvirtualShortMethod(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return (jshort)retWord1;
+	
+}
+jshort CallNonvirtualShortMethodA(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jshort)retWord1;
+	
+}
+jshort CallNonvirtualShortMethodV(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jshort)retWord1;
+}
+//==========================================================================================
+
+
+//=====================================CallNonvirtualIntMethod(A|V| )=============================
+jint CallNonvirtualIntMethod(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return (jint)retWord1;
+	
+}
+jint CallNonvirtualIntMethodA(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jint)retWord1;
+	
+}
+jint CallNonvirtualIntMethodV(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jint)retWord1;
+}
+//==========================================================================================
+
+
+//=====================================CallNonvirtualLongMethod(A|V| )=============================
+jlong CallNonvirtualLongMethod(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, ...){
+	u4 longData[2];
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,longData[0],longData[1],args);
+	va_end(args);
+	return *((jlong*)longData);
+}
+jlong CallNonvirtualLongMethodA(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 longData[2];
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,longData[0],longData[1],args);
+	return *((jlong*)longData);
+	
+}
+jlong CallNonvirtualLongMethodV(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, va_list args){
+	u4 longData[2];
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,longData[0],longData[1],args);
+	return *((jlong*)longData);
+}
+//==========================================================================================
+
+
+//=====================================CallNonvirtualFloatMethod(A|V| )=============================
+jfloat CallNonvirtualFloatMethod(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return *((jfloat*)&retWord1);
+	
+}
+jfloat CallNonvirtualFloatMethodA(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return *((jfloat*)&retWord1);
+	
+}
+jfloat CallNonvirtualFloatMethodV(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return *((jfloat*)&retWord1);
+}
+//==========================================================================================
+
+//=====================================CallNonvirtualDoubleMethod(A|V| )=============================
+jdouble CallNonvirtualDoubleMethod(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, ...){
+	u4 doubleData[2];
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,doubleData[0],doubleData[1],args);
+	va_end(args);
+	return *((jdouble*)doubleData);
+}
+jdouble CallNonvirtualDoubleMethodA(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 doubleData[2];
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,doubleData[0],doubleData[1],args);
+	return *((jdouble*)doubleData);
+	
+}
+jdouble CallNonvirtualDoubleMethodV(JNIEnv *env,jobject obj,jclass clazz, jmethodID methodID, va_list args){
+	u4 doubleData[2];
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,doubleData[0],doubleData[1],args);
+	return *((jdouble*)doubleData);
+}
+//==========================================================================================
+
+
+jmethodID GetStaticMethodID(JNIEnv *env,jclass clazz, const char *name,const char *sig){
+	//if not initialized , initialise the clazz       
+	//if(gExceptionThrower->exceptionOccured())   //check for exception during initialization.
+	//	return NULL;
+	Method* method = ((ClassData*)clazz)->lookupMethod(name,sig);
+	if(gExceptionThrower->exceptionOccured())   //check for exceptions during searching for the method
+			return NULL;
+	return (jmethodID)method;
+}
+
+
+//=====================================CallStaticVoidMethod(A|V| )=============================
+void CallStaticVoidMethod(JNIEnv *env,jclass clazz, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+}
+void CallStaticVoidMethodA(JNIEnv *env,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+}
+void CallStaticVoidMethodV(JNIEnv *env,jclass clazz, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+}
+//==========================================================================================
+
+
+
+//=====================================CallStaticObjectMethod(A|V| )=============================
+jobject CallStaticObjectMethod(JNIEnv *env,jclass clazz, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return (jobject)retWord1;
+	
+}
+jobject CallStaticObjectMethodA(JNIEnv *env,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jobject)retWord1;
+	
+}
+jobject CallStaticObjectMethodV(JNIEnv *env,jclass clazz, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jobject)retWord1;
+}
+//===========================================================================================
+
+
+//=====================================CallStaticBooleanMethod(A|V| )=============================
+jboolean CallStaticBooleanMethod(JNIEnv *env,jclass clazz, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return (jboolean)retWord1;
+	
+}
+jboolean CallStaticBooleanMethodA(JNIEnv *env,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jboolean)retWord1;
+	
+}
+jboolean CallStaticBooleanMethodV(JNIEnv *env,jclass clazz, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jboolean)retWord1;
+}
+//==========================================================================================
+
+
+//=====================================CallStaticByteMethod(A|V| )=============================
+jbyte CallStaticByteMethod(JNIEnv *env,jclass clazz, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return (jbyte)retWord1;
+	
+}
+jbyte CallStaticByteMethodA(JNIEnv *env,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jbyte)retWord1;
+	
+}
+jbyte CallStaticByteMethodV(JNIEnv *env,jclass clazz, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jbyte)retWord1;
+}
+//==========================================================================================
+
+//=====================================CallStaticCharMethod(A|V| )=============================
+jchar CallStaticCharMethod(JNIEnv *env,jclass clazz, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return (jchar)retWord1;
+	
+}
+jchar CallStaticCharMethodA(JNIEnv *env,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jchar)retWord1;
+	
+}
+jchar CallStaticCharMethodV(JNIEnv *env,jclass clazz, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jchar)retWord1;
+}
+//==========================================================================================
+
+//=====================================CallStaticShortMethod(A|V| )=============================
+jshort CallStaticShortMethod(JNIEnv *env,jclass clazz, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return (jshort)retWord1;
+	
+}
+jshort CallStaticShortMethodA(JNIEnv *env,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jshort)retWord1;
+	
+}
+jshort CallStaticShortMethodV(JNIEnv *env,jclass clazz, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jshort)retWord1;
+}
+//==========================================================================================
+
+
+//=====================================CallStaticIntMethod(A|V| )=============================
+jint CallStaticIntMethod(JNIEnv *env,jclass clazz, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return (jint)retWord1;
+	
+}
+jint CallStaticIntMethodA(JNIEnv *env,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jint)retWord1;
+	
+}
+jint CallStaticIntMethodV(JNIEnv *env,jclass clazz, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jint)retWord1;
+}
+//==========================================================================================
+
+
+//=====================================CallStaticLongMethod(A|V| )=============================
+jlong CallStaticLongMethod(JNIEnv *env,jclass clazz, jmethodID methodID, ...){
+	u4 longData[2];
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,longData[0],longData[1],args);
+	va_end(args);
+	return *((jlong*)longData);
+}
+jlong CallStaticLongMethodA(JNIEnv *env,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 longData[2];
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,longData[0],longData[1],args);
+	return *((jlong*)longData);
+	
+}
+jlong CallStaticLongMethodV(JNIEnv *env,jclass clazz, jmethodID methodID, va_list args){
+	u4 longData[2];
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,longData[0],longData[1],args);
+	return *((jlong*)longData);
+}
+//==========================================================================================
+
+
+//=====================================CallStaticFloatMethod(A|V| )=============================
+jfloat CallStaticFloatMethod(JNIEnv *env,jclass clazz, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return *((jfloat*)&retWord1);
+	
+}
+jfloat CallStaticFloatMethodA(JNIEnv *env,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return *((jfloat*)&retWord1);
+	
+}
+jfloat CallStaticFloatMethodV(JNIEnv *env,jclass clazz, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return *((jfloat*)&retWord1);
+}
+//==========================================================================================
+
+//=====================================CallStaticDoubleMethod(A|V| )=============================
+jdouble CallStaticDoubleMethod(JNIEnv *env,jclass clazz, jmethodID methodID, ...){
+	u4 doubleData[2];
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,doubleData[0],doubleData[1],args);
+	va_end(args);
+	return *((jdouble*)doubleData);
+}
+jdouble CallStaticDoubleMethodA(JNIEnv *env,jclass clazz, jmethodID methodID, jvalue *args){
+	u4 doubleData[2];
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,doubleData[0],doubleData[1],args);
+	return *((jdouble*)doubleData);
+	
+}
+jdouble CallStaticDoubleMethodV(JNIEnv *env,jclass clazz, jmethodID methodID, va_list args){
+	u4 doubleData[2];
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,doubleData[0],doubleData[1],args);
+	return *((jdouble*)doubleData);
+}
+//==========================================================================================
+
+
+
+
+
+
+
+
  
  
 /**
@@ -769,39 +1248,39 @@ JNINativeInterface functionTable = {
 /*58*/  CallDoubleMethod,
 /*59*/  CallDoubleMethodV,
 /*60*/  CallDoubleMethodA,
-/*61*/  NULL,
-/*62*/  NULL,
-/*63*/  NULL,
-/*64*/  NULL,
-/*65*/  NULL,
-/*66*/  NULL,
-/*67*/  NULL,
-/*68*/  NULL,
-/*69*/  NULL,
-/*70*/  NULL,
-/*71*/  NULL,
-/*72*/  NULL,
-/*73*/  NULL,
-/*74*/  NULL,
-/*75*/  NULL,
-/*76*/  NULL,
-/*77*/  NULL,
-/*78*/  NULL,
-/*79*/  NULL,
-/*80*/  NULL,
-/*81*/  NULL,
-/*82*/  NULL,
-/*83*/  NULL,
-/*84*/  NULL,
-/*85*/  NULL,
-/*86*/  NULL,
-/*87*/  NULL,
-/*88*/  NULL,
-/*89*/  NULL,
-/*90*/  NULL,
-/*91*/  NULL,
-/*92*/  NULL,
-/*93*/  NULL,
+/*61*/  CallVoidMethod,
+/*62*/  CallVoidMethodV,
+/*63*/  CallVoidMethodA,
+/*64*/  CallNonvirtualObjectMethod,
+/*65*/  CallNonvirtualObjectMethodV,
+/*66*/  CallNonvirtualObjectMethodA,
+/*67*/  CallNonvirtualBooleanMethod,
+/*68*/  CallNonvirtualBooleanMethodV,
+/*69*/  CallNonvirtualBooleanMethodA,
+/*70*/  CallNonvirtualByteMethod,
+/*71*/  CallNonvirtualByteMethodV,
+/*72*/  CallNonvirtualByteMethodA,
+/*73*/  CallNonvirtualCharMethod,
+/*74*/  CallNonvirtualCharMethodV,
+/*75*/  CallNonvirtualCharMethodA,
+/*76*/  CallNonvirtualShortMethod,
+/*77*/  CallNonvirtualShortMethodV,
+/*78*/  CallNonvirtualShortMethodA,
+/*79*/  CallNonvirtualIntMethod,
+/*80*/  CallNonvirtualIntMethodV,
+/*81*/  CallNonvirtualIntMethodA,
+/*82*/  CallNonvirtualLongMethod,
+/*83*/  CallNonvirtualLongMethodV,
+/*84*/  CallNonvirtualLongMethodA,
+/*85*/  CallNonvirtualFloatMethod,
+/*86*/  CallNonvirtualFloatMethodV,
+/*87*/  CallNonvirtualFloatMethodA,
+/*88*/  CallNonvirtualDoubleMethod,
+/*89*/  CallNonvirtualDoubleMethodV,
+/*90*/  CallNonvirtualDoubleMethodA,
+/*91*/  CallNonvirtualVoidMethod,
+/*92*/  CallNonvirtualVoidMethodV,
+/*93*/  CallNonvirtualVoidMethodA,
 /*94*/  GetFieldID,
 /*95*/  GetObjectField,
 /*96*/  GetBooleanField,
@@ -821,37 +1300,37 @@ JNINativeInterface functionTable = {
 /*110*/  SetLongField,
 /*111*/  SetFloatField,
 /*112*/  SetDoubleField,
-/*113*/  NULL,
-/*114*/  NULL,
-/*115*/  NULL,
-/*116*/  NULL,
-/*117*/  NULL,
-/*118*/  NULL,
-/*119*/  NULL,
-/*120*/  NULL,
-/*121*/  NULL,
-/*122*/  NULL,
-/*123*/  NULL,
-/*124*/  NULL,
-/*125*/  NULL,
-/*126*/  NULL,
-/*127*/  NULL,
-/*128*/  NULL,
-/*129*/  NULL,
-/*130*/  NULL,
-/*131*/  NULL,
-/*132*/  NULL,
-/*133*/  NULL,
-/*134*/  NULL,
-/*135*/  NULL,
-/*136*/  NULL,
-/*137*/  NULL,
-/*138*/  NULL,
-/*139*/  NULL,
-/*140*/  NULL,
-/*141*/  NULL,
-/*142*/  NULL,
-/*143*/  NULL,
+/*113*/  GetStaticMethodID,
+/*114*/  CallStaticObjectMethod,
+/*115*/  CallStaticObjectMethodV,
+/*116*/  CallStaticObjectMethodA,
+/*117*/  CallStaticBooleanMethod,
+/*118*/  CallStaticBooleanMethodV,
+/*119*/  CallStaticBooleanMethodA,
+/*120*/  CallStaticByteMethod,
+/*121*/  CallStaticByteMethodV,
+/*122*/  CallStaticByteMethodA,
+/*123*/  CallStaticCharMethod,
+/*124*/  CallStaticCharMethodV,
+/*125*/  CallStaticCharMethodA,
+/*126*/  CallStaticShortMethod,
+/*127*/  CallStaticShortMethodV,
+/*128*/  CallStaticShortMethodA,
+/*129*/  CallStaticIntMethod,
+/*130*/  CallStaticIntMethodV,
+/*131*/  CallStaticIntMethodA,
+/*132*/  CallStaticLongMethod,
+/*133*/  CallStaticLongMethodV,
+/*134*/  CallStaticLongMethodA,
+/*135*/  CallStaticFloatMethod,
+/*136*/  CallStaticFloatMethodV,
+/*137*/  CallStaticFloatMethodA,
+/*138*/  CallStaticDoubleMethod,
+/*139*/  CallStaticDoubleMethodV,
+/*140*/  CallStaticDoubleMethodA,
+/*141*/  CallStaticVoidMethod,
+/*142*/  CallStaticVoidMethodV,
+/*143*/  CallStaticVoidMethodA,
 /*144*/  GetStaticFieldID,
 /*145*/  GetStaticObjectField,
 /*146*/  GetStaticBooleanField,
