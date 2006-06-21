@@ -462,9 +462,240 @@ jmethodID GetMethodID(JNIEnv *env, jclass clazz,const char *name, const char *si
 	return (jmethodID)method;
 }
 
-void nextFunction(){
-}
 
+//<NativeType> Call<Type>Method(JNIEnv *env,jobject obj, jmethodID methodID, ...);
+//<NativeType> Call<Type>MethodA(JNIEnv *env,jobject obj, jmethodID methodID, jvalue *args);
+//<NativeType> Call<Type>MethodV(JNIEnv *env,jobject obj, jmethodID methodID, va_list args);
+
+//=====================================CallVoidMethod(A|V| )=============================
+void CallVoidMethod(JNIEnv *env,jobject obj, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+}
+void CallVoidMethodA(JNIEnv *env,jobject obj, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+}
+void CallVoidMethodV(JNIEnv *env,jobject obj, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+}
+//==========================================================================================
+
+
+
+//=====================================CallObjectMethod(A|V| )=============================
+jobject CallObjectMethod(JNIEnv *env,jobject obj, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return (jobject)retWord1;
+	
+}
+jobject CallObjectMethodA(JNIEnv *env,jobject obj, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jobject)retWord1;
+	
+}
+jobject CallObjectMethodV(JNIEnv *env,jobject obj, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jobject)retWord1;
+}
+//===========================================================================================
+
+
+//=====================================CallBooleanMethod(A|V| )=============================
+jboolean CallBooleanMethod(JNIEnv *env,jobject obj, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return (jboolean)retWord1;
+	
+}
+jboolean CallBooleanMethodA(JNIEnv *env,jobject obj, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jboolean)retWord1;
+	
+}
+jboolean CallBooleanMethodV(JNIEnv *env,jobject obj, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jboolean)retWord1;
+}
+//==========================================================================================
+
+
+//=====================================CallByteMethod(A|V| )=============================
+jbyte CallByteMethod(JNIEnv *env,jobject obj, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return (jbyte)retWord1;
+	
+}
+jbyte CallByteMethodA(JNIEnv *env,jobject obj, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jbyte)retWord1;
+	
+}
+jbyte CallByteMethodV(JNIEnv *env,jobject obj, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jbyte)retWord1;
+}
+//==========================================================================================
+
+//=====================================CallCharMethod(A|V| )=============================
+jchar CallCharMethod(JNIEnv *env,jobject obj, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return (jchar)retWord1;
+	
+}
+jchar CallCharMethodA(JNIEnv *env,jobject obj, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jchar)retWord1;
+	
+}
+jchar CallCharMethodV(JNIEnv *env,jobject obj, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jchar)retWord1;
+}
+//==========================================================================================
+
+//=====================================CallShortMethod(A|V| )=============================
+jshort CallShortMethod(JNIEnv *env,jobject obj, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return (jshort)retWord1;
+	
+}
+jshort CallShortMethodA(JNIEnv *env,jobject obj, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jshort)retWord1;
+	
+}
+jshort CallShortMethodV(JNIEnv *env,jobject obj, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jshort)retWord1;
+}
+//==========================================================================================
+
+
+//=====================================CallIntMethod(A|V| )=============================
+jint CallIntMethod(JNIEnv *env,jobject obj, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return (jint)retWord1;
+	
+}
+jint CallIntMethodA(JNIEnv *env,jobject obj, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jint)retWord1;
+	
+}
+jint CallIntMethodV(JNIEnv *env,jobject obj, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return (jint)retWord1;
+}
+//==========================================================================================
+
+
+//=====================================CallLongMethod(A|V| )=============================
+jlong CallLongMethod(JNIEnv *env,jobject obj, jmethodID methodID, ...){
+	u4 longData[2];
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,longData[0],longData[1],args);
+	va_end(args);
+	return *((jlong*)longData);
+}
+jlong CallLongMethodA(JNIEnv *env,jobject obj, jmethodID methodID, jvalue *args){
+	u4 longData[2];
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,longData[0],longData[1],args);
+	return *((jlong*)longData);
+	
+}
+jlong CallLongMethodV(JNIEnv *env,jobject obj, jmethodID methodID, va_list args){
+	u4 longData[2];
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,longData[0],longData[1],args);
+	return *((jlong*)longData);
+}
+//==========================================================================================
+
+
+//=====================================CallFloatMethod(A|V| )=============================
+jfloat CallFloatMethod(JNIEnv *env,jobject obj, jmethodID methodID, ...){
+	u4 retWord1,retWord2;
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	va_end(args);
+	return *((jfloat*)&retWord1);
+	
+}
+jfloat CallFloatMethodA(JNIEnv *env,jobject obj, jmethodID methodID, jvalue *args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return *((jfloat*)&retWord1);
+	
+}
+jfloat CallFloatMethodV(JNIEnv *env,jobject obj, jmethodID methodID, va_list args){
+	u4 retWord1,retWord2;
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,retWord1,retWord2,args);
+	return *((jfloat*)&retWord1);
+}
+//==========================================================================================
+
+//=====================================CallDoubleMethod(A|V| )=============================
+jdouble CallDoubleMethod(JNIEnv *env,jobject obj, jmethodID methodID, ...){
+	u4 doubleData[2];
+	va_list args;
+	va_start(args,methodID);
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,doubleData[0],doubleData[1],args);
+	va_end(args);
+	return *((jdouble*)doubleData);
+}
+jdouble CallDoubleMethodA(JNIEnv *env,jobject obj, jmethodID methodID, jvalue *args){
+	u4 doubleData[2];
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,doubleData[0],doubleData[1],args);
+	return *((jdouble*)doubleData);
+	
+}
+jdouble CallDoubleMethodV(JNIEnv *env,jobject obj, jmethodID methodID, va_list args){
+	u4 doubleData[2];
+	//gExecutionEng->executeMethod((Object*)obj,(Method*)jmethodID,doubleData[0],doubleData[1],args);
+	return *((jdouble*)doubleData);
+}
+//==========================================================================================
 
 
 
@@ -511,33 +742,33 @@ JNINativeInterface functionTable = {
 /*31*/  GetObjectClass,
 /*32*/  IsInstanceOf,
 /*33*/  GetMethodID,
-/*34*/  NULL,
-/*35*/  NULL,
-/*36*/  NULL,
-/*37*/  NULL,
-/*38*/  NULL,
-/*39*/  NULL,
-/*40*/  NULL,
-/*41*/  NULL,
-/*42*/  NULL,
-/*43*/  NULL,
-/*44*/  NULL,
-/*45*/  NULL,
-/*46*/  NULL,
-/*47*/  NULL,
-/*48*/  NULL,
-/*49*/  NULL,
-/*50*/  NULL,
-/*51*/  NULL,
-/*52*/  NULL,
-/*53*/  NULL,
-/*54*/  NULL,
-/*55*/  NULL,
-/*56*/  NULL,
-/*57*/  NULL,
-/*58*/  NULL,
-/*59*/  NULL,
-/*60*/  NULL,
+/*34*/  CallObjectMethod,
+/*35*/  CallObjectMethodV,
+/*36*/  CallObjectMethodA,
+/*37*/  CallBooleanMethod,
+/*38*/  CallBooleanMethodV,
+/*39*/  CallBooleanMethodA,
+/*40*/  CallByteMethod,
+/*41*/  CallByteMethodV,
+/*42*/  CallByteMethodA,
+/*43*/  CallCharMethod,
+/*44*/  CallCharMethodV,
+/*45*/  CallCharMethodA,
+/*46*/  CallShortMethod,
+/*47*/  CallShortMethodV,
+/*48*/  CallShortMethodA,
+/*49*/  CallIntMethod,
+/*50*/  CallIntMethodV,
+/*51*/  CallIntMethodA,
+/*52*/  CallLongMethod,
+/*53*/  CallLongMethodV,
+/*54*/  CallLongMethodA,
+/*55*/  CallFloatMethod,
+/*56*/  CallFloatMethodV,
+/*57*/  CallFloatMethodA,
+/*58*/  CallDoubleMethod,
+/*59*/  CallDoubleMethodV,
+/*60*/  CallDoubleMethodA,
 /*61*/  NULL,
 /*62*/  NULL,
 /*63*/  NULL,
