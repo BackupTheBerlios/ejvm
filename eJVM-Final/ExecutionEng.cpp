@@ -2,6 +2,7 @@
 
 using std::cout;
 using std::endl;
+//-------------------------------------------------------------------------------------------
 ExecutionEng::ExecutionEng()
 {
 	this->mainThread = new Thread();
@@ -11,13 +12,13 @@ ExecutionEng::ExecutionEng()
 		exit(1);
 	}
 }
-
+//------------------------------------------------------------------------------------------------
 ExecutionEng::~ExecutionEng()
 {
 	delete mainThread;
 	cout<<"ExecutionEngine Destructor"<<endl;
 }
-
+//--------------------------------------------------------------------------------------------------
 void ExecutionEng::executeMethod(Object *object,Method * method,...)
 {
 	//1- get the current stack (with single thread, we only have the stack of mainThread).
@@ -59,7 +60,8 @@ void ExecutionEng::executeMethod(Object *object,Method * method,...)
 	{                         
        if((*p == 'J') || (*p == 'D'))
        {         
-           //Insert Long and Double values in the Local Variables                                    
+           //Insert Long and Double values in the Local Variables      
+                                         
            p++;                                  
        }
        else 
@@ -105,7 +107,77 @@ void ExecutionEng::executeMethod(Object *object,Method * method,...)
 	//8- call interpret
 	interpret(mainThread);
 }
-
+//-------------------------------------------------------------------------
+void ExecutionEng::executeMethod(Object *object,Method * method,va_list ap)
+{
+	Stack * stack = mainThread->getStack();
+	Frame * f =new Frame(true,method);
+	if(f == NULL)
+	{
+		cout<<"ExecutionEng: executeMethod: no suffiecinet memory"<<endl;
+		exit(1);
+	}
+	char * desc = method->getDesc();
+	cout<<"method desc: "<<desc<<endl;
+	
+	char *p;
+	u4 arg;
+	u4 * vPtr = &arg;
+	int index=0;//index to locals variables
+	if(object)//if this the <init> method
+	{
+		*vPtr=(u4)object;
+		f->setAtIndex(index,arg);//put in the local variables array at index index
+		index++;
+	}
+	
+	p = desc; 
+	cout<<*p;
+	p++;     /* skip start ( */    
+	while(*p != ')')
+	{                         
+       if((*p == 'J') || (*p == 'D'))
+       {         
+           //Insert Long and Double values in the Local Variables                                    
+           p++;                                  
+       }
+       else 
+       {                                 
+           if(*p == 'L' || *p == '[')//if the pareamete is a refrence (e.g. refrence to object or refrece to array object)
+           {
+          		*vPtr = va_arg(ap,u4); 
+           }		
+           else if(*p == 'F')
+           {
+           		*(float *)vPtr = va_arg(ap,double);
+           }
+           else
+           {
+           		*vPtr = va_arg(ap,u4);
+           }
+          f->setAtIndex(index,arg);
+          index++; 
+                                              
+           if(*p == '[') 
+               for(p++; *p == '['; p++);         
+           if(*p == 'L')                         
+               while(*p++ != ';');              
+           else                                 
+               p++;                              
+       }                                         
+    }                                            
+    cout<<*p;
+    p++;               /* skip end ) */
+	cout<<*p<<endl<<endl;
+	
+	stack->push(f);
+	interpret(mainThread);	
+}
+//--------------------------------------------------------------------------------------------
+void ExecutionEng::executeMethod(Object *object,Method * method,jvalue* args)
+{
+}
+//--------------------------------------------------------------------------------------------
 void ExecutionEng::interpret(Thread * thread)
 {
 	unsigned char* pc=NULL;
@@ -152,6 +224,32 @@ void ExecutionEng::interpret(Thread * thread)
 					cout<<"FCONST_"<<(*pc -FCONST_0)<<" : TopOfTheOperandStack= "<<*(float *)ptr<<endl;
 				}
 				pc++;
+				break;
+			case SIPUSH:
+				{
+					u1 	byte1 = *(pc+1);
+					u1  byte2 = *(pc+2);
+					int value = (byte1 << 8) | byte2;
+					cout<<"SIPUSH: The Value="<<value<<endl;
+				}
+				pc+=3;
+				break;
+			case LDC2_W:
+				{
+					u1 indexbyte1 = *(pc+1);
+					u1 indexbyte2 = *(pc+2);
+					u4 word1, word2;
+					constantPool->get2Words(((indexbyte1 << 8) | indexbyte2),word1,word2);
+					u4 longOrDouble[2] ; 
+					longOrDouble[0]=word1;
+					longOrDouble[1]=word2;
+					//push the least significant bits first, where word1 is the least significant bit
+					currentFrame->push(word1);
+					currentFrame->push(word2);
+					cout<<"LDC2_W: value="<<*(long long *)longOrDouble<<endl;
+					
+				}
+				pc+=3;
 				break;
 			case ILOAD_0 :  
 			case ILOAD_1 :  
