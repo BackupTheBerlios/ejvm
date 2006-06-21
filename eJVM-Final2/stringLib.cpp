@@ -2,8 +2,7 @@
 //------------------------------------------------------
 Object* utf8ToArrayOfUnicodeChar (byte* utf8String)
 {
-	char * str; /* small indian */
-	u2 length=0,utf8Loc=0,i,temp;
+	u2 length=0,utf8Loc=0,temp;
 	byte x,y,z;
 //**********************************************		
 	while(utf8String[utf8Loc] != 0)//Temination condition
@@ -40,11 +39,11 @@ Object* utf8ToArrayOfUnicodeChar (byte* utf8String)
 	Array = new Object(1,lengths,5,arrayClass,NULL);
 	utf8loc=0;
 	int index[1];//to set the array elements
+	index[0] = 0;
 	while(utf8String[utf8Loc] != 0)//Temination condition
 	{
 		/* the character consists of only one byte "0*******" */
 		x = utf8String[utf8Loc];
-		index [0]= (index [0]) + 1;
 		if( x>>7 == 0 )
 		{
 			Array->putElement(index , (u4)x ,(u4)0 )
@@ -75,6 +74,7 @@ Object* utf8ToArrayOfUnicodeChar (byte* utf8String)
 			length ++;
 			utf8Loc+=3;
 		}
+		index [0]= (index [0]) + 1;
 		
 	}
 //**************************************************
