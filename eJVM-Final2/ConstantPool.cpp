@@ -70,7 +70,8 @@ fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_InterfaceMethodr
     			*	}
 				**/
 				case 8:  infoCount = 2; 
-fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_String_info\n",i);							break;  /* CONSTANT_String  */
+fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_String_info\n",i);						
+				break;  /* CONSTANT_String  */
 				/** CONSTANT_String_info {
     			 *		u1 tag;
     			 *		u2 string_index;
@@ -85,7 +86,8 @@ fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Integer_info\n",
 				 * 
 				 * */
 				case 4:  infoCount = 4; 
-fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Float_info\n",i);								break;  /* CONSTANT_Float  */
+fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Float_info\n",i);								
+				break;  /* CONSTANT_Float  */
 				case 5:	 infoCount = 8;
 fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Long_info\n",i);
 					 break;  /* CONSTANT_Long  */
@@ -120,6 +122,8 @@ printf("fill the current entry  %d in the constant pool with tag and data\n",i);
 				entryTable[i][j] = inputFile[ (*inputPtr)+j ];
 			/* advance the input pointer */
 			(*inputPtr) += infoCount+1;
+			if(tag==5 || tag == 6)
+				i++;
 		}
 }
 /*****************************************/

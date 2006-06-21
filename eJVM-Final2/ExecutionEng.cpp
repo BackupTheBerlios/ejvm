@@ -230,7 +230,8 @@ void ExecutionEng::interpret(Thread * thread)
 					u1 	byte1 = *(pc+1);
 					u1  byte2 = *(pc+2);
 					int value = (byte1 << 8) | byte2;
-					cout<<"SIPUSH: The Value="<<value<<endl;
+					currentFrame->push(value);
+					cout<<"SIPUSH: The Value="<<currentFrame->getTopOpStack()<<endl;
 				}
 				pc+=3;
 				break;
