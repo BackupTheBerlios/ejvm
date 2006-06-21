@@ -36,7 +36,7 @@ Object* utf8ToArrayOfUnicodeChar (byte* utf8String)
 	int lengthes[1];
 	lengthes[0] = length;
 	ClassData * arrayClass = Loader::getInstance()->getClassData("[C");
-	Array = new Object(1,lengthes,5,arrayClass,NULL);
+	Array =  Heap::getInstance()->createArrayObject(1,lengthes,5,arrayClass,NULL);
 	utf8Loc=0;
 	int index[1];//to set the array elements
 	index[0] = 0;
@@ -84,5 +84,12 @@ Object* utf8ToArrayOfUnicodeChar (byte* utf8String)
 //------------------------------------------------------
 Object* arrayOfUnicodeCharToString (Object* arrayObject)
 {
+	ClassData * stringClass = Loader::getInstance()->getClassData("java/lang/String");
+	Object* stringObject = (Heap::getInstance())->createObject(stringClass);
+	Method* initMethod = stringClass->lookupMethod("<init>","([C)V");
+	ExecutionEng * exec =new ExecutionEng();
+	exec->executeMethod(stringObject,initMethod,arrayObject);
+	return stringObject;
 }
 //------------------------------------------------------
+
