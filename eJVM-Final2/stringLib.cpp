@@ -2,7 +2,7 @@
 //------------------------------------------------------
 Object* utf8ToArrayOfUnicodeChar (byte* utf8String)
 {
-	u2 length=0,utf8Loc=0,temp;
+	u2 length=0,utf8Loc = 0,temp;
 	byte x,y,z;
 //**********************************************		
 	while(utf8String[utf8Loc] != 0)//Temination condition
@@ -36,17 +36,18 @@ Object* utf8ToArrayOfUnicodeChar (byte* utf8String)
 	int lengthes[1];
 	lengthes[0] = length;
 	ClassData * arrayClass = Loader::getInstance()->getClassData("[C");
-	Array = new Object(1,lengths,5,arrayClass,NULL);
-	utf8loc=0;
+	Array = new Object(1,lengthes,5,arrayClass,NULL);
+	utf8Loc=0;
 	int index[1];//to set the array elements
 	index[0] = 0;
+//*****************************************************
 	while(utf8String[utf8Loc] != 0)//Temination condition
 	{
 		/* the character consists of only one byte "0*******" */
 		x = utf8String[utf8Loc];
 		if( x>>7 == 0 )
 		{
-			Array->putElement(index , (u4)x ,(u4)0 )
+			Array->putElement(index , (u4)x ,(u4)0 );
 			length ++;
 			utf8Loc++;
 		}	
@@ -57,7 +58,7 @@ Object* utf8ToArrayOfUnicodeChar (byte* utf8String)
 		{
 			y = utf8String[utf8Loc+1];
 			temp = ( ( (u2)(x & 31) ) << 6) + (y & 63);
-			Array->putElement(index , (u4)temp ,(u4)0 )
+			Array->putElement(index , (u4)temp ,(u4)0 );
 			length ++ ;
 			utf8Loc+=2;
 		}	
@@ -70,7 +71,7 @@ Object* utf8ToArrayOfUnicodeChar (byte* utf8String)
 			y = utf8String[utf8Loc+1];
 			z = utf8String[utf8Loc+2];
 			temp = ( ( (u2)(x & 15) ) << 12) + ( ( (u2)(y & 63) ) << 6) + (z & 63);
-			Array->putElement(index ,(u4)temp  ,(u4)0 )
+			Array->putElement(index ,(u4)temp  ,(u4)0 );
 			length ++;
 			utf8Loc+=3;
 		}

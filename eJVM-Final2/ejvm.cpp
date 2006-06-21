@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include "Loader.h"
 #include "ExecutionEng.h"
+#include"stringLib.h"
 
 void testJNI(void);
 
@@ -76,7 +77,7 @@ int main(int argc, char** argv){
 		}*/
 		
 		
-		exec->executeMethod(NULL,m);
+		//exec->executeMethod(NULL,m);
 		
 		
 		/*-cout<<"Enter calssName: ";
@@ -87,9 +88,18 @@ int main(int argc, char** argv){
 		cout<<"Class name is: "<<cptr->getFQName()<<endl;
 		
 		cout<<"Hash size: "<<h->HashSize()<<endl;*/
-		
-		
-		
+
+	/*	u4 word1,word2;
+	int index [1];
+	byte * sam=(byte *)"samehIsmail";
+	Object * Array = utf8ToArrayOfUnicodeChar (sam);
+	for(int i=0; i<=10;i++)
+	{
+		index[0] = i;
+		Array->getElement(index,word1,word2);
+		printf("%c\n",(char) word1);
+	}*/
+			
 		
 		Loader::deleteLoader();
 		Heap::deleteHeap();
