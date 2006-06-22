@@ -77,7 +77,7 @@ int main(int argc, char** argv){
 		}*/
 		
 		
-		//exec->executeMethod(NULL,m);
+		exec->executeMethod(NULL,m);
 		
 		
 		/*-cout<<"Enter calssName: ";

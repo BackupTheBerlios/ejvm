@@ -10,6 +10,7 @@
 #include "ConstantPool.h"
 #include "Heap.h"
 #include "jni.h"
+#include <cmath>
 class ExecutionEng
 {
 public:
@@ -85,6 +86,8 @@ private:
 	void putArgInLocalVariables(Frame * invokingMethod, Frame * invokedMethod,Object * ob);
 	void calNumOfArg(char * p,unsigned int & argCount,unsigned int & opStackArgCount);
 	unsigned int getRefrenceIndex(char * p);
+	float computFloat(u4 floatValue);
+	double computDouble(u4 word1,u4 word2);
 
 };
 

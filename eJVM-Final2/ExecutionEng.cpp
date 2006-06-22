@@ -174,8 +174,71 @@ void ExecutionEng::executeMethod(Object *object,Method * method,va_list ap)
 	interpret(mainThread);	
 }
 //--------------------------------------------------------------------------------------------
-void ExecutionEng::executeMethod(Object *object,Method * method,jvalue* args)
+void ExecutionEng::executeMethod(Object *object,Method * method,jvalue * args)
 {
+	Stack * stack = mainThread->getStack();
+	Frame * f =new Frame(true,method);
+	if(f == NULL)
+	{
+		cout<<"ExecutionEng: executeMethod: no suffiecinet memory"<<endl;
+		exit(1);
+	}
+	char * desc = method->getDesc();
+	cout<<"method desc: "<<desc<<endl;
+	
+	char *p;
+	u4 arg;
+	u4 * vPtr = &arg;
+	int index=0;//index to locals variables
+	if(object)//if this the <init> method
+	{
+		*vPtr=(u4)object;
+		f->setAtIndex(index,arg);//put in the local variables array at index index
+		index++;
+	}
+	
+	p = desc; 
+	cout<<*p;
+	p++;     /* skip start ( */    
+	int argIndex=0;
+	while(*p != ')')
+	{                         
+       if((*p == 'J') || (*p == 'D'))
+       {         
+           //Insert Long and Double values in the Local Variables                                    
+           p++;                                  
+       }
+       else 
+       {                                 
+           if(*p == 'L' || *p == '[')//if the pareamete is a refrence (e.g. refrence to object or refrece to array object)
+           {
+          		*vPtr = args[argIndex].i; 
+           }		
+           else if(*p == 'F')
+           {
+           		*(float *)vPtr =  args[argIndex].f;
+           }
+           else
+           {
+           		*vPtr =  args[argIndex].i;
+           }
+          f->setAtIndex(index,arg);
+          index++; 
+          argIndex++;        
+           if(*p == '[') 
+               for(p++; *p == '['; p++);         
+           if(*p == 'L')                         
+               while(*p++ != ';');              
+           else                                 
+               p++;                              
+       }                                         
+    }                                            
+    cout<<*p;
+    p++;               /* skip end ) */
+	cout<<*p<<endl<<endl;
+	
+	stack->push(f);
+	interpret(mainThread);	
 }
 //--------------------------------------------------------------------------------------------
 void ExecutionEng::interpret(Thread * thread)
@@ -235,6 +298,27 @@ void ExecutionEng::interpret(Thread * thread)
 				}
 				pc+=3;
 				break;
+			case LDC:
+				{
+					u1 index= *(pc+1);
+					u4 word;
+					constantPool->getWord(index,word);
+					currentFrame->push(word);
+					cout<<"LDC: value="<<computFloat(word)<<endl;
+				}
+				pc+=2;
+				break;
+			case LDC_W:
+				{
+					u1 indexbyte1 = *(pc+1);
+					u1 indexbyte2 = *(pc+2);
+					u4 word;
+					constantPool->getWord(((indexbyte1 << 8) | indexbyte2),word);
+					currentFrame->push(word);
+					cout<<"LDC_w: value="<<computFloat(word)<<endl;
+				}
+				pc+=3;
+				break;
 			case LDC2_W:
 				{
 					u1 indexbyte1 = *(pc+1);
@@ -255,6 +339,15 @@ void ExecutionEng::interpret(Thread * thread)
 				}
 				pc+=3;
 				break;
+			case ILOAD:
+				{
+					u1 index = *(pc+1);
+					u4 word = currentFrame->getAtIndex(index);
+					currentFrame->push(word);
+					cout<<"ILOAD: theIndex="<<(int)index<<"  theValueAtTheTopOfTheStack="<<(int)currentFrame->getTopOpStack()<<endl;
+				}
+				pc+=2;
+				break;
 			case LLOAD:
 				{
 					u1 index = *(pc+1);
@@ -266,10 +359,42 @@ void ExecutionEng::interpret(Thread * thread)
 					//push the least significant bits first, where word1 is the least significant bit,then push the most significant bits
 					//operandStack: ...=> ...,word1,word2
 					currentFrame->push(word1);
+					//operandStack: ...,word1
+					currentFrame->push(word2);
+					//operandStack: ..,word1,word2
+					cout<<"LLOAD: theIndex="<<(int)index<<"  theLongValueAtTopOfStack="<<*(long long *)longValue<<endl;
+				}
+				pc+=2;
+				break;
+			case FLOAD:
+				{
+					u1 index = *(pc+1);
+					u4 word = currentFrame->getAtIndex(index);
+					currentFrame->push(word);
+					cout<<"ILOAD: theIndex="<<(int)index<<"  theValueAtTheTopOfTheStack="<<computFloat(word)<<endl;
+				}
+				pc+=2;
+				break;
+			case DLOAD:
+				{
+					u1 index = *(pc+1);
+					u4 word1 = currentFrame->getAtIndex(index);
+					u4 word2 = currentFrame->getAtIndex(index+1);
+					//operandStack: ...=> ...,word1,word2
+					currentFrame->push(word1);
 					//operandStack: ...=> ...,word1
 					currentFrame->push(word2);
-					//operandStack: ...=> ...,word1,word2
-					cout<<"LLOAD: theLongValue="<<*(long long *)longValue<<endl;
+					//operandStack: ..,word1,word2
+					cout<<"DLOAD: theIndex="<<(int)index<<"  theDoubleValueAtTopOfStack="<<computDouble(word1,word2)<<endl;
+				}				
+				pc+=2;
+				break;
+			case ALOAD:
+				{
+					u1 index = *(pc+1);
+					u4 word = currentFrame->getAtIndex(index);
+					currentFrame->push(word);
+					cout<<"ALOAD: theIndex="<<(int)index<<"  theValueAtTheTopOfTheStack="<<(Object *)word<<endl;
 				}
 				pc+=2;
 				break;
@@ -309,6 +434,20 @@ void ExecutionEng::interpret(Thread * thread)
 					currentFrame->push(temp);
 					u4 * ptr=& temp;
 					cout<<"FLOAD_"<<(*pc - FLOAD_0)<<": value at the top of the Stack"<<*(float *)ptr<<endl;
+					cout<<computFloat(temp)<<endl;
+				}
+				pc++;
+				break;
+			case DLOAD_0:
+			case DLOAD_1:
+			case DLOAD_2:
+			case DLOAD_3:
+				{
+					u4 word1 = currentFrame->getAtIndex(*pc - DLOAD_0);
+					u4 word2 = currentFrame->getAtIndex((*pc - DLOAD_0)+1);
+					currentFrame->push(word1);
+					currentFrame->push(word2);
+					cout<<"LLOAD_"<<(*pc - DLOAD_0)<<": theDoubleValue="<<computDouble(word1,word2)<<endl;
 				}
 				pc++;
 				break;
@@ -339,7 +478,7 @@ void ExecutionEng::interpret(Thread * thread)
 					//localVariable[index+1]=word2
 					currentFrame->setAtIndex(index,word1);
 					currentFrame->setAtIndex(index+1,word2);
-					cout<<"LSTORE: theLongValue-"<<*(long long *)longValue<<endl;
+					cout<<"LSTORE: theIndex="<<(int)index<<" theLongValue-"<<*(long long *)longValue<<endl;
 				}
 				pc+=2;
 				break;            
@@ -385,6 +524,7 @@ void ExecutionEng::interpret(Thread * thread)
 					u4 * ptr = & u4num;
 					currentFrame->setAtIndex((*pc - FSTORE_0 ),u4num);
 					cout<<"FSTORE_"<<(*pc - FSTORE_0 )<<": "<<"value Poped="<<*(float*)ptr<<endl;
+					cout<<computFloat(u4num)<<endl;
 				}
 				pc++;
 				break;
@@ -455,6 +595,19 @@ void ExecutionEng::interpret(Thread * thread)
 				}
 				pc++;	
 				break;
+			case FADD:
+				{
+					float value2 = computFloat(currentFrame->pop());
+					float value1 = computFloat(currentFrame->pop());
+					float fresult = value1 + value2;
+					u4 result;
+					u4 * ptr=&result;
+					*(float *)ptr= fresult;
+					currentFrame->push(*ptr);
+					cout<<"FADD: Value1="<<value1<<" Value2="<<value2<<" Result="<<fresult<<endl;
+				}
+				pc++;
+				break;
 			case ISUB:
 				{
 					u4 value2=currentFrame->pop();
@@ -509,16 +662,20 @@ void ExecutionEng::interpret(Thread * thread)
 			case FDIV:
 				{
 					u4 value2=currentFrame->pop();
-					u4 * pValue2 = &value2;
+				//	u4 * pValue2 = &value2;
+					float fValue2=computFloat(value2);
 					u4 value1=currentFrame->pop();
-					u4 * pValue1 = &value1;
-					float fresult = *(float *)pValue1 / *(float *)pValue2;
+					//u4 * pValue1 = &value1;
+					float fValue1=computFloat(value1);
+					//float fresult = *(float *)pValue1 / *(float *)pValue2;
+					float fresult=fValue1/fValue2; 
 					u4 result;
 					u4 * pResult = &result;
 					*(float *)pResult = fresult;
 					currentFrame->push(*pResult);
-					cout<<"FDIV: Value1="<<*(float *)pValue1<<" Value2="<<*(float *)pValue2<<" Result="<<*(float *)pResult<<endl;
-					cout<<"REsult in u4="<<*pResult<<endl;
+					//cout<<"FDIV: Value1="<<*(float *)pValue1<<" Value2="<<*(float *)pValue2<<" Result="<<*(float *)pResult<<endl;
+					//cout<<"REsult in u4="<<*pResult<<endl;
+					cout<<"FDIV: Value1="<<fValue1<<" Value2="<<fValue2<<" Result="<<*(float *)pResult<<endl;
 					
 				}
 				pc++;
@@ -857,6 +1014,7 @@ void ExecutionEng::interpret(Thread * thread)
 				break;
 			default:      
 				cout<<"Fatal Error : Unrecognised opcode"<<endl;
+				cout<<"the opcode"<<(unsigned int)*pc<<" doesnot exist"<<endl;
 				exit(1);
 		}
 	}
@@ -967,9 +1125,65 @@ unsigned int ExecutionEng::getRefrenceIndex(char * p)
 	calNumOfArg(p,argCount,opStackArgCount);
 	return opStackArgCount;
 }
-
-
-
+//------------------------------------------------------------------------------------------------------------------
+float ExecutionEng::computFloat(u4 floatValue)
+{
+	u4 * ptr=&floatValue;
+	int bits= *(int *)ptr;
+	if(floatValue ==0x7f800000)//positive infinity
+	{
+		cout<<"The value is positive infinity"<<endl;
+		exit(1);
+		return *(float *)ptr;
+	}
+	if(floatValue ==0xff800000)
+	{
+		cout<<"The value is negative infinity"<<endl;
+		exit(1);
+		return *(float *)ptr;
+	}
+	if( (0x7f800001 <=floatValue &&  floatValue<=0x7fffffff) ||(0xff800001 <= floatValue &&floatValue<= 0xffffffff))
+	{
+		cout<<"The value is NaN"<<endl;
+		exit(1);
+		return *(float *)ptr;
+	}
+	
+	int s = ((bits >> 31) == 0) ? 1 : -1;
+    int e = ((bits >> 23) & 0xff);
+    int m = (e == 0) ?	(bits & 0x7fffff) << 1 : (bits & 0x7fffff) | 0x800000;
+	
+	float fValue = s * m * powf(2,e-150);
+	
+	return fValue;
+}
+//----------------------------------------------------------------------------------------------------------------
+double ExecutionEng::computDouble(u4 low_bytes,u4 high_bytes)
+{
+	long long bits = ((long long) high_bytes << 32) + low_bytes;
+	if(bits == 0x7ff0000000000000LL)
+	{
+		cout<<"The value is positive infinity"<<endl;
+		exit(1);
+	}
+	if((unsigned long long)bits == 0xfff0000000000000LL)
+	{
+		cout<<"The value is negative infinity"<<endl;
+		exit(1);
+	}
+	if((0x7ff0000000000001LL<= (unsigned long long)bits && (unsigned long long)bits <= 0x7fffffffffffffffLL)||
+	   (0xfff0000000000001LL<= (unsigned long long)bits && (unsigned long long)bits<=0xffffffffffffffffLL))
+	{
+		cout<<"The value is NaN"<<endl;
+		exit(1);
+	}
+	int s = ((bits >> 63) == 0) ? 1 : -1;
+   	int e = (int)((bits >> 52) & 0x7ffL);
+    long long m = (e == 0) ? (bits & 0xfffffffffffffLL) << 1 :	(bits & 0xfffffffffffffLL) | 0x10000000000000LL;
+    
+    double fDouble = s * m * powf(2,e-1075);
+    return fDouble;
+}
 
 
 

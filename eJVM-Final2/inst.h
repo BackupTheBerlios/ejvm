@@ -99,6 +99,8 @@
 #define SWAP                        95
 #define IADD                        96
 
+#define FADD						 98
+
 #define ISUB						100
 
 #define IMUL						104
