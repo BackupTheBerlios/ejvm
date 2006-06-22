@@ -15,7 +15,7 @@ Object* utf8ToArrayOfUnicodeChar (byte* utf8String)
 			utf8Loc++;
 		}	
 		/* the character consists of two bytes */
-		else if( (x>>5) ==6 )	
+		else if( (x&224) ==192  )	
 		{
 			length++;
 			utf8Loc+=2;
@@ -54,7 +54,7 @@ Object* utf8ToArrayOfUnicodeChar (byte* utf8String)
 		
 		/* the character consists of two bytes 
 		 * X = "110 bits(10-6)" , Y =  "10 bits(5-0)" */
-		else if( (x>>5) ==6 )	
+		else if( (x&224) ==192  )	
 		{
 			y = utf8String[utf8Loc+1];
 			temp = ( ( (u2)(x & 31) ) << 6) + (y & 63);
