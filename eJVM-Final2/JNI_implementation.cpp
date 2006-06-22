@@ -1363,7 +1363,7 @@ JNINativeInterface functionTable = {
 
 	
 };
-const JNINativeInterface * env = &functionTable;
+const JNINativeInterface * JNI_env = &functionTable;
 
 
 
@@ -1373,7 +1373,7 @@ const JNINativeInterface * env = &functionTable;
  * @brief This function tests the functionality of the jni functions
  */
  void testJNI(){
- 	cout<<"GetVersion():" << env->GetVersion(&env)<< endl;
+ 	cout<<"GetVersion():" << JNI_env->GetVersion(&JNI_env)<< endl;
  }
  
  

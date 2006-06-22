@@ -22,7 +22,7 @@ public:
         Method * getMethod(){return method;}
         u4 getTopOpStack(){return operandStack[top];}
         u4 getAtIndexInOpStack(u4 index)const;
-        
+        u4* getOperandStack(){return operandStack;} //added for the jni to get the arguments of the native method....
         unsigned char* PC;
 private:
         u4 * localVariables;

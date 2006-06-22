@@ -48,6 +48,7 @@ public:
 	/* returns the class that declares the field */
 	ClassData * getOwnerClassData(void);
 	ConstantPool * getConstantPool(){return constantPool;}
+	u2 getAccesFlags(){return accessFlags;}	
 	
 };
 

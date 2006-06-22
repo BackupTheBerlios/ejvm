@@ -1,5 +1,5 @@
 #include "ExecutionEng.h"
-
+#include "JNIManager.h"
 using std::cout;
 using std::endl;
 //-------------------------------------------------------------------------------------------
@@ -974,30 +974,40 @@ void ExecutionEng::interpret(Thread * thread)
 					//by the index in the instruction operand 
 					Method * m = constantPool->getMethodData((indexbyte1 << 8) | indexbyte2);
 					cout<<"INVOKESTATIC: "<<m->getName()<<"\t"<<m->getDesc()<<endl<<endl;
-					//create a new frame for the invoked method and put the resolved method in it
-					//and put false to indicate that this frame is not in the top of java invocation
-					Frame * newFrame = new Frame(false,m);
-					if(newFrame == NULL)
-					{
-						cout<<"ExecutionEng: interpret:INVOKESTATIC:no sufficient memory "<<endl;
-						exit(1);
+					//-------------------check if native
+					JNIManager *jniMngr = JNIManager::getInstance();
+					if(m->getAccesFlags() & ACC_NATIVE){
+						jniMngr->callNativeMethod(m,currentFrame->getOperandStack(),2);
+						pc+=3;
 					}
-					//put the arg in the operand stack in the current frame
-					//in the local variables of the new frame, taken care with the order ====> very important
-					putArgInLocalVariables(currentFrame,newFrame,NULL);
+					else{
 					
-					//adjust the execution of the new frame
-					//stroe the pc, pc point to the instruction that follow the invoke instruction
-					currentFrame->PC=pc+3;
-					//make the new frame is the current frame
-					currentFrame = newFrame;
-					method = currentFrame->getMethod();
-					byteCode = method->getByteCode();
-					constantPool = method->getConstantPool();
-					code = byteCode->getCode();
-					pc = code;
-					//push the new frame in the stack	
-					mainThread->getStack()->push(currentFrame);
+					
+						//create a new frame for the invoked method and put the resolved method in it
+						//and put false to indicate that this frame is not in the top of java invocation
+						Frame * newFrame = new Frame(false,m);
+						if(newFrame == NULL)
+						{
+							cout<<"ExecutionEng: interpret:INVOKESTATIC:no sufficient memory "<<endl;
+							exit(1);
+						}
+						//put the arg in the operand stack in the current frame
+						//in the local variables of the new frame, taken care with the order ====> very important
+						putArgInLocalVariables(currentFrame,newFrame,NULL);
+						
+						//adjust the execution of the new frame
+						//stroe the pc, pc point to the instruction that follow the invoke instruction
+						currentFrame->PC=pc+3;
+						//make the new frame is the current frame
+						currentFrame = newFrame;
+						method = currentFrame->getMethod();
+						byteCode = method->getByteCode();
+						constantPool = method->getConstantPool();
+						code = byteCode->getCode();
+						pc = code;
+						//push the new frame in the stack	
+						mainThread->getStack()->push(currentFrame);
+					}
 				}
 				break;
 			case NEW:

@@ -38,6 +38,7 @@ private:
 	/* used in "canCastedTo" method */
 	bool isImplement(ClassData * theInterface);
 
+
 public:
 ConstantPool * constantPool;
 	ClassData(const char *name,const byte []);
@@ -124,8 +125,10 @@ ConstantPool * constantPool;
 	 * This method applies the alogrithm described in the specs sec 5.4.3.2 (Field resolution) 
 	 * to find the field block identified by name and desc
 	 */
+
 	Field * lookupField(const char *name,const  char*desc);
-	
+
+	u2 getAccesFlags(){return accessFlags;}	
 	void prepare(void);
 	char * getFQName(void);
 	u2 getObjectSize(void);

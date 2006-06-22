@@ -1,16 +1,21 @@
 #ifndef JNIMANAGER_H_
 #define JNIMANAGER_H_
 #include "jni.h"
+#include "typeDefs.h"
+#include "ffi.h"
+
 class Object;
+class Method;
+
+
+
 
 class JNIManager
 {
 public:
 
-	static JNIManager * getInstance(){
-		//this method should be implemented, for now it will return NULL;
-		return NULL;
-	}
+	static JNIManager * getInstance();
+
 	
 	/**This method adds the given obj to the data structure saving the local 
 	 * objects referenced by a native function.
@@ -30,9 +35,26 @@ public:
     }
 	
 	
+	/**
+	 * This method is called by the interpreter to execute a native method given the method data in arg method and the arguments in the 
+	 * array args, this array is in the same format of the local variables before the calling of a java methods...
+	 */
+	void callNativeMethod(Method * method,u4 args[],int argsCount);
+	void loadLib(const char * libName);
+	
+	
+	
 	virtual ~JNIManager();
 private:
+	static const int MAX_LIBS = 10;
+	void *loadedLibs[MAX_LIBS] ;
+	int libCount ;
+	static JNIManager * instance;
 	JNIManager(); 
+	const char * mangleMethodName(char* name,char * className);
+	void * searchInLoadedLibs(const char* name);
+	void  generateFFI_CIF(Method * method,ffi_cif * cif,int argsCount);
+	void getValues(Method * method, u4 args[],void ** values,void * retValue,int argsCount); //put the arguments from args to values...
 	
 	
 };
