@@ -2,6 +2,8 @@
 #include "ClassData.h"
 #include "Heap.h"
 #include "Loader.h"
+#include "Object.h"
+#include "stringLib.h"
 #include <stdio.h>
 
 ConstantPool::ConstantPool(const byte inputFile [],int CPCount,
@@ -387,6 +389,29 @@ printf("check if this is a member method of an class or an interface\n");
 	return (Method*)pointerTable[index];	
 }
 
+
+Object * ConstantPool:: getStringObject(u2 ind)
+{
+	
+	if( entryTable [ind][0] != (byte)8)
+	//exception();
+	;	
+	/* if the entry is resolved, then return the pointer directly*/	
+	if( pointerTable[ind] != NULL )
+		return (Object *)pointerTable[ind];
+	/* here, the entry is not resolved */
+	u2 utfIndex = ( ((u2)entryTable[ind][1] )<<8 ) + entryTable[ind][2];
+	
+	u2 utfLength = ( ((u2)entryTable[utfIndex][1] )<<8 ) + entryTable[utfIndex][2];
+	byte * str = new byte [utfLength+1];
+	
+	for(u2 i=0;i<utfLength;i++)
+		str[i] = entryTable[utfIndex][i+3];
+	str[utfLength] =(byte) 0;	
+	
+	return arrayOfUnicodeCharToString(utf8ToArrayOfUnicodeChar(str));
+
+}
 
 char * ConstantPool:: getNameAndType(u2 nameTypeIndex,int option)
 {

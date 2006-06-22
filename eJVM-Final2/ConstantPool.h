@@ -6,6 +6,7 @@
 class ClassData;
 class Field;
 class Method;
+class Object;
 
 class ConstantPool
 {
@@ -110,6 +111,8 @@ public:
 	 * entry #  classIndex. Usaully this class
 	 * is the class that owns this constantPool */
 	char * getClassName(u2 classIndex);
+	
+	Object * getStringObject(u2 index);
 };
 
 #endif /*CONSTANTPOOL_H_*/
