@@ -150,7 +150,7 @@ if(name == NULL)
 }
 		strcpy(name,arrayName);
 printf("put the class Object's Fully Qualified name in an char * obj\n");
-		char * obj ="java/lang/Object ";
+		char * obj ="java/lang/Object";
 		pointerTable[1] = myClass;
 		pointerTable[3] = name;
 		pointerTable[4] = obj;
@@ -161,9 +161,9 @@ printf("ask heap to create CPTableEntry number 1 in the constructor of constant 
 		entryTable[1][2]=(u1)3;
 printf("ask heap to create CPTableEntry number 2 in the constructor of constant pool of arrays\n");		
 		entryTable[2] = Heap:: createCPTableEntry(3);
-		entryTable[1][0]=(u1)7;
-		entryTable[1][1]=(u1)0;
-		entryTable[1][2]=(u1)4;
+		entryTable[2][0]=(u1)7;
+		entryTable[2][1]=(u1)0;
+		entryTable[2][2]=(u1)4;
 printf("ask heap to create CPTableEntry number 3 in the constructor of constant pool of arrays\n");
 		entryTable[3] = Heap:: createCPTableEntry(1);
 		entryTable[3][0] = 1;
@@ -541,7 +541,6 @@ char * ConstantPool:: getClassName(u2 classIndex)
 printf("inside ConstantPool-- getClassName\n");
 	/* we will not check here if the
 	 * entry is of type "CONSTAVT_CLASS"*/
-	u2 utf8Index = ( ((u2)entryTable[classIndex][1])<<8) +
-	entryTable[classIndex][2];
+	u2 utf8Index = ( ((u2)entryTable[classIndex][1])<<8) +	entryTable[classIndex][2];
 	return this->getString(utf8Index);
 }
