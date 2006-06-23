@@ -503,6 +503,19 @@ void ExecutionEng::interpret(Thread * thread)
 				}
 				pc++;
 				break;
+			case AALOAD:
+				{
+					int index[1];
+					index[0]=currentFrame->pop();
+					Object * arrayref=(Object *)currentFrame->pop();
+					u4 value;
+					u4 temp;
+					arrayref->getElement(index,value,temp);
+					currentFrame->push(value);
+					cout<<"AALOAD: theIndex="<<index[0]<<" theValue="<<(Object *)value<<endl;
+				}
+				pc++;
+				break;
 			case ISTORE:
 				{
 					u1 index = *(pc+1);
@@ -1175,10 +1188,60 @@ void ExecutionEng::interpret(Thread * thread)
 					Object * arrayref= new Object(1,count,(int)atype,arrayCData,NULL);
 					//push the arrayref in the operand stack
 					currentFrame->push((u4)arrayref);
-					cout<<"NEWARRAY: Array of"<<int(atype)<<" theLengthOfTheArray="<<arrayref->getArrayLength()<<endl;
+					cout<<"NEWARRAY: Array of:"<<int(atype)<<" theLengthOfTheArray="<<arrayref->getArrayLength()<<endl;
 				}
 				pc+=2;
 				break; 
+			case MULTIANEWARRAY:
+				{
+					u1 indexbyte1 = *(pc+1);
+					u1 indexbyte2 = *(pc+2);
+					u1 dimensions=  *(pc+3);
+					int *count = new int[dimensions];
+					for(int i=dimensions-1;i>=0;i--)
+						count[i]=currentFrame->pop();
+						
+					ClassData * arrayCData = constantPool->getClassData((indexbyte1 << 8) | indexbyte2);
+					//determine the type of the array
+					char * desc = arrayCData->getFQName();
+					//char * desc = "[[I";
+					ClassData * elementCData=NULL;
+					u1 atype=0;
+					//advance the pointer to point to the type of the array
+					for(desc++; *desc == '['; desc++);
+					
+					if(*desc == 'L')                         
+					{
+						char className[80];
+					 	desc++; //advance the pointer to point to the first char of the class name
+					 	int i=0;
+               			while(*desc != ';')
+               			{
+               				className[i++]=*desc;
+               				desc++;
+               				//i++;
+               			}  
+               			className[i]='\0';            
+               			Loader * loader= Loader::getInstance();
+               			elementCData=loader->getClassData(className);
+					}
+           			else
+           			{
+           				atype=getAtype(*desc);
+           			}   
+           			                              
+               		Object * arrayref= new Object(dimensions,count,(int)atype,arrayCData,elementCData);
+						
+					currentFrame->push((u4)arrayref);
+					cout<<"MULTIANEWARRAY: the dimensions"<<endl;
+					for(int i=0;i<dimensions;i++)
+					{
+						cout<<"["<<i<<"]="<<count[i]<<endl;
+					}
+					delete [] count;
+				}
+				pc+=4;
+				break;
 			default:      
 				cout<<"Fatal Error : Unrecognised opcode"<<endl;
 				cout<<"the opcode"<<(unsigned int)*pc<<" doesnot exist"<<endl;
@@ -1387,6 +1450,42 @@ char ExecutionEng::getType(u1 atype)
 	 }
 	 return c;
 		 	
+}
+//-------------------------------------------------------------------------------
+u1 ExecutionEng::getAtype(char c)
+{
+	u1 atype;
+	 switch(c)
+	 {
+	 	case 'Z':
+	 		atype=T_BOOLEAN;
+	 		break;
+		case 'C': 	
+			atype=T_CHAR;
+	 		break;
+		case 'F': 	
+			atype=T_FLOAT;
+	 		break;
+		case 'D': 	
+			atype=T_DOUBLE;
+	 		break;
+		case 'B':
+			atype=T_BYTE;
+	 		break;
+		case 'S': 	
+			atype=T_SHORT;
+	 		break;
+		case 'I':	
+			atype=T_INT;
+	 		break;	
+		case 'J':
+			atype=T_LONG;
+	 		break;
+		default:
+			cout<<"Fatal Error : Unrecognised type"<<endl;
+			exit(1);
+	 }
+	 return atype;
 }
 
 

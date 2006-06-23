@@ -133,7 +133,7 @@
 #define NEW						187
 #define NEWARRAY					188
 
-
+#define MULTIANEWARRAY				197 
 
 
 

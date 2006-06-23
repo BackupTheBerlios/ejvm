@@ -90,6 +90,7 @@ private:
 	void calNumOfArg(char * p,unsigned int & argCount,unsigned int & opStackArgCount);
 	unsigned int getRefrenceIndex(char * p);
 	char getType(u1 atype);
+	u1 getAtype(char c);
 };
 
 #endif /*EXECUTIONENG_H_*/

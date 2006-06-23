@@ -173,10 +173,11 @@ printf("ask the heap to create the byte array that contains the array's elements
 		data = Heap:: createByteArray(length*entrySize);
 		Object * arr;
 		int arrInt;
-		for(int i = 0; i<length ;i+=entrySize)
+		lengths++;
+		for(int i = 0; i<length*entrySize ;i+=entrySize)
 		{
 printf("initialize the array's entry number %d  to an array of dim = %d\n",i,dims-1);			
-			arr = Heap:: createArrayObject(dims-1,++lengths,type,myClass,classType);
+			arr = Heap:: createArrayObject(dims-1,lengths,type,myClass,classType);
 			arrInt = (int)arr;
 			data[i]   = (byte)arrInt;
 			data[i+1] = (byte)(arrInt>>8);
@@ -209,7 +210,7 @@ printf("ask the heap to create the byte array that contains the array's elements
 		data = Heap:: createByteArray(length*entrySize);
 		Object * arr;
 		int arrInt;
-		for(int i = 0; i<length ;i+=entrySize)
+		for(int i = 0; i<length*entrySize ;i+=entrySize)
 		{
 printf("initialize the array's entry number %d  to an array of dim = %d\n",i,dims-1);			
 			arr = Heap:: createArrayObject(dims-1,++lengths,type,myClass,classType);
@@ -231,8 +232,8 @@ void Object:: putElement(int index [], u4 word1, u4 word2)
 printf("inside Object:: putElement for arrays' elements\n");
 	int offset = index[0]*entrySize;
 
-	if(numOfDims == 1)
-	{
+//	if(numOfDims == 1)
+//	{
 		switch(entrySize)
 		{
 			case 1:
@@ -271,9 +272,9 @@ printf("inside Object:: putElement for arrays' elements\n");
 			}	
 		
 		}
-	}
+//	}
 	
-	else   //here entrySize = 4
+	/*else   //here entrySize = 4
 	{
 		Object * obj;
 		u4 temp = data[offset+2];
@@ -282,7 +283,7 @@ printf("inside Object:: putElement for arrays' elements\n");
 		
 		obj->putElement(++index,word1,word2);
 
-	}
+	}*/
 }
 
 void Object:: getElement(int index [], u4 & word1, u4 & word2)
@@ -291,8 +292,8 @@ printf("inside Object:: getElement for arrays' elements\n");
 	int offset = index[0]*entrySize;
 
 	
-	if(numOfDims == 1)
-	{
+	//if(numOfDims == 1)
+	//{
 		switch(entrySize)
 		{
 			case 1:
@@ -330,9 +331,9 @@ printf("inside Object:: getElement for arrays' elements\n");
 				break;
 			}	
 		}
-	}
+	//}
 	
-	else  //here entrySize = 4
+	/*else  //here entrySize = 4
 	{
 		Object * obj;
 		u4 temp = data[offset+2];
@@ -340,7 +341,7 @@ printf("inside Object:: getElement for arrays' elements\n");
 		( ((u2)data[offset+1])<<8) + data[offset];
 		
 		obj->getElement(++index,word1,word2);
-	}	
+	}	*/
 }
 
 int Object::getArrayLength(void)
