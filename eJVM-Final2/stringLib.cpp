@@ -92,4 +92,24 @@ Object* arrayOfUnicodeCharToString (Object* arrayObject)
 	return stringObject;
 }
 //------------------------------------------------------
+char*   stringObjectToArrayOfCChars(Object* stringObject)
+{
+	u4 word1,word2;
+	Field* arrayOfChars = (stringObject->getClassData())->lookupField("value","[C");
+	stringObject->getField(arrayOfChars,word1,word2);
+	Object* arrayObject = (Object*)word1;
+	int length = arrayObject->getArrayLength();
+	char * returnString = new char [length+1];
+	int index[1];//to get the array elements
+	for (int i =0; i<=length;i++)
+	{
+		index[0] = i;
+		arrayObject->getElement(index,word1,word2);
+		returnString[i] = (char)word1;
+	}
+	returnString[length] = '\0';
+	return returnString;
+}
+//------------------------------------------------------
+
 
