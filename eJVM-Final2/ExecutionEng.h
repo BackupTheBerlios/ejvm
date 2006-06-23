@@ -10,6 +10,7 @@
 #include "ConstantPool.h"
 #include "Heap.h"
 #include "jni.h"
+#include "Loader.h"
 #include <cmath>
 class ExecutionEng
 {

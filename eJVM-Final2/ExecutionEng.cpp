@@ -1,6 +1,6 @@
 #include "ExecutionEng.h"
 #include "JNIManager.h"
-using std::cout;
+using std::cout;  
 using std::endl;
 //-------------------------------------------------------------------------------------------
 ExecutionEng::ExecutionEng()
@@ -274,7 +274,21 @@ void ExecutionEng::interpret(Thread * thread)
 				currentFrame->push((*pc -ICONST_0));
 				cout<<"ICONST_"<<(*pc -ICONST_0)<<" : TopOfTheOperandStack= "<<currentFrame->getTopOpStack()<<endl;
 				pc++;	
-				break;          
+				break;         
+			case LCONST_0:
+			case LCONST_1:
+				{
+					u4 Long[2] ; 
+					Long[0]=0;
+					Long[1]=0;
+					*(long long *)Long=(*pc -LCONST_0);
+					//operandStack: ...=> ...,word1,word2
+					currentFrame->push(Long[0]);
+					currentFrame->push(Long[1]);
+					cout<<"LCONST_"<<(*pc -LCONST_0)<<" : TopOfTheOperandStack= "<<*(long long *)Long<<endl;
+				}
+				pc++;
+				break;
 			case FCONST_0:
 			case FCONST_1:      
 			case FCONST_2:
@@ -285,6 +299,18 @@ void ExecutionEng::interpret(Thread * thread)
 					*(float * )ptr = fnum;
 					currentFrame->push(*ptr);
 					cout<<"FCONST_"<<(*pc -FCONST_0)<<" : TopOfTheOperandStack= "<<*(float *)ptr<<endl;
+				}
+				pc++;
+				break;
+			case DCONST_0:
+			case DCONST_1:
+				{
+					u4 Double[2];
+					*(double *)Double =(double) (*pc -DCONST_0);
+					currentFrame->push(Double[0]);
+					currentFrame->push(Double[1]);
+					cout<<"DCONST_"<<(*pc -DCONST_0)<<" : TopOfTheOperandStack= ";
+					printf("%.1f\n",*(double *)Double);
 				}
 				pc++;
 				break;
@@ -335,7 +361,7 @@ void ExecutionEng::interpret(Thread * thread)
 					currentFrame->push(word2);
 					//operandStack: ...=> ...,word1,word2
 					cout<<"LDC2_W: value="<<*(long long *)longOrDouble<<endl;
-					
+					printf("%.1lf\n",computDouble(word1,word2));
 				}
 				pc+=3;
 				break;
@@ -385,7 +411,8 @@ void ExecutionEng::interpret(Thread * thread)
 					//operandStack: ...=> ...,word1
 					currentFrame->push(word2);
 					//operandStack: ..,word1,word2
-					cout<<"DLOAD: theIndex="<<(int)index<<"  theDoubleValueAtTopOfStack="<<computDouble(word1,word2)<<endl;
+					cout<<"DLOAD: theIndex="<<(int)index<<"  theDoubleValueAtTopOfStack=";
+					printf("%.1lf\n",computDouble(word1,word2));
 				}				
 				pc+=2;
 				break;
@@ -447,7 +474,8 @@ void ExecutionEng::interpret(Thread * thread)
 					u4 word2 = currentFrame->getAtIndex((*pc - DLOAD_0)+1);
 					currentFrame->push(word1);
 					currentFrame->push(word2);
-					cout<<"LLOAD_"<<(*pc - DLOAD_0)<<": theDoubleValue="<<computDouble(word1,word2)<<endl;
+					cout<<"DLOAD_"<<(*pc - DLOAD_0)<<": theDoubleValue=";
+					printf("%.1lf\n",computDouble(word1,word2));
 				}
 				pc++;
 				break;
@@ -461,7 +489,16 @@ void ExecutionEng::interpret(Thread * thread)
 					cout<<"ALOAD_"<<(*pc - ALOAD_0)<<": value at index"<<(*pc - ALOAD_0)<<"="<<(Object *)temp<<"  value at the top of the stack="<<(Object *)currentFrame->getTopOpStack()<<endl;
 				}
 				pc++;
-				break;     
+				break;    
+			case ISTORE:
+				{
+					u1 index = *(pc+1);
+					u4 word = currentFrame->pop();
+					currentFrame->setAtIndex(index,word);
+					cout<<"ISTORE: theIndex="<<(int)index<<" theValue="<<word<<endl;
+				}
+				pc+=2;
+				break; 
 			case LSTORE:
 				{
 					u1 index = *(pc+1);
@@ -478,10 +515,45 @@ void ExecutionEng::interpret(Thread * thread)
 					//localVariable[index+1]=word2
 					currentFrame->setAtIndex(index,word1);
 					currentFrame->setAtIndex(index+1,word2);
-					cout<<"LSTORE: theIndex="<<(int)index<<" theLongValue-"<<*(long long *)longValue<<endl;
+					cout<<"LSTORE: theIndex="<<(int)index<<" theLongValue="<<*(long long *)longValue<<endl;
 				}
 				pc+=2;
-				break;            
+				break;     
+			case FSTORE:
+				{
+					u1 index = *(pc+1);
+					u4 word = currentFrame->pop();
+					currentFrame->setAtIndex(index,word);
+					cout<<"FSTORE: theIndex="<<(int)index<<" theValue="<<computFloat(word)<<endl;
+				}
+				pc+=2;
+				break;      
+			case DSTORE:
+				{
+					u1 index = *(pc+1);
+					//operandStack: ...,word1,word2=>...
+					u4 word2= currentFrame->pop();
+					//operandStack: ...,word1
+					u4 word1= currentFrame->pop();
+					//operandStack: ...
+					//localVariable[index]=word1
+					//localVariable[index+1]=word2
+					currentFrame->setAtIndex(index,word1);
+					currentFrame->setAtIndex(index+1,word2);
+					cout<<"DSTORE: theIndex="<<(int)index<<" theDoubleValue=";
+					printf("%.1lf\n",computDouble(word1,word2));
+				}
+				pc+=2;
+				break;
+			case ASTORE:
+				{
+					u1 index = *(pc+1);
+					u4 word = currentFrame->pop();
+					currentFrame->setAtIndex(index,word);
+					cout<<"FSTORE: theIndex="<<(int)index<<" theObject="<<(Object *)word<<endl;
+				}
+				pc+=2;
+				break; 
 			case ISTORE_0:  
 			case ISTORE_1:
 			case ISTORE_2: 
@@ -525,6 +597,23 @@ void ExecutionEng::interpret(Thread * thread)
 					currentFrame->setAtIndex((*pc - FSTORE_0 ),u4num);
 					cout<<"FSTORE_"<<(*pc - FSTORE_0 )<<": "<<"value Poped="<<*(float*)ptr<<endl;
 					cout<<computFloat(u4num)<<endl;
+				}
+				pc++;
+				break;
+			case DSTORE_0:
+			case DSTORE_1:
+			case DSTORE_2:
+			case DSTORE_3:
+				{
+					//operandStack: ...,word1,word2=>...
+					u4 word2= currentFrame->pop();
+					//operandStack: ...,word1
+					u4 word1= currentFrame->pop();
+					//operandStack: ...
+					currentFrame->setAtIndex((*pc - DSTORE_0 ),word1);
+					currentFrame->setAtIndex(((*pc - DSTORE_0)+1),word2);
+					cout<<"DSTORE_"<<(*pc - DSTORE_0 )<<": theDoubleValue=";
+					printf("%.1lf\n",computDouble(word1,word2));
 				}
 				pc++;
 				break;
@@ -605,6 +694,25 @@ void ExecutionEng::interpret(Thread * thread)
 					*(float *)ptr= fresult;
 					currentFrame->push(*ptr);
 					cout<<"FADD: Value1="<<value1<<" Value2="<<value2<<" Result="<<fresult<<endl;
+				}
+				pc++;
+				break;
+			case DADD:
+				{
+					u4 word2=currentFrame->pop();
+					u4 word1=currentFrame->pop();
+					double value2=computDouble(word1,word2);
+					word2=currentFrame->pop();
+					word1=currentFrame->pop();
+					double value1=computDouble(word1,word2);
+					u4 result[2];
+					*(double *)result = value1 + value2;
+					word1=result[0];
+					word2=result[1];
+					currentFrame->push(word1);
+					currentFrame->push(word2);
+//					cout<<"DADD: Value1="<<(double)value1<<" Value2="<<(double)value2<<" Result="<<*(double *)result<<endl;
+					printf("DADD: Value1=%.1lf Value2=%.1lf Result=%.1lf\n",value1,value2,*(double *)result);
 				}
 				pc++;
 				break;
@@ -1022,6 +1130,28 @@ void ExecutionEng::interpret(Thread * thread)
 				}
 				pc+=3;
 				break;
+			case NEWARRAY:
+				{
+					int count[1];
+					//get the count :number of elements of array to create 
+					count[0]= currentFrame->pop();
+					u1 atype= *(pc+1);
+					//form the descriptor of the array
+					char desc[3];
+					desc[0]='[';
+					desc[1]=(char) atype;
+					desc[2]='\0';
+					Loader * loader= Loader::getInstance();
+					//get the Class instance of the array
+					ClassData * arrayCData=loader->getClassData(desc);
+					//create the array object
+					Object * arrayref= new Object(1,count,(int)atype,arrayCData,NULL);
+					//push the arrayref in the operand stack
+					currentFrame->push((u4)arrayref);
+					cout<<"NEWARRAY: Array of"<<int(atype)<<" theLengthOfTheArray="<<arrayref->getArrayLength()<<endl;
+				}
+				pc+=2;
+				break; 
 			default:      
 				cout<<"Fatal Error : Unrecognised opcode"<<endl;
 				cout<<"the opcode"<<(unsigned int)*pc<<" doesnot exist"<<endl;

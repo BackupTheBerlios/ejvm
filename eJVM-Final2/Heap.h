@@ -42,7 +42,7 @@ class Heap
 		ClassData * addToHash(ClassData * cptr);
 		int HashSize();
 		ClassData * createClassData (const char*name ,const byte classFile[]);
-		
+		ClassData * createArrayClassData (const char*name);
 		
 		Object* createObject(ClassData* classData);
 		

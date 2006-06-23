@@ -88,6 +88,18 @@ ClassData * Heap::createClassData(const char* name, const byte * classFile)//***
 	return p;
 	
 }
+//-----------------------------------------------------------------------------
+ClassData * Heap::createArrayClassData (const char*name)
+{
+	ClassData * p = new ClassData(name);
+	//return new ClassData(classFile);
+	if(p == NULL)
+	{
+		cout<<"Heap:createArrayClassData: NO Sufficient Memory "<<endl;
+		exit(1);
+	}
+	return p;
+}
 //----------------------------------------------------------------------
 Heap::Heap():
 	objectCount(0)

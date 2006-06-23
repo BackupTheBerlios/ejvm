@@ -108,15 +108,22 @@ ClassData * Loader::getClassData(const char * className)
 	 
 	 if(cdata == NULL)//Class not loaded
 	 {
-	 	//prepare the path of the class file
-	 	strcat(path,className);
-	 	strcat(path,".class");
-	 	//put the class file in array of bytes
-		classFile=this->makeArrayInCPP(path);//*********************************************************************************DONT forget to uncomment
-	 	//create classdata on the heap
-	 	cdata = heap->createClassData(className,classFile); //*************************************************dont forget to modify it to take array of bytes or u1
-	 	//after checking that there are no errors during parsing, insert in the hash
+	 	if(*className == '[')
+	 	{
+	 		cdata = heap->createArrayClassData(className);
+	 	}
+	 	else
+	 	{
 	 	
+	 		//prepare the path of the class file
+	 		strcat(path,className);
+	 		strcat(path,".class");
+	 		//put the class file in array of bytes
+			classFile=this->makeArrayInCPP(path);//*********************************************************************************DONT forget to uncomment
+	 		//create classdata on the heap
+	 		cdata = heap->createClassData(className,classFile); //*************************************************dont forget to modify it to take array of bytes or u1
+	 		//after checking that there are no errors during parsing, insert in the hash
+	 	}
 	 	heap->addToHash(cdata);
 	 }
 	

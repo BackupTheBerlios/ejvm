@@ -18,6 +18,14 @@ typedef unsigned int u4;
 #define ACC_ABSTRACT   0x0400  // Declared abstract; no implementation is provided. 
 #define ACC_STRICT   0x0800  //Declared strictfp; floating-point mode is FP-strict 
 
-
+//----Array Types
+#define T_BOOLEAN	4
+#define T_CHAR 	5
+#define T_FLOAT 	6
+#define T_DOUBLE 	7
+#define T_BYTE 	8
+#define T_SHORT 	9
+#define T_INT		10
+#define T_LONG 	11
 
 #endif //TYPEDEFS_H_

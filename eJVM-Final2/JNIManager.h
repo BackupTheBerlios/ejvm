@@ -2,7 +2,7 @@
 #define JNIMANAGER_H_
 #include "jni.h"
 #include "typeDefs.h"
-#include "ffi.h"
+#include <ffi.h>
 
 class Object;
 class Method;

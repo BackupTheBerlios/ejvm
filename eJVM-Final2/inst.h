@@ -100,6 +100,7 @@
 #define IADD                        96
 
 #define FADD						 98
+#define DADD						 99
 
 #define ISUB						100
 
@@ -130,7 +131,7 @@
 
 
 #define NEW						187
-
+#define NEWARRAY					188
 
 
 
