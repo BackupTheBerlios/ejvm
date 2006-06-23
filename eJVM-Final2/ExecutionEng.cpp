@@ -825,36 +825,42 @@ void ExecutionEng::interpret(Thread * thread)
 				}
 				pc++;
 				break;
-			case IF_ICMPNE:
+			case IINC:
 				{
-					cout<<"IF_ICMPNE: ";
-					u4 value2 = currentFrame->pop();
+					u1 index= *(pc+1);
+					signed char Const= (signed char)*(pc+2);
+					int value= currentFrame->getAtIndex((int)index);
+					cout<<"IINC: index="<<(int)index<<" valueBefore="<<value<<" const="<<(int)Const;
+					value+=(int)Const;
+					currentFrame->setAtIndex((int)index,value);
+					cout<<" newValeue="<<value<<endl;
+				}
+				pc+=3;
+				break;
+			case IFEQ:
+			case IFNE:
+			case IFLT:
+			case IFGE:
+			case IFGT:
+			case IFLE:
+			case IF_ICMPEQ:	
+			case IF_ICMPNE:
+			case IF_ICMPLT:
+			case IF_ICMPGE:
+			case IF_ICMPGT:
+			case IF_ICMPLE:
+				{
+					u4 value2;
+					if(IFEQ<=*pc && *pc<=IFLE)
+						value2=0;
+					else
+						value2 = currentFrame->pop();
 					u4 value1 = currentFrame->pop();
-					if((int)value1 != (int)value2)
+					if(compare((int) value1,(int) value2,*pc))
 					{//succeed 
 						u1 branchbyte1 = *(pc+1);
 						u1 branchbyte2 = *(pc+2);
-						u2 offset = (branchbyte1 << 8) | branchbyte2;
-						pc =pc+offset;
-						cout<<"offset="<<offset<<endl;
-					}
-					else
-					{ 
-						cout<<"execution proceed noramlly"<<endl;
-						pc+=3;
-					}
-				}
-				break;
-			case IF_ICMPGE:
-				{
-					cout<<"IF_ICMPGE: ";
-					u4 value2 = currentFrame->pop();
-					u4 value1 = currentFrame->pop();
-					if((int)value1 >= (int)value2)
-					{
-						u1 branchbyte1 = *(pc+1);
-						u1 branchbyte2 = *(pc+2);
-						u2 offset = (branchbyte1 << 8) | branchbyte2;
+						short int offset =(short int ) (branchbyte1 << 8) | branchbyte2;
 						pc =pc+offset;
 						cout<<"offset="<<offset<<endl;
 					}
@@ -1487,8 +1493,59 @@ u1 ExecutionEng::getAtype(char c)
 	 }
 	 return atype;
 }
-
-
+//---------------------------------------------------------------------------
+bool ExecutionEng::compare(int value1,int value2,u1 opCode)
+{
+	switch(opCode-IFEQ )
+	{
+		case 0:
+			cout<<"IFEQ: ";
+		case 6:	
+			cout<<"IF_ICMPEQ: ";
+			if(value1 == value2)
+				return true;
+			break;
+		case 1:
+			cout<<"IFNE: ";
+		case 7:	
+			cout<<"IF_ICMPNE: ";
+			if(value1 != value2)
+				return true;
+			break;
+		case 2:
+			cout<<"IFLT: ";
+		case 8:	
+			cout<<"IF_ICMPLT: ";
+			if(value1 < value2)
+				return true;
+			break;
+		case 3:
+			cout<<"IFGE: ";
+		case 9:	
+			cout<<"IF_ICMPGE: ";
+			if(value1>=value2)
+				return true;
+			break;
+		case 4:
+			cout<<"IFGT: ";
+		case 10:	
+			cout<<"IF_ICMPGT: ";
+			if(value1 > value2)
+				return true;
+			break;
+		case 5:	
+			cout<<"IFLE: ";
+		case 11:
+			cout<<"IIF_ICMPLE: ";
+			if(value1<=value2)
+				return true;	
+			break;
+		default:
+			cout<<"Fatal Error : Unrecognised opcode"<<endl;
+			exit(1);
+	}
+	return false;
+}
 
 
 

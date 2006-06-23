@@ -91,6 +91,7 @@ private:
 	unsigned int getRefrenceIndex(char * p);
 	char getType(u1 atype);
 	u1 getAtype(char c);
+	bool compare(int value1,int value2,u1 opCode);
 };
 
 #endif /*EXECUTIONENG_H_*/
