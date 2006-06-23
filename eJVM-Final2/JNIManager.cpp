@@ -1,9 +1,11 @@
 #include "JNIManager.h"
 #include "Method.h"
 #include "ClassData.h"
+#include "ExecutionEng.h"
 #include <iostream>
 #include <string.h>
 #include <dlfcn.h>
+#include <stdlib.h>
 using std::cout;
 using std::endl;
 extern JNINativeInterface functionTable;
@@ -29,6 +31,14 @@ JNIManager::~JNIManager()
 }
 
 void JNIManager::callNativeMethod(Method *method, u4 args[],int argsCount){
+	//test args values...
+	cout <<endl<<endl<<ExecutionEng::computFloat(args[0])<<endl;
+	cout <<(jint)args[0]<<endl;
+	
+	cout <<endl<<endl<<ExecutionEng::computFloat(args[1])<<endl;
+	cout <<(jint)args[1]<<endl;
+	
+	
 	//first version of this funciton: I will assume 
 	//		1- The native method has no arguments (so no need to use the ffi functions for now....)
 	//		2- The native methods resides in one library called jniNatives
@@ -42,13 +52,15 @@ void JNIManager::callNativeMethod(Method *method, u4 args[],int argsCount){
 	//if using FFI we should do the following:
 			//Get the ffi structures required (ffi_cif and the array of values of the arguments (see the example in .../soruces/jni/testFFI.cpp
 			//Call the function using the ffi_Call function
-	void ** values = new void*[argsCount]; //to hold the values of the arguments
+	ffi_type ** argsTypes = new ffi_type *[argsCount+2]; //the 2 is for JNIEnv and jobject passed to the native method...		
+	ffi_type * retType;
+	void ** values = new void*[argsCount+2]; //to hold the values of the arguments
 	void * retValue;
-	ffi_cif cif;		
-	generateFFI_CIF(method,&cif,argsCount);
+	ffi_cif *cif= new ffi_cif;		
+	generateFFI_CIF(method,cif,argsCount,argsTypes,retType);
 	getValues(method,args,values,retValue,argsCount);
-	ffi_call(&cif,(anyFunction)nativeFunctionPtr,retValue,values);
-	cout << *((jint*)retValue);
+	ffi_call(cif,(anyFunction)nativeFunctionPtr,retValue,values);
+	cout << *((float*)retValue);
 	
 	//we should here pass the return value to the interpreter....
 	
@@ -58,10 +70,13 @@ void JNIManager::callNativeMethod(Method *method, u4 args[],int argsCount){
 //	((simpleNativeFunction)nativeFunctionPtr)(&JNI_env,NULL);
 	
 	
-	for(int i =0;i<argsCount;i++)
+	for(int i =0;i<argsCount+2;i++){
+		cout<<i<<endl;
 		delete values[i];
+	}
 	delete[] values	;
 	delete name;
+	delete cif;
 }
 
 
@@ -98,15 +113,15 @@ void JNIManager::loadLib(const char* libName){
 }
 
 
-void JNIManager::generateFFI_CIF(Method * method, ffi_cif * cif,int argsCount){
-	ffi_type *rType;
-	ffi_type ** argsTypes = new ffi_type *[argsCount+2]; //the 2 is for JNIEnv and jobject passed to the native method...
+void JNIManager::generateFFI_CIF(Method * method, ffi_cif * cif,int argsCount,ffi_type** argsTypes,ffi_type *&rType){
+	//ffi_type *rType;
+	//ffi_type ** argsTypes = new ffi_type *[argsCount+2]; //the 2 is for JNIEnv and jobject passed to the native method...
 	
 	char * p=method->getDesc();
 	
 	argsTypes[0] = &ffi_type_pointer;
 	argsTypes[1] = &ffi_type_pointer;
-	int i=1;
+	int i=2;
 	p++;     /* skip start ( */	
 	while(*p != ')')
 	{               
@@ -161,6 +176,7 @@ void JNIManager::generateFFI_CIF(Method * method, ffi_cif * cif,int argsCount){
 				break;		
 		}  
 	 }   
+	p++; //skip ')'
 	 	//getting the return type...
 	switch (*p){
 		case 'B':
@@ -195,24 +211,144 @@ void JNIManager::generateFFI_CIF(Method * method, ffi_cif * cif,int argsCount){
 				
 	}                                                                  
 	//getting the ffi_cif
-	 ffi_prep_cif(cif,FFI_DEFAULT_ABI,argsCount,rType,argsTypes);
- 
+	
+	 if(!(ffi_prep_cif(cif,FFI_DEFAULT_ABI,argsCount+2,rType,argsTypes)==FFI_OK))
+	 	cout <<"error in ffi_cif generation"<<endl;	
+ 	
 }
 
+//void JNIManager::getValues(Method* method,u4 args[],void ** values,void *&retValue,int argsCount){
+//	char * p=method->getDesc();
+//	
+//	
+//	p++;     /* skip start ( */	
+//	values[0] = new jobject;
+//	*((JNIEnv **)values[0]) = &JNI_env;
+//	values[1] = new jobject;
+//	*((jobject*)values[1]) = NULL;
+//	//p: iterates on the desc
+//	//i: iterates on the values
+//	//j: iterates on the args
+//	
+//	int i=2;  //number of values = argCount+2
+//	int j=0;
+//	while(*p != ')')
+//	{               
+//	//getting the arguments...    
+//		switch (*p){
+//			case 'B':
+//				values[i] = new jbyte;
+//				*((jbyte*)values[i]) = (jbyte)args[j];
+//				i++; p++;j++;
+//				break;
+//			case 'C':
+//				values[i] = new jchar;
+//				*((jchar*)values[i]) = (jchar)args[j];
+//				i++; p++;j++;
+//				break;
+//			case 'D':
+//				values[i] = new jdouble;
+//				*((jdouble*)values[i]) = ExecutionEng::computDouble(args[j],args[j+1]);
+//				i++; p++;j+=2;
+//				break;
+//			case 'F':
+//				values[i] = new jfloat;
+//				*((jfloat*)values[i]) =  ExecutionEng::computFloat(args[j]);;
+//				i++; p++;j++;
+//				break;;	
+//			case 'I':
+//				values[i] = new jint;
+//				*((jint*)values[i]) = (jint)args[j];
+//				i++; p++;j++;
+//				break;
+//			case 'J':
+//				values[i] = new jlong;
+//				*((jlong*)values[i]) = *((jlong*)(args+j));
+//				i++; p++;j+=2;
+//				break;	
+//			case 'L':
+//				values[i] = new jobject;
+//				*((jobject*)values[i]) = (jobject)args[j];
+//				i++;j++;
+//				while(*(p++) != ';');              
+//				break;
+//			case 'S':
+//				values[i] = new jshort;
+//				*((jshort*)values[i]) = (jshort)args[j];
+//				i++; p++;j++;
+//				break;
+//			case 'Z':
+//				values[i] = new jboolean;
+//				*((jboolean*)values[i]) = (jboolean)args[j];
+//				i++; p++;j++;
+//				break;
+//			case '[':
+//				values[i] = new jobject;
+//				*((jobject*)values[i]) = (jobject)args[j];
+//				i++;j++;
+//				while(*(p++)=='[');
+//				if(*p == 'L')
+//					while(*(p++) != ';');
+//				else
+//					p++;	              
+//				break;		
+//		}  
+//	 }   
+//	 
+//	 
+//	 p++; //skip ')'
+//	 //allocate the return value...
+//	 switch (*p){
+//			case 'B':
+//				retValue = new jbyte;
+//				break;
+//			case 'C':
+//				retValue = new jchar;
+//				break;
+//			case 'D':
+//				retValue = new jdouble;
+//				break;
+//			case 'F':
+//				retValue = new jfloat;
+//				break;;	
+//			case 'I':
+//				retValue = new jint;
+//				break;
+//			case 'J':
+//				retValue = new jlong;
+//				break;	
+//			case 'L':
+//				retValue = new jobject;
+//				break;
+//			case 'S':
+//				retValue = new jshort;
+//				break;
+//			case 'Z':
+//				retValue = new jboolean;
+//				break;
+//			case '[':
+//				retValue = new jobject;
+//				break;		
+//		}  
+//	 
+//	
+//}
 
 
-void JNIManager::getValues(Method* method,u4 args[],void ** values,void *retValue,int argsCount){
+void JNIManager::getValues(Method* method,u4 args[],void ** values,void *&retValue,int argsCount){
 	char * p=method->getDesc();
 	
 	
 	p++;     /* skip start ( */	
+	values[0] = new jobject;
 	*((JNIEnv **)values[0]) = &JNI_env;
-	
+	values[1] = new jobject;
+	*((jobject*)values[1]) = NULL;
 	//p: iterates on the desc
 	//i: iterates on the values
 	//j: iterates on the args
 	
-	int i=argsCount+1;  //number of values = argCount+2
+	int i=2;  //number of values = argCount+2
 	int j=0;
 	while(*p != ')')
 	{               
@@ -221,53 +357,53 @@ void JNIManager::getValues(Method* method,u4 args[],void ** values,void *retValu
 			case 'B':
 				values[i] = new jbyte;
 				*((jbyte*)values[i]) = (jbyte)args[j];
-				i--; p++;j++;
+				i++; p++;j++;
 				break;
 			case 'C':
 				values[i] = new jchar;
 				*((jchar*)values[i]) = (jchar)args[j];
-				i--; p++;j++;
+				i++; p++;j++;
 				break;
 			case 'D':
 				values[i] = new jdouble;
-				*((jdouble*)values[i]) = *((jdouble*)(args+j));
-				i--; p++;j+=2;
+				*((jdouble*)values[i]) = ExecutionEng::computDouble(args[j],args[j+1]);
+				i++; p++;j+=2;
 				break;
 			case 'F':
 				values[i] = new jfloat;
-				*((jfloat*)values[i]) = *((jfloat*)(args+j));
-				i--; p++;j++;
+				*((jfloat*)values[i]) =  ExecutionEng::computFloat(args[j]);;
+				i++; p++;j++;
 				break;;	
 			case 'I':
 				values[i] = new jint;
 				*((jint*)values[i]) = (jint)args[j];
-				i--; p++;j++;
+				i++; p++;j++;
 				break;
 			case 'J':
 				values[i] = new jlong;
 				*((jlong*)values[i]) = *((jlong*)(args+j));
-				i--; p++;j+=2;
+				i++; p++;j+=2;
 				break;	
 			case 'L':
 				values[i] = new jobject;
 				*((jobject*)values[i]) = (jobject)args[j];
-				i--;j++;
+				i++;j++;
 				while(*(p++) != ';');              
 				break;
 			case 'S':
 				values[i] = new jshort;
 				*((jshort*)values[i]) = (jshort)args[j];
-				i--; p++;j++;
+				i++; p++;j++;
 				break;
 			case 'Z':
 				values[i] = new jboolean;
 				*((jboolean*)values[i]) = (jboolean)args[j];
-				i--; p++;j++;
+				i++; p++;j++;
 				break;
 			case '[':
 				values[i] = new jobject;
 				*((jobject*)values[i]) = (jobject)args[j];
-				i--;j++;
+				i++;j++;
 				while(*(p++)=='[');
 				if(*p == 'L')
 					while(*(p++) != ';');
@@ -277,41 +413,42 @@ void JNIManager::getValues(Method* method,u4 args[],void ** values,void *retValu
 		}  
 	 }   
 	 
+	 
+	 p++; //skip ')'
 	 //allocate the return value...
 	 switch (*p){
 			case 'B':
-				values[i] = new jbyte;
+				retValue = new jbyte;
 				break;
 			case 'C':
-				values[i] = new jchar;
+				retValue = new jchar;
 				break;
 			case 'D':
-				values[i] = new jdouble;
+				retValue = new jdouble;
 				break;
 			case 'F':
-				values[i] = new jfloat;
+				retValue = new jfloat;
 				break;;	
 			case 'I':
-				values[i] = new jint;
+				retValue = new jint;
 				break;
 			case 'J':
-				values[i] = new jlong;
+				retValue = new jlong;
 				break;	
 			case 'L':
-				values[i] = new jobject;
+				retValue = new jobject;
 				break;
 			case 'S':
-				values[i] = new jshort;
+				retValue = new jshort;
 				break;
 			case 'Z':
-				values[i] = new jboolean;
+				retValue = new jboolean;
 				break;
 			case '[':
-				values[i] = new jobject;
+				retValue = new jobject;
 				break;		
 		}  
 	 
 	
 }
-
 

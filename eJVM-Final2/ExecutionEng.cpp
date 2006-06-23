@@ -1084,6 +1084,9 @@ void ExecutionEng::interpret(Thread * thread)
 					cout<<"INVOKESTATIC: "<<m->getName()<<"\t"<<m->getDesc()<<endl<<endl;
 					//-------------------check if native
 					JNIManager *jniMngr = JNIManager::getInstance();
+					//u4* jniArgs = currentFrame->getOperandStack();
+					//cout<< computFloat(jniArgs[0]);
+					//cout<< computFloat(jniArgs[1]);
 					if(m->getAccesFlags() & ACC_NATIVE){
 						jniMngr->callNativeMethod(m,currentFrame->getOperandStack(),2);
 						pc+=3;

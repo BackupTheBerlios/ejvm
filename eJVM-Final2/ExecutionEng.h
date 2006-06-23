@@ -87,8 +87,10 @@ private:
 	void putArgInLocalVariables(Frame * invokingMethod, Frame * invokedMethod,Object * ob);
 	void calNumOfArg(char * p,unsigned int & argCount,unsigned int & opStackArgCount);
 	unsigned int getRefrenceIndex(char * p);
-	float computFloat(u4 floatValue);
-	double computDouble(u4 word1,u4 word2);
+	
+	
+public:	static float computFloat(u4 floatValue);
+		static double computDouble(u4 word1,u4 word2);
 
 };
 

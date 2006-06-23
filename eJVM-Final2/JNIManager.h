@@ -53,8 +53,9 @@ private:
 	JNIManager(); 
 	const char * mangleMethodName(char* name,char * className);
 	void * searchInLoadedLibs(const char* name);
-	void  generateFFI_CIF(Method * method,ffi_cif * cif,int argsCount);
-	void getValues(Method * method, u4 args[],void ** values,void * retValue,int argsCount); //put the arguments from args to values...
+	void  generateFFI_CIF(Method * method, ffi_cif * cif,int argsCount,ffi_type** argsTypes,ffi_type *&rType);
+	void getValues(Method * method, u4 args[],void ** values,void *& retValue,int argsCount); //put the arguments from args to values...
+	
 	
 	
 };
