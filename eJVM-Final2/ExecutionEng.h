@@ -78,6 +78,8 @@ public:
 			}
 	*/
 	void interpret(Thread * thread);
+	static float computFloat(u4 floatValue);
+	static double computDouble(u4 word1,u4 word2);
 	
 	
 	~ExecutionEng();
@@ -87,11 +89,7 @@ private:
 	void putArgInLocalVariables(Frame * invokingMethod, Frame * invokedMethod,Object * ob);
 	void calNumOfArg(char * p,unsigned int & argCount,unsigned int & opStackArgCount);
 	unsigned int getRefrenceIndex(char * p);
-	
-	
-public:	static float computFloat(u4 floatValue);
-		static double computDouble(u4 word1,u4 word2);
-
+	char getType(u1 atype);
 };
 
 #endif /*EXECUTIONENG_H_*/

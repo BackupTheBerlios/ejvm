@@ -105,7 +105,7 @@ printf("Creating the constant pool of an array\n");
 		fields = NULL;
 		methodsCount =0;
 		methods = NULL;
-	   	constantPool-> getClassData(superClass);
+	   //	constantPool-> getClassData(superClass);
 }
 
 ClassData::~ClassData()
@@ -159,7 +159,7 @@ printf("\tso it does only a loop to get the method clinit from the methods array
 	/* search in this class */
 	for(i=0; i<methodsCount ; i++)
 	{
-		if(strcmp(methods[i]-> getName() ,"()")==0 ) /* another method */
+		if(strcmp(methods[i]-> getName() ,"<clinit>")==0 ) /* another method */
 		{
 			clInit =  methods[i];
 			break;

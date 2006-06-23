@@ -490,6 +490,19 @@ void ExecutionEng::interpret(Thread * thread)
 				}
 				pc++;
 				break;    
+			case IALOAD:
+				{
+					int index[1];
+					index[0]=currentFrame->pop();
+					Object * arrayref=(Object *)currentFrame->pop();
+					u4 value;
+					u4 temp;
+					arrayref->getElement(index,value,temp);
+					currentFrame->push(value);
+					cout<<"IALOAD: theIndex="<<index[0]<<" theValue="<<value<<endl;
+				}
+				pc++;
+				break;
 			case ISTORE:
 				{
 					u1 index = *(pc+1);
@@ -625,6 +638,17 @@ void ExecutionEng::interpret(Thread * thread)
 					u4 temp = currentFrame->pop();
 					currentFrame->setAtIndex((*pc - ASTORE_0 ),temp);
 					cout<<"ASTORE_"<<(*pc - ASTORE_0 )<<": "<<"value Poped="<<(Object *)temp<<" value at index "<<(*pc - ASTORE_0 )<<"="<<(Object *)currentFrame->getAtIndex((*pc - ASTORE_0 ))<<endl;
+				}
+				pc++;
+				break;
+			case IASTORE:
+				{
+					int value= currentFrame->pop();
+					int index[1];
+					index[0]= currentFrame->pop();
+					Object * arrayref=(Object *)currentFrame->pop();
+					arrayref->putElement(index,value);
+					cout<<"IASTORE: theIndex"<<index[0]<<" theValue="<<value<<endl;
 				}
 				pc++;
 				break;
@@ -1142,7 +1166,7 @@ void ExecutionEng::interpret(Thread * thread)
 					//form the descriptor of the array
 					char desc[3];
 					desc[0]='[';
-					desc[1]=(char) atype;
+					desc[1]=getType(atype);
 					desc[2]='\0';
 					Loader * loader= Loader::getInstance();
 					//get the Class instance of the array
@@ -1327,7 +1351,43 @@ double ExecutionEng::computDouble(u4 low_bytes,u4 high_bytes)
     double fDouble = s * m * powf(2,e-1075);
     return fDouble;
 }
-
+//-----------------------------------------------------------
+char ExecutionEng::getType(u1 atype)
+{
+	 char c;
+	 switch(atype)
+	 {
+	 	case T_BOOLEAN:
+	 		c='Z';
+	 		break;
+		case T_CHAR: 	
+			c='C';
+	 		break;
+		case T_FLOAT: 	
+			c='F';
+	 		break;
+		case T_DOUBLE: 	
+			c='D';
+	 		break;
+		case T_BYTE:
+			c='B';
+	 		break;
+		case T_SHORT: 	
+			c='S';
+	 		break;
+		case T_INT:	
+			c='I';
+	 		break;	
+		case T_LONG:
+			c='J';
+	 		break;
+		default:
+			cout<<"Fatal Error : Unrecognised type"<<endl;
+			exit(1);
+	 }
+	 return c;
+		 	
+}
 
 
 

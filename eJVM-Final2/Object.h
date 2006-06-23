@@ -41,8 +41,8 @@ public:
 	
 	/* these methods are for arrays */
 	Object(int dims,int lengths [],int type,ClassData * myClass,ClassData * classType);
-	void putElement(int index [], u4 word1, u4 word2);
-	void getElement(int index [], u4 & word1, u4 & word2);
+	void putElement(int index [], u4 word1, u4 word2=0);
+	void getElement(int index [], u4 & word1, u4 & word2 =0);
 	int getArrayLength(void);
 };
 
