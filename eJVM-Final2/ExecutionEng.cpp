@@ -77,7 +77,12 @@ void ExecutionEng::executeMethod(Object *object,Method * method,...)
        if((*p == 'J') || (*p == 'D'))
        {         
            //Insert Long and Double values in the Local Variables      
-                                         
+           *vPtr = va_arg(ap,u4);
+           f->setAtIndex(index,arg);
+           index++;
+           *vPtr = va_arg(ap,u4);
+           f->setAtIndex(index,arg);      
+           index++ ;                      
            p++;                                  
        }
        else 
@@ -903,12 +908,52 @@ void ExecutionEng::interpret(Thread * thread)
 				}
 				pc++;
 				break;
+			case DMUL:
+				{
+					u4 word2=currentFrame->pop();
+					u4 word1=currentFrame->pop();
+					double value2=computDouble(word1,word2);
+					word2=currentFrame->pop();
+					word1=currentFrame->pop();
+					double value1=computDouble(word1,word2);
+					u4 result[2];
+					*(double *)result = value1 * value2;
+					word1=result[0];
+					word2=result[1];
+					currentFrame->push(word1);
+					currentFrame->push(word2);
+					printf("DMUL: Value1=%.1lf Value2=%.1lf Result=%.1lf\n",value1,value2,*(double *)result);
+				}
+				pc++;
+				break;
 			case IDIV:
 				{
 					u4 value2=currentFrame->pop();
 					u4 value1=currentFrame->pop();
 					currentFrame->push((int)value1/(int)value2);     //note temp2/temp not the reverse order temp/temp2     
 					cout<<"IDIV: Value1="<<(int)value1<<" Value2="<<(int)value2<<" Result="<<(int)currentFrame->getTopOpStack()<<endl;
+				}
+				pc++;
+				break;
+			case LDIV:
+				{
+					u4 word2=currentFrame->pop();
+					u4 word1=currentFrame->pop();
+					u4 value2[2];
+					value2[0]=word1;
+					value2[1]=word2;
+					word2=currentFrame->pop();
+					word1=currentFrame->pop();
+					u4 value1[2];
+					value1[0]=word1;
+					value1[1]=word2;
+					u4 result[2];
+					*(long long *)result=(*(long long *)value1) / (*(long long *)value2);
+					word1=result[0];
+					word2=result[1];
+					currentFrame->push(word1);
+					currentFrame->push(word2);
+					cout<<"LDIV: Value1="<<*(long long *)value1<<" Value2="<<*(long long *)value2<<" Result="<<*(long long *)result<<endl;
 				}
 				pc++;
 				break;
@@ -930,6 +975,24 @@ void ExecutionEng::interpret(Thread * thread)
 					//cout<<"REsult in u4="<<*pResult<<endl;
 					cout<<"FDIV: Value1="<<fValue1<<" Value2="<<fValue2<<" Result="<<*(float *)pResult<<endl;
 					
+				}
+				pc++;
+				break;
+			case DDIV:
+				{
+					u4 word2=currentFrame->pop();
+					u4 word1=currentFrame->pop();
+					double value2=computDouble(word1,word2);
+					word2=currentFrame->pop();
+					word1=currentFrame->pop();
+					double value1=computDouble(word1,word2);
+					u4 result[2];
+					*(double *)result = value1 / value2;
+					word1=result[0];
+					word2=result[1];
+					currentFrame->push(word1);
+					currentFrame->push(word2);
+					printf("DDIVs: Value1=%.1lf Value2=%.1lf Result=%.1lf\n",value1,value2,*(double *)result);
 				}
 				pc++;
 				break;
@@ -1407,6 +1470,11 @@ void ExecutionEng::putArgInLocalVariables(Frame * invokingMethod,Frame * invoked
        {         
            //Insert Long and Double values in the Local Variables                                    
            //dont forget to decrement the argCount and opStackArgCount
+           invokedMethod->setAtIndex(opStackArgCount-1,invokingMethod->pop());
+           opStackArgCount--;
+           invokedMethod->setAtIndex(opStackArgCount-1,invokingMethod->pop());
+           opStackArgCount--;
+           argCount--;
            p++;                                  
        }
        else 
@@ -1448,7 +1516,7 @@ void ExecutionEng::calNumOfArg(char * p,unsigned int & argCount,unsigned int & o
 		{
     		if(*p == '[') //array
        		{
-        		//we will not decrement the following 2 variables why?
+        		//we will not increment the following 2 variables why?
         		//because if it is array, and when we will check the type of the array,
         		//we will increment them, so we will incremnet them twice and that is wrong
         		//argCount++;

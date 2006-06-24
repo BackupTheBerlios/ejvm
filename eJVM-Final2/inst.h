@@ -108,10 +108,11 @@
 #define IMUL						104
 #define LMUL						105
 #define FMUL						106
-
+#define DMUL						107
 #define IDIV						108
-
+#define LDIV						109
 #define FDIV						110
+#define DDIV						111
 
 #define IINC						132
 
