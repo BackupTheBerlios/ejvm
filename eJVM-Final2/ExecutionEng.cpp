@@ -721,6 +721,28 @@ void ExecutionEng::interpret(Thread * thread)
 				}
 				pc++;	
 				break;
+			case LADD:
+				{
+					u4 word2=currentFrame->pop();
+					u4 word1=currentFrame->pop();
+					u4 value2[2];
+					value2[0]=word1;
+					value2[1]=word2;
+					word2=currentFrame->pop();
+					word1=currentFrame->pop();
+					u4 value1[2];
+					value1[0]=word1;
+					value1[1]=word2;
+					u4 result[2];
+					*(long long *)result=(*(long long *)value1) + (*(long long *)value2);
+					word1=result[0];
+					word2=result[1];
+					currentFrame->push(word1);
+					currentFrame->push(word2);
+					cout<<"LADD: Value1="<<*(long long *)value1<<" Value2="<<*(long long *)value2<<" Result="<<*(long long *)result<<endl;
+				}
+				pc++;
+				break;
 			case FADD:
 				{
 					float value2 = computFloat(currentFrame->pop());
@@ -763,6 +785,61 @@ void ExecutionEng::interpret(Thread * thread)
 				}
 				pc++;
 				break;
+			case LSUB:
+				{
+					u4 word2=currentFrame->pop();
+					u4 word1=currentFrame->pop();
+					u4 value2[2];
+					value2[0]=word1;
+					value2[1]=word2;
+					word2=currentFrame->pop();
+					word1=currentFrame->pop();
+					u4 value1[2];
+					value1[0]=word1;
+					value1[1]=word2;
+					u4 result[2];
+					*(long long *)result=(*(long long *)value1) - (*(long long *)value2);
+					word1=result[0];
+					word2=result[1];
+					currentFrame->push(word1);
+					currentFrame->push(word2);
+					cout<<"LSUB: Value1="<<*(long long *)value1<<" Value2="<<*(long long *)value2<<" Result="<<*(long long *)result<<endl;
+				}
+				pc++;
+				break;
+			case FSUB:
+				{
+					u4 value2=currentFrame->pop();
+					float fValue2=computFloat(value2);
+					u4 value1=currentFrame->pop();
+					float fValue1=computFloat(value1);
+					float fresult=fValue1 - fValue2; 
+					u4 result;
+					u4 * pResult = &result;
+					*(float *)pResult = fresult;
+					currentFrame->push(*pResult);
+					cout<<"FSUB: Value1="<<fValue1<<" Value2="<<fValue2<<" Result="<<*(float *)pResult<<endl;
+				}
+				pc++;
+				break;
+			case DSUB:
+				{
+					u4 word2=currentFrame->pop();
+					u4 word1=currentFrame->pop();
+					double value2=computDouble(word1,word2);
+					word2=currentFrame->pop();
+					word1=currentFrame->pop();
+					double value1=computDouble(word1,word2);
+					u4 result[2];
+					*(double *)result = value1 - value2;
+					word1=result[0];
+					word2=result[1];
+					currentFrame->push(word1);
+					currentFrame->push(word2);
+					printf("DSUB: Value1=%.1lf Value2=%.1lf Result=%.1lf\n",value1,value2,*(double *)result);
+				}
+				pc++;
+				break;
 			case IMUL:
 				{
 					u4 value2=currentFrame->pop();
@@ -792,6 +869,21 @@ void ExecutionEng::interpret(Thread * thread)
 					currentFrame->push(word1);
 					currentFrame->push(word2);
 					cout<<"LMUL: Value1="<<*(long long *)value1<<" Value2="<<*(long long *)value2<<" Result="<<*(long long *)result<<endl;
+				}
+				pc++;
+				break;
+			case FMUL:
+				{
+					u4 value2=currentFrame->pop();
+					float fValue2=computFloat(value2);
+					u4 value1=currentFrame->pop();
+					float fValue1=computFloat(value1);
+					float fresult=fValue1 * fValue2; 
+					u4 result;
+					u4 * pResult = &result;
+					*(float *)pResult = fresult;
+					currentFrame->push(*pResult);
+					cout<<"FMUL: Value1="<<fValue1<<" Value2="<<fValue2<<" Result="<<*(float *)pResult<<endl;
 				}
 				pc++;
 				break;
@@ -875,7 +967,7 @@ void ExecutionEng::interpret(Thread * thread)
 				{
 					u1 branchbyte1 = *(pc+1);
 					u1 branchbyte2 = *(pc+2);
-					u2 offset = (branchbyte1 << 8) | branchbyte2;
+					short int offset =(short int ) (branchbyte1 << 8) | branchbyte2;
 					pc = pc+offset;
 					cout<<"GOTO: offset="<<offset<<endl;
 				}

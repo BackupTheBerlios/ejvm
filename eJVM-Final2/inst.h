@@ -98,14 +98,16 @@
 #define DUP2_X2                     94
 #define SWAP                        95
 #define IADD                        96
-
+#define LADD						 97
 #define FADD						 98
 #define DADD						 99
-
 #define ISUB						100
-
+#define LSUB						101
+#define FSUB						102
+#define DSUB						103
 #define IMUL						104
 #define LMUL						105
+#define FMUL						106
 
 #define IDIV						108
 
