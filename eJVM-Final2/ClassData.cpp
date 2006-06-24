@@ -175,14 +175,15 @@ void ClassData:: initialize(void)
 			clInit =  methods[i];
 			break;
 		}	
-	}	
+	}
+	initialized = true;	
 	if(clInit)
 	{
 		ExecutionEng * exec=ExecutionEng::getInstance();
 		exec->executeMethod(NULL,clInit);
 		//;//execEng->exec(clInit);	
 	}
-	initialized = true;
+	//initialized = true;
 }
 
 
