@@ -29,7 +29,6 @@
 
 #define e_CORE_i2f 	 \
 	 e_CORE_i2f_START:   \
-e_PROMOTE_STAK(e_j_integer);\
- 	e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_float) = (e_j_integer) e_ACCESS_OPERAND_STACK_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_integer,1);\
+	e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_float) = (e_j_integer) e_ACCESS_OPERAND_STACK_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_integer,1);\
 	 e_CORE_i2f_END: \
 

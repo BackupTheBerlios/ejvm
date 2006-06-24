@@ -29,7 +29,6 @@
 
 #define e_CORE_f2i 	 \
 	 e_CORE_f2i_START:   \
-		e_ACCESS_OPERAND_STACK_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_integer, 1) = (e_j_integer) e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_float);\
-		e_RETRACT_STAK(e_j_integer);\
-	 e_CORE_f2i_END: \
+		e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_integer) = (e_j_integer) e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_float);\
+	e_CORE_f2i_END: \
 

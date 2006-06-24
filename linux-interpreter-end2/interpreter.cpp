@@ -1856,6 +1856,9 @@ e_label_return :
 	e_CORE_return ;
 	e_console_log_end
 	e_TRACE_ANNOUNCE_INSTRUCTION(return) ;
+	e_TRACE_CLOSE( )
+	return 0;
+
 e_label_getstatic :
 
 	e_console_log_start(getstatic)

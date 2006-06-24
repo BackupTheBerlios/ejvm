@@ -10,17 +10,22 @@
  * 
  */
 	#define e_j_NULL 	    NULL
-	typedef unsigned char     e_byte_t,u1_t,e_j_u_byte;		/*Java byte   */
-	typedef unsigned int      e_j_u_integer;
-	typedef unsigned long     e_j_u_long;
-	typedef unsigned short    e_j_char;
+	typedef unsigned char          e_byte_t,u1_t,e_j_u_byte;		/*Java byte   */
+	typedef unsigned int           e_j_u_integer;
+	typedef unsigned short         e_j_char;
+	typedef unsigned long long     e_j_u_long;
+	
 	typedef char              e_j_byte; 
-	typedef double  	  e_j_double; 			/*Java double  */
-	typedef long    	  e_j_long; 			/*Java long    */
-	typedef float   	  e_j_float;			/*Java float   */
+	typedef short             e_j_short;
 	typedef int     	  e_j_integer;  		/*Java integer */
 	typedef int     	  e_j_word;			/*Java word    */
-	typedef short             e_j_short;
+	typedef float   	  e_j_float;			/*Java float   */
+	
+	typedef double  	  e_j_double; 			/*Java double  */
+	typedef long long    	  e_j_long; 			/*Java long    */
+
+	
+
 	typedef int               e_j_refrence;
 	typedef int64_t           e_j_long_long;
 	

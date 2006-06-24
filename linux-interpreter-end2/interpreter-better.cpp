@@ -44,23 +44,23 @@ public:
 
  typedef unsigned int e_j_u_integer;
 
- typedef unsigned long e_j_u_long;
-
  typedef unsigned short e_j_char;
+
+ typedef unsigned long long e_j_u_long;
 
  typedef char e_j_byte;
 
- typedef double e_j_double;
-
- typedef long e_j_long;
-
- typedef float e_j_float;
+ typedef short e_j_short;
 
  typedef int e_j_integer;
 
  typedef int e_j_word;
 
- typedef short e_j_short;
+ typedef float e_j_float;
+
+ typedef double e_j_double;
+
+ typedef long long e_j_long;
 
  typedef int e_j_refrence;
 
@@ -72,7 +72,12 @@ public:
 
   typedef int e_j_wide_integer;
 
+
+
+
+
  typedef
+
  typedef struct const_pool_t{};
 
 
@@ -113,9 +118,6 @@ public: static int e_exexute(const_pool_t* const_pool,ByteCode* method);
 
  int Exec::e_exexute(const_pool_t* const_pool,ByteCode* method){
 e_TRACE_CREATE_TRACE_FILE("dd")
-
-
-
 e_Instruction_Label_Lookup[ e_VALUE_OF_nop ] = &&e_label_nop;
 
 e_Instruction_Label_Lookup[ e_VALUE_OF_aconst_null ] = &&e_label_aconst_null;
@@ -525,8 +527,6 @@ e_Instruction_Label_Lookup[ e_VALUE_OF_breakpoint ] = &&e_label_breakpoint;
 e_Instruction_Label_Lookup[ e_VALUE_OF_impdep1 ] = &&e_label_impdep1;
 
 e_Instruction_Label_Lookup[ e_VALUE_OF_impdep2 ] = &&e_label_impdep2;
-
-
 
 
 assert(sizeof( e_j_double ) == 8);
@@ -1883,7 +1883,7 @@ e_label_iadd :
 
 e_label_ladd :
  e_console_log_start(ladd)
- e_CORE_ladd_START: (* ((e_j_long *) ( op_stk_top - 1 ) )) += (*((typeof(e_j_long)*) op_stk_top ));
+ e_CORE_ladd_START: (* ((e_j_long *) ( op_stk_top - 2 ) )) += (*((typeof(e_j_long)*) op_stk_top ));
  {op_stk_top -= ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_ladd_END: ;
@@ -1911,7 +1911,7 @@ e_label_fadd :
 
 e_label_dadd :
  e_console_log_start(dadd)
- e_CORE_dadd_START: (* ((e_j_double *) ( op_stk_top - 1 ) )) += (*((typeof(e_j_double)*) op_stk_top ));
+ e_CORE_dadd_START: (* ((e_j_double *) ( op_stk_top - 2 ) )) += (*((typeof(e_j_double)*) op_stk_top ));
  {op_stk_top -= ( sizeof( typeof(e_j_double) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_dadd_END: ;
@@ -1939,7 +1939,7 @@ e_label_isub :
 
 e_label_lsub :
  e_console_log_start(lsub)
- e_CORE_lsub_START: (* ((e_j_long *) ( op_stk_top - 1 ) )) = (*((typeof(e_j_long)*) op_stk_top )) - (* ((e_j_long *) ( op_stk_top - 1 ) ));
+ e_CORE_lsub_START: (* ((e_j_long *) ( op_stk_top - 2 ) )) = (*((typeof(e_j_long)*) op_stk_top )) - (* ((e_j_long *) ( op_stk_top - 2 ) ));
  {op_stk_top -= ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_lsub_END: ;
@@ -1967,7 +1967,7 @@ e_label_fsub :
 
 e_label_dsub :
  e_console_log_start(dsub)
- e_CORE_dsub_START: (* ((e_j_double *) ( op_stk_top - 1 ) )) = (*((typeof(e_j_double)*) op_stk_top )) - (* ((e_j_double *) ( op_stk_top - 1 ) ));
+ e_CORE_dsub_START: (* ((e_j_double *) ( op_stk_top - 2 ) )) = (*((typeof(e_j_double)*) op_stk_top )) - (* ((e_j_double *) ( op_stk_top - 2 ) ));
  {op_stk_top -= ( sizeof( typeof(e_j_double) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_dsub_END: ;
@@ -1995,7 +1995,10 @@ e_label_imul :
 
 e_label_lmul :
  e_console_log_start(lmul)
- e_CORE_lmul_START: e_CORE_lmul_END: ;
+ e_CORE_lmul_START: (* ((e_j_long *) ( op_stk_top - 2 ) )) *= (*((typeof(e_j_long)*) op_stk_top ));
+ {op_stk_top -= ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
+};
+ e_CORE_lmul_END: ;
 
  e_console_log_end
  e_TRACE_ANNOUNCE_INSTRUCTION(lmul) ;
@@ -2006,7 +2009,10 @@ e_label_lmul :
 
 e_label_fmul :
  e_console_log_start(fmul)
- e_CORE_fmul_START: e_CORE_fmul_END: ;
+ e_CORE_fmul_START: (* ((e_j_float *) ( op_stk_top - 1 ) )) *= (*((typeof(e_j_float)*) op_stk_top ));
+ {op_stk_top -= ( sizeof( typeof(e_j_float) )/ sizeof( typeof(op_stk_top) ) );
+};
+ e_CORE_fmul_END: ;
 
  e_console_log_end
  e_TRACE_ANNOUNCE_INSTRUCTION(fmul) ;
@@ -2017,7 +2023,10 @@ e_label_fmul :
 
 e_label_dmul :
  e_console_log_start(dmul)
- e_CORE_dmul_START: e_CORE_dmul_END: ;
+ e_CORE_dmul_START: (* ((e_j_double *) ( op_stk_top - 2 ) )) *= (*((typeof(e_j_double)*) op_stk_top ));
+ {op_stk_top -= ( sizeof( typeof(e_j_double) )/ sizeof( typeof(op_stk_top) ) );
+};
+ e_CORE_dmul_END: ;
 
  e_console_log_end
  e_TRACE_ANNOUNCE_INSTRUCTION(dmul) ;
@@ -2042,7 +2051,7 @@ e_label_idiv :
 
 e_label_ldiv :
  e_console_log_start(ldiv)
- e_CORE_ldiv_START: (* ((e_j_long *) ( op_stk_top - 1 ) )) = (*((typeof(e_j_long)*) op_stk_top )) / (* ((e_j_long *) ( op_stk_top - 1 ) ));
+ e_CORE_ldiv_START: (* ((e_j_long *) ( op_stk_top - 2 ) )) = (*((typeof(e_j_long)*) op_stk_top )) / (* ((e_j_long *) ( op_stk_top - 2 ) ));
  {op_stk_top -= ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_ldiv_END: ;
@@ -2070,7 +2079,7 @@ e_label_fdiv :
 
 e_label_ddiv :
  e_console_log_start(ddiv)
- e_CORE_ddiv_START: (* ((e_j_double *) ( op_stk_top - 1 ) )) = (*((typeof(e_j_double)*) op_stk_top )) / (* ((e_j_double *) ( op_stk_top - 1 ) ));
+ e_CORE_ddiv_START: (* ((e_j_double *) ( op_stk_top - 2 ) )) = (*((typeof(e_j_double)*) op_stk_top )) / (* ((e_j_double *) ( op_stk_top - 2 ) ));
  {op_stk_top -= ( sizeof( typeof(e_j_double) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_ddiv_END: ;
@@ -2098,7 +2107,7 @@ e_label_irem :
 
 e_label_lrem :
  e_console_log_start(lrem)
- e_CORE_lrem_START: (* ((e_j_long *) ( op_stk_top - 1 ) )) = (*((typeof(e_j_long)*) op_stk_top )) % (* ((e_j_long *) ( op_stk_top - 1 ) ));
+ e_CORE_lrem_START: (* ((e_j_long *) ( op_stk_top - 2 ) )) = (*((typeof(e_j_long)*) op_stk_top )) % (* ((e_j_long *) ( op_stk_top - 2 ) ));
  {op_stk_top -= ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_lrem_END: ;
@@ -2126,7 +2135,7 @@ e_label_frem :
 
 e_label_drem :
  e_console_log_start(drem)
- e_CORE_drem_START: (* ((e_j_double *) ( op_stk_top - 1 ) )) = fmod( (*((typeof(e_j_double)*) op_stk_top )) , (* ((e_j_double *) ( op_stk_top - 1 ) )));
+ e_CORE_drem_START: (* ((e_j_double *) ( op_stk_top - 2 ) )) = fmod( (*((typeof(e_j_double)*) op_stk_top )) , (* ((e_j_double *) ( op_stk_top - 2 ) )));
  {op_stk_top -= ( sizeof( typeof(e_j_double) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_drem_END: ;
@@ -2202,7 +2211,7 @@ e_label_ishl :
 
 e_label_lshl :
  e_console_log_start(lshl)
- e_CORE_lshl_START: (* ((e_j_long *) ( op_stk_top - 1 ) )) = (*((typeof(e_j_long)*) op_stk_top )) << (0x1F & (* ((e_j_long *) ( op_stk_top - 1 ) )));
+ e_CORE_lshl_START: (* ((e_j_long *) ( op_stk_top - 2 ) )) = (*((typeof(e_j_long)*) op_stk_top )) << (0x1F & (* ((e_j_long *) ( op_stk_top - 2 ) )));
  {op_stk_top -= ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_lshl_END: ;
@@ -2230,7 +2239,7 @@ e_label_ishr :
 
 e_label_lshr :
  e_console_log_start(lshr)
- e_CORE_lshr_START: (* ((e_j_long *) ( op_stk_top - 1 ) )) = (*((typeof(e_j_long)*) op_stk_top )) >> (0x1F & (* ((e_j_long *) ( op_stk_top - 1 ) )));
+ e_CORE_lshr_START: (* ((e_j_long *) ( op_stk_top - 2 ) )) = (*((typeof(e_j_long)*) op_stk_top )) >> (0x1F & (* ((e_j_long *) ( op_stk_top - 2 ) )));
  {op_stk_top -= ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_lshr_END: ;
@@ -2258,7 +2267,7 @@ e_label_iushr :
 
 e_label_lushr :
  e_console_log_start(lushr)
- e_CORE_lushr_START: (* ((e_j_u_long *) ( op_stk_top - 1 ) )) = (*((typeof(e_j_u_long)*) op_stk_top )) >> (0x1F & (* ((e_j_u_long *) ( op_stk_top - 1 ) )));
+ e_CORE_lushr_START: (* ((e_j_u_long *) ( op_stk_top - 2 ) )) = (*((typeof(e_j_u_long)*) op_stk_top )) >> (0x1F & (* ((e_j_u_long *) ( op_stk_top - 2 ) )));
  {op_stk_top -= ( sizeof( typeof(e_j_u_long) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_lushr_END: ;
@@ -2286,7 +2295,7 @@ e_label_iand :
 
 e_label_land :
  e_console_log_start(land)
- e_CORE_land_START: (* ((e_j_long *) ( op_stk_top - 1 ) )) = (*((typeof(e_j_long)*) op_stk_top )) & (* ((e_j_long *) ( op_stk_top - 1 ) ));
+ e_CORE_land_START: (* ((e_j_long *) ( op_stk_top - 2 ) )) = (*((typeof(e_j_long)*) op_stk_top )) & (* ((e_j_long *) ( op_stk_top - 2 ) ));
  {op_stk_top -= ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_land_END: ;
@@ -2314,7 +2323,7 @@ e_label_ior :
 
 e_label_lor :
  e_console_log_start(lor)
- e_CORE_lor_START: (* ((e_j_long *) ( op_stk_top - 1 ) )) = (*((typeof(e_j_long)*) op_stk_top )) | (* ((e_j_long *) ( op_stk_top - 1 ) ));
+ e_CORE_lor_START: (* ((e_j_long *) ( op_stk_top - 2 ) )) = (*((typeof(e_j_long)*) op_stk_top )) | (* ((e_j_long *) ( op_stk_top - 2 ) ));
  {op_stk_top -= ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_lor_END: ;
@@ -2342,7 +2351,7 @@ e_label_ixor :
 
 e_label_lxor :
  e_console_log_start(lxor)
- e_CORE_lxor_START: (* ((e_j_long *) ( op_stk_top - 1 ) )) = (*((typeof(e_j_long)*) op_stk_top )) ^ (* ((e_j_long *) ( op_stk_top - 1 ) ));
+ e_CORE_lxor_START: (* ((e_j_long *) ( op_stk_top - 2 ) )) = (*((typeof(e_j_long)*) op_stk_top )) ^ (* ((e_j_long *) ( op_stk_top - 2 ) ));
  {op_stk_top -= ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_lxor_END: ;
@@ -2382,9 +2391,7 @@ e_label_i2l :
 
 e_label_i2f :
  e_console_log_start(i2f)
- e_CORE_i2f_START: {op_stk_top += ( sizeof( typeof(e_j_integer) )/ sizeof( typeof(op_stk_top) ) );
-};
- (*((typeof(e_j_float)*) op_stk_top )) = (e_j_integer) (* ((e_j_integer *) ( op_stk_top - 1 ) ));
+ e_CORE_i2f_START: (*((typeof(e_j_float)*) op_stk_top )) = (e_j_integer) (* ((e_j_integer *) ( op_stk_top - 1 ) ));
  e_CORE_i2f_END: ;
 
  e_console_log_end
@@ -2424,7 +2431,9 @@ e_label_l2i :
 
 e_label_l2f :
  e_console_log_start(l2f)
- e_CORE_l2f_START: (*((typeof(e_j_float)*) op_stk_top )) = (*((typeof(e_j_long)*) op_stk_top ));
+ e_CORE_l2f_START: (* ((e_j_float *) ( op_stk_top - 1 ) )) =(e_j_float) (*((typeof(e_j_long)*) op_stk_top ));
+ {op_stk_top -= ( sizeof( typeof(e_j_word) )/ sizeof( typeof(op_stk_top) ) );
+};
  e_CORE_l2f_END: ;
 
  e_console_log_end
@@ -2448,9 +2457,7 @@ e_label_l2d :
 
 e_label_f2i :
  e_console_log_start(f2i)
- e_CORE_f2i_START: (* ((e_j_integer *) ( op_stk_top - 1 ) )) = (e_j_integer) (*((typeof(e_j_float)*) op_stk_top ));
- {op_stk_top -= ( sizeof( typeof(e_j_integer) )/ sizeof( typeof(op_stk_top) ) );
-};
+ e_CORE_f2i_START: (*((typeof(e_j_integer)*) op_stk_top )) = (e_j_integer) (*((typeof(e_j_float)*) op_stk_top ));
  e_CORE_f2i_END: ;
 
  e_console_log_end
@@ -2462,7 +2469,9 @@ e_label_f2i :
 
 e_label_f2l :
  e_console_log_start(f2l)
- e_CORE_f2l_START: (*((typeof(e_j_long)*) op_stk_top )) =(e_j_long) (*((typeof(e_j_float)*) op_stk_top ));
+ e_CORE_f2l_START: {op_stk_top += ( sizeof( typeof(e_j_word) )/ sizeof( typeof(op_stk_top) ) );
+};
+ (*((typeof(e_j_long)*) op_stk_top )) =(e_j_long) (* ((e_j_float *) ( op_stk_top - 1 ) ));
  e_CORE_f2l_END: ;
 
  e_console_log_end
@@ -2474,7 +2483,9 @@ e_label_f2l :
 
 e_label_f2d :
  e_console_log_start(f2d)
- e_CORE_f2d_START: (*((typeof(e_j_double)*) op_stk_top )) = (e_j_double) (*((typeof(e_j_float)*) op_stk_top ));
+ e_CORE_f2d_START: {op_stk_top += ( sizeof( typeof(e_j_word) )/ sizeof( typeof(op_stk_top) ) );
+};
+ (*((typeof(e_j_double)*) op_stk_top )) = (e_j_double) (* ((e_j_float *) ( op_stk_top - 1 ) ));
  e_CORE_f2d_END: ;
 
  e_console_log_end
@@ -2512,7 +2523,9 @@ e_label_d2l :
 
 e_label_d2f :
  e_console_log_start(d2f)
- e_CORE_d2f_START: (*((typeof(e_j_float)*) op_stk_top )) =(e_j_float) (*((typeof(e_j_double)*) op_stk_top ));
+ e_CORE_d2f_START: (* ((e_j_float *) ( op_stk_top - 1 ) )) = (e_j_float) (*((typeof(e_j_double)*) op_stk_top ));
+ {op_stk_top -= ( sizeof( typeof(e_j_word) )/ sizeof( typeof(op_stk_top) ) );
+};
  e_CORE_d2f_END: ;
 
  e_console_log_end
@@ -2787,6 +2800,9 @@ e_label_return :
 
  e_console_log_end
  e_TRACE_ANNOUNCE_INSTRUCTION(return) ;
+
+ e_TRACE_CLOSE( )
+ return 0;
 
 e_label_getstatic :
  e_console_log_start(getstatic)

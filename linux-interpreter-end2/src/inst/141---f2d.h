@@ -29,6 +29,7 @@
 
 #define e_CORE_f2d 	 \
 	 e_CORE_f2d_START:   \
-	 	e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_double) = (e_j_double) e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_float);\
+		 e_PROMOTE_STAK(e_j_word);\
+	 	e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_double) = (e_j_double) e_ACCESS_OPERAND_STACK_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_float,1);\
 	 e_CORE_f2d_END: \
 
