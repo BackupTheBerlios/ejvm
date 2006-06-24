@@ -40,7 +40,7 @@ int main(int argc, char** argv){
 //===================================end Test JNI functions===================================
 	Loader * l= Loader::getInstance();
 	Heap * h= 	Heap::getInstance();
-	ExecutionEng * exec =new ExecutionEng();
+	ExecutionEng * exec =ExecutionEng::getInstance();
 	char className[80];
 	ClassData * cptr=NULL;
 	Method * m = NULL;
@@ -103,6 +103,7 @@ int main(int argc, char** argv){
 		
 		Loader::deleteLoader();
 		Heap::deleteHeap();
+		ExecutionEng::deleteExec();
 	/*int * j=NULL;
 	cout<<u4(j)<<"\t"<<j<<endl;
 	int i=-1000000;

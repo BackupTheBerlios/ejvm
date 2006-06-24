@@ -20,7 +20,7 @@ static Loader* gLoader = Loader::getInstance();
 static Heap*		gHeap = Heap::getInstance();
 static ExceptionThrower *gExceptionThrower = ExceptionThrower::getInstance();
 static JNIManager * gJNIManager = JNIManager::getInstance();
-static ExecutionEng * gExecutionEng = ExecutionEng::geInstance();
+static ExecutionEng * gExecutionEng = ExecutionEng::getInstance();
 
 #define JNI_VERSION JNI_VERSION_1_1
 

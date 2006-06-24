@@ -1,7 +1,7 @@
 #include "ClassData.h"
 #include "Heap.h"
 #include <stdio.h>
-
+#include "ExecutionEng.h"
 /* the constructor takes a stream of bytes as a parameter */
 ClassData::ClassData(const char *name, const byte inputFile [])
 {
@@ -18,10 +18,10 @@ ClassData::ClassData(const char *name, const byte inputFile [])
 		inputPtr+=2;
 		
 //	////fprintf(stdout,"getting the constant pool count => %d entries\n",CPCount-1);
-printf("Ask the heap to create the constant pool\n");
+//printf("Ask the heap to create the constant pool\n");
 		/* ask the heap to create the constant pool */
 		constantPool = Heap::createCP(inputFile,CPCount, &inputPtr,this);
-printf("Getting the acess flags of the class\n");
+//printf("Getting the acess flags of the class\n");
 		/* extract accessFlags, thisClass, superClass and advance the input pointer */
 		accessFlags = ( ((u2)inputFile[inputPtr])<<8 ) + inputFile[inputPtr+1];
 		inputPtr+=2;
@@ -32,20 +32,20 @@ printf("Getting the acess flags of the class\n");
 		inputPtr+=2;
 
 	////fprintf(stdout,"getting the current class index in the constant pool => %d \n",thisClass);
-printf("getting the current class index in the constant pool => %d \n",thisClass);
+//printf("getting the current class index in the constant pool => %d \n",thisClass);
 		superClass = ( ((u2)inputFile[inputPtr])<<8) + inputFile[inputPtr+1];
 		inputPtr+=2;
 		
 	//fprintf(stdout,"getting the super class index in the constant pool => %d \n",superClass);
-printf("getting the super class index in the constant pool => %d \n",superClass);
+//printf("getting the super class index in the constant pool => %d \n",superClass);
 		/* extract interfacesCount and advance the input pointer */
 		interfacesCount =( ((u2)inputFile[inputPtr])<<8 ) + inputFile[inputPtr+1];
 		inputPtr+=2;
 
 	//fprintf(stdout,"getting the interfaces count => %d \n",interfacesCount);
-printf("getting the interfaces count => %d \n",interfacesCount);
+//printf("getting the interfaces count => %d \n",interfacesCount);
 		/* create the interfaces array and fill it */
-printf("create the interfaces array and fill it\n");
+//printf("create the interfaces array and fill it\n");
 		interfaces = Heap::createInterfaces(interfacesCount);
 		for( i=0 ; i < interfacesCount ; i++)
 		{
@@ -56,9 +56,9 @@ printf("create the interfaces array and fill it\n");
 		fieldsCount = ( ((u2)inputFile[inputPtr])<<8 ) + inputFile[inputPtr+1];
 		inputPtr+=2;
 
-printf("getting the fields count in this class=> %d \n",fieldsCount);
+//printf("getting the fields count in this class=> %d \n",fieldsCount);
 	//fprintf(stdout,"getting the fields count in this class=> %d \n",fieldsCount);
-printf("create the fields table and fill it\n");
+//printf("create the fields table and fill it\n");
 		/* create the fields table and fill it */
 		fields = Heap::createFileds(fieldsCount);
 		for( i=0 ; i < fieldsCount ; i++)
@@ -69,9 +69,9 @@ printf("create the fields table and fill it\n");
 		inputPtr+=2;
 
 	//fprintf(stdout,"getting the methods count in this class=> %d \n",methodsCount);
-printf("getting the methods count in this class=> %d \n",methodsCount);
+//printf("getting the methods count in this class=> %d \n",methodsCount);
 		/* create the methods table and fill it */
-printf("create the methods table and fill it\n");
+//printf("create the methods table and fill it\n");
 		methods = Heap::createMethods(methodsCount);
 		for(i=0 ; i < methodsCount ; i++)
 			methods[i] = Heap::createMethodData(inputFile, &inputPtr,constantPool);
@@ -79,12 +79,16 @@ printf("create the methods table and fill it\n");
 		/* here, there exist the attributes count and attributes table */
 		
 		/* to load and resolve the super class */
-printf("load and resolve the super class NOW COMMENTED IN CODE\n");
-	 //  	constantPool-> getClassData(superClass);
+//printf("load and resolve the super class NOW COMMENTED IN CODE\n");
+		if(strcmp(constantPool->getClassName(superClass),"java/lang/Object")!=0)//it is not  the java/lang/Object.class Class
+		{
+		  	constantPool-> getClassData(superClass);
+		}
 		/* to load and resolve the superInterfaces */
-printf("load and resolve the super interfaces NOW COMMENTED IN CODE\n");
+//printf("load and resolve the super interfaces NOW COMMENTED IN CODE\n");
 		for( i=0 ; i < interfacesCount ; i++)
 			constantPool-> getClassData(interfaces[i]);
+		
 }
 /*****************ARRAY USAGE**********************/
 /*****************ARRAY USAGE**********************/
@@ -93,8 +97,8 @@ ClassData::ClassData(const char* arrayName)
 {
 /*****************ARRAY USAGE**********************/
 /*****************ARRAY USAGE**********************/
-printf("Creating the class Data of an array\n");		
-printf("Creating the constant pool of an array\n");
+//printf("Creating the class Data of an array\n");		
+//printf("Creating the constant pool of an array\n");
 		constantPool = Heap::createArrayCP(arrayName,this );
 		accessFlags = 35;//public
 		thisClass = 1;
@@ -115,22 +119,27 @@ ClassData::~ClassData()
 
 void ClassData:: prepare(void)
 {
-printf("the preparation phase of the class\n");
+//printf("the preparation phase of the class\n");
 	/* get the size of an object of the parent class */
-	/*ClassData * parentClass=constantPool->getClassData(superClass);
-	objectSize = parentClass-> getObjectSize();*/
-	objectSize=0;
+	if(strcmp(constantPool->getClassName(superClass),"java/lang/Object")==0)
+		objectSize=0;
+	else
+	{
+		ClassData * parentClass=constantPool->getClassData(superClass);
+		objectSize = parentClass-> getObjectSize();
+	}
+	//objectSize=0;
 	for(u2 i=0; i < fieldsCount; i++)
 	{
 		/* if the field is static, then set it to the default value */
 		if(fields[i]-> isStatic())
 		{
 			fields[i]-> setDefaultValue();
-printf("setting the default value for a static feild\n");
+//printf("setting the default value for a static feild\n");
 		}
 		else /* this part is for nonstatic fields only */
 		{
-printf("Non static feild--->set the offset of the field in the cbject image\n");
+//printf("Non static feild--->set the offset of the field in the cbject image\n");
 			/* set the offset of the field in the cbject image */
 			fields[i]->setInstanceVariableSize();
 			fields[i]-> setOffset(objectSize);
@@ -147,15 +156,17 @@ bool ClassData:: isInitialized(void)
 
 void ClassData:: initialize(void)
 {
-printf("initializing the class--> commented now \n");
-printf("\tso it does only a loop to get the method clinit from the methods array\n");
+//printf("initializing the class--> commented now \n");
+//printf("\tso it does only a loop to get the method clinit from the methods array\n");
 	ClassData * myParent;
 	Method * clInit=NULL;
 	u2 i;
-	
-	/*myParent = constantPool->getClassData(superClass);
-	if( !(myParent->isInitialized()) )
-		myParent->initialize();*/
+	if(strcmp(constantPool->getClassName(superClass),"java/lang/Object")!=0)
+	{
+		myParent = constantPool->getClassData(superClass);
+		if( !(myParent->isInitialized()) )
+			myParent->initialize();
+	}
 	/* search in this class */
 	for(i=0; i<methodsCount ; i++)
 	{
@@ -166,14 +177,18 @@ printf("\tso it does only a loop to get the method clinit from the methods array
 		}	
 	}	
 	if(clInit)
-	;//execEng->exec(clInit);	
+	{
+		ExecutionEng * exec=ExecutionEng::getInstance();
+		exec->executeMethod(NULL,clInit);
+		//;//execEng->exec(clInit);	
+	}
 	initialized = true;
 }
 
 
 Field * ClassData:: lookupField(const char *name,const  char*desc)
 { 
-printf("return the Field block using its name and descriptor\n");
+//printf("return the Field block using its name and descriptor\n");
 	u2 i;
 	/* search in this class */
 	for(i=0; i<fieldsCount ; i++)
@@ -182,7 +197,7 @@ printf("return the Field block using its name and descriptor\n");
 		&&    (strcmp(desc  , fields[i]->getDesc()  )==0)       ) /* another method */
 			return fields[i];
 	}
-printf("searching the super interfaces for this field\n");	
+//printf("searching the super interfaces for this field\n");	
 	/* search the super interfaces */
 	/* what is meant by interface extended by this class */
 	ClassData * interface;
@@ -194,14 +209,14 @@ printf("searching the super interfaces for this field\n");
 			return field;
 	}
 	/* search in the super class */
-printf("searching the super class for this field\n");	
+//printf("searching the super class for this field\n");	
 	ClassData * myParent=constantPool->getClassData(superClass);
 	return myParent->lookupField(name,desc);
 }
 
 Method * ClassData:: lookupMethod(const char *name, const char*desc)
 {
-printf("return the Method block using its name and descriptor\n");
+//printf("return the Method block using its name and descriptor\n");
 	if(this->isInterface())
 	;/////////exception();
 	u2 i;
@@ -212,7 +227,7 @@ printf("return the Method block using its name and descriptor\n");
 		&&           (strcmp(desc  , methods[i]->getDesc()   )==0) ) /* another method */
 			return methods[i];
 	}
-printf("searching the super class for this Method\n");	
+//printf("searching the super class for this Method\n");	
 	/* search in the super class */
 	Method * method;
 	ClassData * myParent=constantPool->getClassData(superClass);
@@ -221,7 +236,7 @@ printf("searching the super class for this Method\n");
 	/* search the super interfaces */
 	/* what is meant by sueprinterface of interfaces 
 	 * directly implemented by this class */
-printf("searching the super interfaces for this Method\n");	
+//printf("searching the super interfaces for this Method\n");	
 	ClassData * interface;
 	for(i=0; i<interfacesCount ; i++)
 	{
@@ -234,19 +249,19 @@ printf("searching the super interfaces for this Method\n");
 
 Method* ClassData:: lookupInterfaceMethod(const char *name,const char *desc)
 {
-printf("look up interface method\n");
+//printf("look up interface method\n");
 	if(! (this->isInterface()) )
 	;////////////////////////
 	u2 i;
 	/* search in this interface */
-printf("search in this interface\n");
+//printf("search in this interface\n");
 	for(i=0; i<methodsCount ; i++)
 	{
 		if(   (strcmp(name ,methods[i]-> getName())==0)
 		&& (strcmp(desc , methods[i]->getDesc() )==0)  ) /* another method */
 			return methods[i];
 	}
-printf("search in this super interfaces\n");
+//printf("search in this super interfaces\n");
 	/* search the super interfaces */
 	/* what is meant by sueprinterface of interfaces 
 	 * directly implemented by this class */
@@ -269,7 +284,7 @@ u2 ClassData:: getObjectSize(void)
  * overriding for simpilicity */
 void ClassData::createMethodTable(void)
 {
-printf("Create the method table\n");
+//printf("Create the method table\n");
 	u2 count,i;
 	ClassData * parentClass=constantPool->getClassData(superClass); 
 	Method ** tempTable = parentClass->getMethodTable();
@@ -287,23 +302,23 @@ Method ** ClassData::getMethodTable(void)
 
 bool ClassData:: canCastedTo(ClassData *classData)
 {
-printf("check the validation of casting this class to another given class\n");
+//printf("check the validation of casting this class to another given class\n");
 	/* if this class is a class */
 	if( ! isInterface() )
 	{
-printf("This class is of type class not interface\n");		
+//printf("This class is of type class not interface\n");		
 		/* the other class is a class */
 		if( !(classData->isInterface()) )
 		{
-printf("the class to be casted to is of type class\n");
-printf("check if this class is a descendent of the given class\n");
+//printf("the class to be casted to is of type class\n");
+//printf("check if this class is a descendent of the given class\n");
 			if(isDescendentOf(classData)||this==classData)
 				return true;
 		}
 		else /* the other class is an interface */
 		{
-printf("the class to be casted to is of type interface\n");
-printf("check if this class implements the given interface\n");
+//printf("the class to be casted to is of type interface\n");
+//printf("check if this class implements the given interface\n");
 			if(isImplement(classData))
 				return true;
 		}
@@ -311,19 +326,19 @@ printf("check if this class implements the given interface\n");
 	/* this class is an interface */
 	else
 	{
-printf("This class is of type class not interface\n");		
+//printf("This class is of type class not interface\n");		
 		/* the other class is a class */
 		if( !(classData->isInterface()) )
 		{
-printf("the class to be casted to is of type class\n");
-printf("check if the class to be casted to is the Object class\n");
+//printf("the class to be casted to is of type class\n");
+//printf("check if the class to be casted to is the Object class\n");
 			if(classData->getFQName()=="Object")//another function
 				return true;
 		}
 		else /* the other class is an interface */
 		{
-printf("the class to be casted to is of type interface\n");
-printf("check if this class is a descendent of the given interface\n");
+//printf("the class to be casted to is of type interface\n");
+//printf("check if this class is a descendent of the given interface\n");
 			///////what is meant by superinterfaces
 			if(this==classData||isDescendentOf(classData))
 				return true;
@@ -334,8 +349,8 @@ printf("check if this class is a descendent of the given interface\n");
 
 bool ClassData:: isImplement(ClassData * theInterface)
 {
-printf("searches the interfaces array for the given interface");
-printf(" to check if this class implements this given interface\n");
+//printf("searches the interfaces array for the given interface");
+//printf(" to check if this class implements this given interface\n");
 	for(u2 i=0; i<interfacesCount; i++)
 	{
 		if(theInterface==constantPool->getClassData(i))
@@ -349,7 +364,7 @@ char * ClassData :: getFQName(void)
 
 bool ClassData:: isPublic(void)
 {
-printf("Check the access flags of the class to check if it is public\n");
+//printf("Check the access flags of the class to check if it is public\n");
 	if( ( accessFlags & ( ( (u2)1 ) ) ) ==0 )
 		return false;
 	return true;	
@@ -357,7 +372,7 @@ printf("Check the access flags of the class to check if it is public\n");
  
 bool ClassData:: isFinal(void)
 {
-printf("Check the access flags of the class to check if it is final\n");
+//printf("Check the access flags of the class to check if it is final\n");
 	if( ( accessFlags & ( ( (u2)1 )<<1 ) ) ==0 )
 		return false;
 	return true;	
@@ -365,7 +380,7 @@ printf("Check the access flags of the class to check if it is final\n");
 
 bool ClassData:: treatSuperMethodsSpecially()
 {
-printf("Check the access flags of the class to check if it treats the super class methods specially\n");
+//printf("Check the access flags of the class to check if it treats the super class methods specially\n");
 	if( ( accessFlags & ( ( (u2)1 )<< 5 ) ) ==0 )
 		return false;
 	return true;
@@ -373,7 +388,7 @@ printf("Check the access flags of the class to check if it treats the super clas
 
 bool ClassData:: isInterface(void)
 {
-printf("Check the access flags of the class to check if it is an interface\n");
+//printf("Check the access flags of the class to check if it is an interface\n");
 	if( ( accessFlags & ( ( (u2)1 )<< 9 ) ) ==0 )
 		return false;
 	return true;	
@@ -381,7 +396,7 @@ printf("Check the access flags of the class to check if it is an interface\n");
 
 bool ClassData:: isAbstract(void)
 {
-printf("Check the access flags of the class to check if it is abstract class\n");
+//printf("Check the access flags of the class to check if it is abstract class\n");
 	if( ( accessFlags & ( ( (u2)1 )<< 10 ) ) ==0 )
 		return false;
 	return true;	
@@ -389,14 +404,14 @@ printf("Check the access flags of the class to check if it is abstract class\n")
 
 Method * ClassData:: getActualMethod(Method* nonActualMethod)
 {
-printf("Get actual method--> it returns NULL so far\n");
-printf("--------------->if U reached here the error is a call to getActualMethod\n");
+//printf("Get actual method--> it returns NULL so far\n");
+//printf("--------------->if U reached here the error is a call to getActualMethod\n");
 return NULL;
 }
 
 bool ClassData:: isDescendentOf(ClassData* classData)
 {
-printf("Check if this class is a descendent of the given class\n");
+//printf("Check if this class is a descendent of the given class\n");
 	ClassData * myParent=constantPool->getClassData(superClass);
 	if( classData == myParent )
 		return true;
@@ -405,15 +420,14 @@ printf("Check if this class is a descendent of the given class\n");
 
 ClassData* ClassData::getSuperClassData()
 {
-printf("Get super class data --> it returns NULL so far\n");
-printf("--------------->if U reached here the error is a call to getSuperClassData\n");
-	//////////////////////////////////////////////
-	//		Where
-	//		Is	
-	//		IT
-	//		??????????????????????????????????????
-	//ClassData * myParent = constantPool->getClassData(superClass)
-	//return myParent;
-	return NULL;
+//printf("Get super class data --> it returns NULL so far\n");
+//printf("--------------->if U reached here the error is a call to getSuperClassData\n");
+	if(strcmp(constantPool->getClassName(superClass),"java/lang/Object") ==0)
+		return NULL;
+	else
+	{
+	ClassData * myParent = constantPool->getClassData(superClass);
+	return myParent;}
+	//return NULL;
 }
 

@@ -16,17 +16,14 @@ class ExecutionEng
 {
 public:
 
-	static ExecutionEng * geInstance(){
-		//this method should be implemented , for now it will return NULL
-		return NULL;
-	}
-	 
+	static ExecutionEng * getInstance();
+	static void deleteExec(); 
 	/**
 	* The constructor 
 	*    -creates the main thread data structure
 	*    -May take as an argument the max size of Thread stack...		
 	*/
-	ExecutionEng();
+	
 	/**
 	* @brief This method takes a method and executes it either in java or calling native implementation of the functoin	   * 
 	* PseudoCode:
@@ -82,9 +79,12 @@ public:
 	static double computDouble(u4 word1,u4 word2);
 	
 	
-	~ExecutionEng();
+	
 
 private:
+	ExecutionEng();
+	~ExecutionEng();
+	static ExecutionEng * execInstance;
 	Thread * mainThread;
 	void putArgInLocalVariables(Frame * invokingMethod, Frame * invokedMethod,Object * ob);
 	void calNumOfArg(char * p,unsigned int & argCount,unsigned int & opStackArgCount);

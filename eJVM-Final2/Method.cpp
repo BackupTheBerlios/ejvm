@@ -5,21 +5,21 @@
 
 Method::Method(const byte inputFile [],int * inputPtr,ConstantPool * cp)
 {
-printf("inside tha Method Constructor\n");
+//printf("inside tha Method Constructor\n");
 		constantPool = cp;
-printf("get the owner class of this method\n");
+//printf("get the owner class of this method\n");
 		myClass = constantPool->getOwnerClassData();
-printf("get the access flags of the method\n");
+//printf("get the access flags of the method\n");
 		accessFlags = ( ((u2)inputFile[*inputPtr]) <<8) +
 		inputFile[*inputPtr+1];
-printf("get the name index of this method\n");
+//printf("get the name index of this method\n");
 		nameIndex = ( ((u2)inputFile[*inputPtr+2]) <<8) +
 		inputFile[*inputPtr+3];
-printf("get the descriptor index of this method\n");
+//printf("get the descriptor index of this method\n");
 		descriptorIndex=( ((u2)inputFile[*inputPtr+4]) <<8)+
 		inputFile[*inputPtr+5];
 		/* get the number of attributes */
-printf("get the number of attributes of this method\n");
+//printf("get the number of attributes of this method\n");
 		u2 attributesCount=( ((u2)inputFile[*inputPtr+6]) <<8) +
 		inputFile[*inputPtr+7];
 		/* advance the input pointer */
@@ -30,23 +30,23 @@ printf("get the number of attributes of this method\n");
 		u2 attrNameIndex,attrLength;
 		u4 temp;
 		char * attrName;
-printf("a loop to fine the code attribute\n");
+//printf("a loop to fine the code attribute\n");
 		for(u2 i=0; i<attributesCount; i++)
 		{
-printf("get the attribute's name index\n");
+//printf("get the attribute's name index\n");
 			attrNameIndex = ( ((u2)inputFile[*inputPtr]) <<8)+
 			inputFile[*inputPtr+1];
 			temp = inputFile[*inputPtr+3];
-printf("get the attribute's length\n");
+//printf("get the attribute's length\n");
 			attrLength =( ((u4)inputFile[*inputPtr+2])<<24) +
 			(temp << 16) + ( ((u2)inputFile[*inputPtr+4])<<8)+
 			inputFile[*inputPtr+5];
-printf("get the attribute's name \n");
+//printf("get the attribute's name \n");
 			attrName = constantPool->getString(attrNameIndex);
 			/* Code Attribute */
 			if(strcmp(attrName,"Code") == 0 ) /*another function*/
 			{
-printf("the Code attribute is reached\n");
+//printf("the Code attribute is reached\n");
 			  byteCode = new ByteCode(inputFile,*inputPtr+6,  attrNameIndex,attrLength);
 	if(byteCode == NULL)
 	{
@@ -83,7 +83,7 @@ ClassData * Method:: getOwnerClassData(void)
 
 bool Method::isInit(void)
 {
-printf("inside Method::isInit\n");
+//printf("inside Method::isInit\n");
 	if(strcmp(constantPool->getString(nameIndex),"<init>") == 0)/*another function*/
 		return true;
 	else
@@ -102,7 +102,7 @@ char * Method:: getDesc(void)
 
 bool Method:: isPublic(void)
 {
-printf("inside Method::isPublic\n");
+//printf("inside Method::isPublic\n");
 	if( ( accessFlags & ( (u2)1 ) ) == 0 )
 		return false;
 	return true;
@@ -110,7 +110,7 @@ printf("inside Method::isPublic\n");
 
 bool Method:: isPrivate(void)
 {
-printf("inside Method::isPrivate\n");
+//printf("inside Method::isPrivate\n");
 	if( ( accessFlags & ( (u2)1 )<<1 ) == 0 )
 		return false;
 	return true;
@@ -118,7 +118,7 @@ printf("inside Method::isPrivate\n");
 
 bool Method:: isProtected(void)
 {
-printf("inside Method::isProtected\n");
+//printf("inside Method::isProtected\n");
 	if( ( accessFlags & ( (u2)1 )<<2 ) == 0 )
 		return false;
 	return true;
@@ -126,7 +126,7 @@ printf("inside Method::isProtected\n");
 
 bool Method:: isStatic(void)
 {
-printf("inside Method::isStatic\n");
+//printf("inside Method::isStatic\n");
 	if( ( accessFlags & ( (u2)1 )<<3 ) == 0 )
 		return false;
 	return true;
@@ -134,7 +134,7 @@ printf("inside Method::isStatic\n");
 
 bool Method:: isFinal(void)
 {
-printf("inside Method::isFinal\n");
+//printf("inside Method::isFinal\n");
 	if( ( accessFlags & ( (u2)1 )<<4 ) == 0 )
 		return false;
 	return true;
@@ -142,7 +142,7 @@ printf("inside Method::isFinal\n");
 
 bool Method:: isSynchronized(void)
 {
-printf("inside Method::isSynchronized\n");
+//printf("inside Method::isSynchronized\n");
 	if( ( accessFlags & ( (u2)1 )<<5 ) == 0 )
 		return false;
 	return true;
@@ -150,7 +150,7 @@ printf("inside Method::isSynchronized\n");
 
 bool Method:: isNative(void)
 {
-printf("inside Method::isNative\n");
+//printf("inside Method::isNative\n");
 	if( ( accessFlags & ( (u2)1 )<<8 ) == 0 )
 		return false;
 	return true;
@@ -158,7 +158,7 @@ printf("inside Method::isNative\n");
 
 bool Method:: isAbstract(void)
 {
-printf("inside Method::isAbstract\n");
+//printf("inside Method::isAbstract\n");
 	if( ( accessFlags & ( (u2)1 )<<10 ) == 0 )
 		return false;
 	return true;
@@ -166,7 +166,7 @@ printf("inside Method::isAbstract\n");
 
 bool Method:: isStrict(void)
 {
-printf("inside Method::isStrict\n");
+//printf("inside Method::isStrict\n");
 	if( ( accessFlags & ( (u2)1 )<<11 ) == 0 )
 		return false;
 	return true;
@@ -174,13 +174,13 @@ printf("inside Method::isStrict\n");
 
 u2 Method::getMaxLoacals()
 {
-printf("inside Method::getMaxLoacals\n");
+//printf("inside Method::getMaxLoacals\n");
 	 return		byteCode->getMaxLocals();
 }
 
 u2 Method::getMaxStack()
 {
-printf("inside Method::getMaxStack\n");
+//printf("inside Method::getMaxStack\n");
 	 return   byteCode->getMaxStack();
 }
 

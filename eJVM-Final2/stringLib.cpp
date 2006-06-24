@@ -87,7 +87,7 @@ Object* arrayOfUnicodeCharToString (Object* arrayObject)
 	ClassData * stringClass = Loader::getInstance()->getClassData("java/lang/String");
 	Object* stringObject = (Heap::getInstance())->createObject(stringClass);
 	Method* initMethod = stringClass->lookupMethod("<init>","([C)V");
-	ExecutionEng * exec =new ExecutionEng();
+	ExecutionEng * exec =ExecutionEng::getInstance();
 	exec->executeMethod(stringObject,initMethod,arrayObject);
 	return stringObject;
 }

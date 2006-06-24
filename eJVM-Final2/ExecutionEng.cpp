@@ -19,6 +19,22 @@ ExecutionEng::~ExecutionEng()
 	cout<<"ExecutionEngine Destructor"<<endl;
 }
 //--------------------------------------------------------------------------------------------------
+ExecutionEng * ExecutionEng::execInstance=NULL;
+
+ExecutionEng * ExecutionEng::getInstance()
+{
+	if(execInstance == NULL)
+		execInstance= new ExecutionEng;
+	
+	return execInstance;
+}
+//---------------------------------------------------------------------------------------------
+void ExecutionEng::deleteExec()
+{
+	delete execInstance;
+	execInstance=NULL;
+}
+//---------------------------------------------------------------------------------------------------
 void ExecutionEng::executeMethod(Object *object,Method * method,...)
 {
 	//1- get the current stack (with single thread, we only have the stack of mainThread).
@@ -1171,6 +1187,14 @@ void ExecutionEng::interpret(Thread * thread)
 					}
 					Method * nonActualMethod = constantPool->getMethodData((indexbyte1 << 8) | indexbyte2);
 					ClassData * nonActualMethodClass = nonActualMethod->getOwnerClassData();
+					if(strcmp(nonActualMethod->getName(),"<init>")==0//check if this the <init> of the object
+						&& nonActualMethodClass->getSuperClassData()==NULL)
+					{
+						cout<<"INVOKESPECIAL: "<<nonActualMethod->getName()<<"\t"<<nonActualMethod->getDesc()<<endl<<endl;
+						currentFrame->pop();
+						pc+=3;
+						break;
+					}
 					ClassData * currentClass = method->getOwnerClassData();
 					
 					/*if(currentClass->treatSuperMethodsSpecially()&&

@@ -9,7 +9,7 @@
 ConstantPool::ConstantPool(const byte inputFile [],int CPCount,
 int * inputPtr, ClassData * myClass)
 {
-printf("inside the constructor of the constant pool\n");
+//printf("inside the constructor of the constant pool\n");
 		u1 tag;  			/* the tag is the first byte of each entry */
 		int infoCount;  	/* the length ( in bytes) of the actual entry data */
 
@@ -17,9 +17,9 @@ printf("inside the constructor of the constant pool\n");
 		this-> CPCount = CPCount;
 		this-> myClass = myClass;
 		/* create the entry table and pointer table */
-printf("creating the constant pool table in the constant pool constructor\n");
+//printf("creating the constant pool table in the constant pool constructor\n");
 		entryTable = Heap:: createCPTable(CPCount);
-printf("creating the pointer table in the constant pool constructor\n");
+//printf("creating the pointer table in the constant pool constructor\n");
 		pointerTable = Heap:: createPointerTable(CPCount);
 
 fprintf(stdout,"fill the constant pool entries\n");
@@ -29,7 +29,7 @@ fprintf(stdout,"fill the constant pool entries\n");
 		{
 			/* initialize the pointer table to NULL
 		 	* as indication of not being resolved */
-printf("initialize the pointer table to NULL  as indication of not being resolved \n");
+//printf("initialize the pointer table to NULL  as indication of not being resolved \n");
 			pointerTable[i] = NULL;
 
 			tag = inputFile[*inputPtr];
@@ -116,10 +116,10 @@ fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_utf8_info\n",i);
 			}
 
 			/* create the current entry */
-printf("create the entry number %d in the constant pool\n",i);
+//printf("create the entry number %d in the constant pool\n",i);
 			entryTable[i] = Heap:: createCPTableEntry(infoCount+1);
 			/* fill the current entry with tag and data */
-printf("fill the current entry  %d in the constant pool with tag and data\n",i);
+//printf("fill the current entry  %d in the constant pool with tag and data\n",i);
 			for(int j=0 ; j <= infoCount ; j++)
 				entryTable[i][j] = inputFile[ (*inputPtr)+j ];
 			/* advance the input pointer */
@@ -134,10 +134,10 @@ ConstantPool::ConstantPool(const char * arrayName, ClassData * myClass)
 		this-> CPCount =5;
 		this-> myClass = myClass;
 		/* create the entry table and pointer table */
-printf("create the entry table and pointer table in the constant pool constructor for arays\n");
+//printf("create the entry table and pointer table in the constant pool constructor for arays\n");
 		entryTable = Heap:: createCPTable(CPCount);
 		pointerTable = Heap:: createPointerTable(CPCount);
-printf("initialize the pointer table to NULL  as indication of not being resolved \n");
+//printf("initialize the pointer table to NULL  as indication of not being resolved \n");
 		for(int i=1 ; i < CPCount ; i++)
 			/* initialize the pointer table to NULL  as indication of not being resolved */
 			pointerTable[i] = NULL;	
@@ -149,25 +149,25 @@ if(name == NULL)
 	exit(1);
 }
 		strcpy(name,arrayName);
-printf("put the class Object's Fully Qualified name in an char * obj\n");
+//printf("put the class Object's Fully Qualified name in an char * obj\n");
 		char * obj ="java/lang/Object";
 		pointerTable[1] = myClass;
 		pointerTable[3] = name;
 		pointerTable[4] = obj;
-printf("ask heap to create CPTableEntry number 1 in the constructor of constant pool of arrays\n");			
+//printf("ask heap to create CPTableEntry number 1 in the constructor of constant pool of arrays\n");			
 		entryTable[1] = Heap:: createCPTableEntry(3);
 		entryTable[1][0]=(u1)7;
 		entryTable[1][1]=(u1)0;
 		entryTable[1][2]=(u1)3;
-printf("ask heap to create CPTableEntry number 2 in the constructor of constant pool of arrays\n");		
+//printf("ask heap to create CPTableEntry number 2 in the constructor of constant pool of arrays\n");		
 		entryTable[2] = Heap:: createCPTableEntry(3);
 		entryTable[2][0]=(u1)7;
 		entryTable[2][1]=(u1)0;
 		entryTable[2][2]=(u1)4;
-printf("ask heap to create CPTableEntry number 3 in the constructor of constant pool of arrays\n");
+//printf("ask heap to create CPTableEntry number 3 in the constructor of constant pool of arrays\n");
 		entryTable[3] = Heap:: createCPTableEntry(1);
 		entryTable[3][0] = 1;
-printf("ask heap to create CPTableEntry number 4 in the constructor of constant pool of arrays\n");
+//printf("ask heap to create CPTableEntry number 4 in the constructor of constant pool of arrays\n");
 		entryTable[4] = Heap:: createCPTableEntry(1);
 		entryTable[4][0] = 1;
 }
@@ -181,13 +181,13 @@ ConstantPool::~ConstantPool()
 
 char * ConstantPool::getString(u2 UTF8Index)
 {
-printf("the ConstantPool -- getString\n");
+//printf("the ConstantPool -- getString\n");
 	/* if the entry is not of the type UTF-8 */
 	if(entryTable[UTF8Index][0] != 1)
 	//exception();
 	;
 	/* if the entry is resolved, then return the pointer directly*/	
-printf("if the entry is resolved, then return the pointer directly\n");
+//printf("if the entry is resolved, then return the pointer directly\n");
 	if( pointerTable[UTF8Index] != NULL )
 		return (char *)pointerTable[UTF8Index];
 	/* here, the entry is not resolved */
@@ -195,7 +195,7 @@ printf("if the entry is resolved, then return the pointer directly\n");
 	u2 entryLength,entryPtr,i,temp;
 	byte x,y,z;
 	/* get the length of the UTF8 in bytes */
-printf("get the length of the UTF8 in bytes\n");
+//printf("get the length of the UTF8 in bytes\n");
 	entryLength=(((u2)entryTable[UTF8Index][1])<<8)+entryTable[UTF8Index][2];
 	str = new char [entryLength+1];
 if(str == NULL)
@@ -204,13 +204,13 @@ if(str == NULL)
 	printf(" in the constant pool ::getString \n");
 	exit(1);
 }
-printf("initialize the string to NULLs\n");
+//printf("initialize the string to NULLs\n");
 	/* initialize the string */
 	for(i=0; i<=entryLength ;i++)
 		str[i] = '\0';	
 	/* fill str from the UTF8 */
 	entryPtr=3;
-printf("fill the string from the UTF8 string got\n");
+//printf("fill the string from the UTF8 string got\n");
 	while(entryPtr<entryLength+3)
 	{
 		/* the character consists of only one byte "0*******" */
@@ -254,12 +254,12 @@ printf("fill the string from the UTF8 string got\n");
 
 ClassData * ConstantPool:: getClassData(u2 index)
 {
-printf("ConstantPool-- getClassData\n");
+//printf("ConstantPool-- getClassData\n");
 	/* if the entry is not of the type "ClassInfo"  */
 	if( entryTable [index][0] != (byte)7 )
 		//exception();
 		;
-printf("if the entry is resolved, then return the pointer directly \n");
+//printf("if the entry is resolved, then return the pointer directly \n");
 	/* if the entry is resolved, then return the pointer directly*/	
 	if( pointerTable[index] != NULL )
 		return (ClassData *)pointerTable[index];
@@ -267,21 +267,21 @@ printf("if the entry is resolved, then return the pointer directly \n");
 	ClassData * theClass;
 	char * className;
 	u2 classNameIndex;
-printf("the entry is not resolved\n");	
+//printf("the entry is not resolved\n");	
 	classNameIndex = ( ((u2)entryTable[index][1]) <<8 ) + entryTable[index][2];
 	className = getString(classNameIndex);
 	Loader * loader = Loader::getInstance();
-printf("Loader * loader = Loader::getInstance\n");
+//printf("Loader * loader = Loader::getInstance\n");
 	theClass = loader-> getClassData(className);
 	/* access permission goes here */
 	accessPermissionClass(theClass);
 	//theClass -> prepare();
 	/* the verification goes here */
-printf("initialize the class if it is not initialized\n");
+//printf("initialize the class if it is not initialized\n");
 	if(!theClass->isInitialized())
 		theClass -> initialize();
 	/* the resoution goes here */
-printf("the entry of the pointer table corresponding to this class is set to a pointer to the loaded class data \n");
+//printf("the entry of the pointer table corresponding to this class is set to a pointer to the loaded class data \n");
 	pointerTable[index] = theClass;
 	return theClass;
 }
@@ -289,16 +289,16 @@ printf("the entry of the pointer table corresponding to this class is set to a p
 
 Field * ConstantPool:: getFieldData(u2 index)
 {
-printf("ConstantPool-- getFieldData\n");
+//printf("ConstantPool-- getFieldData\n");
 	/* if the entry is not of the type "FieldInfo"  */
 	if( entryTable [index][0] != (byte)9 )
 	/* exception()*/ ;
-printf("if the entry is resolved, then return the pointer directly \n");
+//printf("if the entry is resolved, then return the pointer directly \n");
 	/* if the entry is resolved, then return the pointer directly*/	
 	if( pointerTable[index] != NULL )
 		return (Field *)pointerTable[index];
 	/* here, the entry is not resolved */
-printf("the entry is not resolved\n");
+//printf("the entry is not resolved\n");
 	/* name and descriptor of the field*/
 	char * fieldName, *fieldDesc; 
 	/* the two parts of the fieldInfo entry */
@@ -306,17 +306,17 @@ printf("the entry is not resolved\n");
 	/* the class that contains the desired field */
 	ClassData * theClass;
 	/* get the classIndex part of the entry */
-printf("get the classIndex part of the entry\n");
+//printf("get the classIndex part of the entry\n");
 	classIndex = ( ((u2)entryTable[index][1] )<<8 ) + entryTable[index][2];
 	/* resolve the class that contains the desired field */
-printf("resolve the class that contains the desired field \n");
+//printf("resolve the class that contains the desired field \n");
 	theClass = getClassData(classIndex);
 	/* get the nameAndType part of the entry */
 	nameTypeIndex = ( ((u2)entryTable[index][3] )<<8 ) + entryTable[index][4];
-printf("call to get name and type twice to get the name and descriptor of the feild\n");
+//printf("call to get name and type twice to get the name and descriptor of the feild\n");
 	fieldName = getNameAndType(nameTypeIndex,0);
 	fieldDesc = getNameAndType(nameTypeIndex,1);
-printf("call look up field on the class containing this field\n");
+//printf("call look up field on the class containing this field\n");
 	pointerTable[index] = theClass-> lookupField(fieldName,fieldDesc);
 	/* if the lookup failed */
 	if(pointerTable[index] == NULL)
@@ -331,18 +331,18 @@ printf("call look up field on the class containing this field\n");
 
 Method * ConstantPool:: getMethodData(u2 index)
 {
-printf("inside ConstantPool-- getMethodData\n");
+//printf("inside ConstantPool-- getMethodData\n");
 	/* if the entry is not of the type "MethodInfo"  */
 	if( entryTable [index][0] != (byte)10 && 
 	entryTable [index][0] != (byte)11)
 	//exception();
 	;
-printf("if the entry is resolved, then return the pointer directly \n");
+//printf("if the entry is resolved, then return the pointer directly \n");
 	/* if the entry is resolved, then return the pointer directly*/	
 	if( pointerTable[index] != NULL )
 		return (Method *)pointerTable[index];
 	/* here, the entry is not resolved */
-printf("the entry is not resolved\n");
+//printf("the entry is not resolved\n");
 	/* get the classIndex part of the entry */
 	/* name and descriptor of the method*/
 	char * methodName, *methodDesc; 
@@ -350,10 +350,10 @@ printf("the entry is not resolved\n");
 	u2 classIndex , nameTypeIndex;
 	/* the class that contains the desired method */
 	ClassData * theClass;
-printf("get the classIndex part of the entry\n");		
+//printf("get the classIndex part of the entry\n");		
 	classIndex = ( ((u2)entryTable[index][1] )<<8 ) + entryTable[index][2];
 	/* resolve the class that contains the desired method */
-printf("resolve the class that contains the desired Method \n");
+//printf("resolve the class that contains the desired Method \n");
 	theClass = getClassData(classIndex);
 	
 	//
@@ -362,12 +362,12 @@ printf("resolve the class that contains the desired Method \n");
 	//	//exception();
 	//;
 	//	
-printf("call to get name and type twice to get the name and descriptor of the feild\n");	
+//printf("call to get name and type twice to get the name and descriptor of the feild\n");	
 	/* get the nameAndType part of the entry */
 	nameTypeIndex = ( ((u2)entryTable[index][3] )<<8 ) + entryTable[index][4];
 	methodName = getNameAndType(nameTypeIndex,0);
 	methodDesc = getNameAndType(nameTypeIndex,1);
-printf("check if this is a member method of an class or an interface\n");		
+//printf("check if this is a member method of an class or an interface\n");		
 	/* check the type of the cp entry */
 	if(entryTable [index][0] == (byte)10)
 		pointerTable[index] = theClass-> lookupMethod(methodName,methodDesc);
@@ -415,10 +415,10 @@ Object * ConstantPool:: getStringObject(u2 ind)
 
 char * ConstantPool:: getNameAndType(u2 nameTypeIndex,int option)
 {
-printf("inside ConstantPool-- getNameAndType\n");
+//printf("inside ConstantPool-- getNameAndType\n");
 	char * str;
 	u2 index;
-printf("check if the entry is not of type NameAndType \n");
+//printf("check if the entry is not of type NameAndType \n");
 	/* if the entry is not of the type "NameAndType" */
 	if(entryTable[nameTypeIndex][0] != 12)
 	//exception();
@@ -431,14 +431,14 @@ printf("check if the entry is not of type NameAndType \n");
 	else
 		index = (( (u2)entryTable[nameTypeIndex][3] ) <<8) + 
 		entryTable[nameTypeIndex][4];
-printf("Call To get String\n");	
+//printf("Call To get String\n");	
 	str = getString(index);	
 	return str;
 }
 
 void ConstantPool::accessPermissionClass(ClassData * theClass)
 {
-printf("inside ConstantPool--accessPermissionClass\n");
+//printf("inside ConstantPool--accessPermissionClass\n");
 	if( !(theClass->isPublic()) )
 	/* exception() */ ;
 	//the two classes are members of the same runtime package
@@ -446,16 +446,16 @@ printf("inside ConstantPool--accessPermissionClass\n");
 
 void ConstantPool::accessPermissionField(Field * theField)
 {
-printf("ConstantPool--accessPermissionField\n");
+//printf("ConstantPool--accessPermissionField\n");
 	/* what is the declaring class */
 	bool pub = theField->isPublic();
 	if(!pub)
 	{
 		bool prot = theField->isProtected();
 		ClassData * currentClass, * declaringClass; 
-printf("get the class data of the current class that uses this field\n");
+//printf("get the class data of the current class that uses this field\n");
 		currentClass = this->getOwnerClassData();
-printf("get the class data of the class that owns this field\n");
+//printf("get the class data of the class that owns this field\n");
 		declaringClass = theField->getOwnerClass();
 	
 		bool cond1=(currentClass->isDescendentOf(declaringClass)) 
@@ -476,7 +476,7 @@ printf("get the class data of the class that owns this field\n");
 
 void ConstantPool::accessPermissionMethod(Method * theMethod)
 {
-printf("ConstantPool--accessPermissionMethod\n");
+//printf("ConstantPool--accessPermissionMethod\n");
 /* what is the declaring class */
 	bool pub = theMethod->isPublic();
 	if(!pub)
@@ -484,9 +484,9 @@ printf("ConstantPool--accessPermissionMethod\n");
 		bool prot = theMethod->isProtected();
 		ClassData * currentClass, * declaringClass; 
 		currentClass = this->getOwnerClassData();
-printf("get the class data of the current class that uses this method\n");
+//printf("get the class data of the current class that uses this method\n");
 		declaringClass = theMethod->getOwnerClassData();
-printf("get the class data of the class that owns this method\n");	
+//printf("get the class data of the class that owns this method\n");	
 		bool cond1=(currentClass->isDescendentOf(declaringClass)) 
 		|| (currentClass==declaringClass) ;
 		if( !(cond1&&prot))
@@ -509,7 +509,7 @@ ClassData * ConstantPool:: getOwnerClassData(void)
 
 void ConstantPool:: getWord(u2 index,u4 &word)
 {
-printf("inside ConstantPool-- getWord\n");
+//printf("inside ConstantPool-- getWord\n");
 	/* CONSTANT_Integer_info */
 	if(entryTable[index][0]!=3&&entryTable[index][0]!=4)
 	/* exception(); */ ;
@@ -521,7 +521,7 @@ printf("inside ConstantPool-- getWord\n");
 
 void ConstantPool:: get2Words(u2 index,u4 &word1,u4 &word2)
 {
-printf("inside ConstantPool-- get2Words\n");
+//printf("inside ConstantPool-- get2Words\n");
 	/* CONSTANT_Long_info */
 	if(entryTable[index][0]!=5&&entryTable[index][0]!=6)
 	/* exception(); */ ;
@@ -538,7 +538,7 @@ printf("inside ConstantPool-- get2Words\n");
 
 char * ConstantPool:: getClassName(u2 classIndex)
 {
-printf("inside ConstantPool-- getClassName\n");
+//printf("inside ConstantPool-- getClassName\n");
 	/* we will not check here if the
 	 * entry is of type "CONSTAVT_CLASS"*/
 	u2 utf8Index = ( ((u2)entryTable[classIndex][1])<<8) +	entryTable[classIndex][2];

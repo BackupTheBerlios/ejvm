@@ -3,17 +3,17 @@
 
 Field::Field(const byte inputFile [],int * inputPtr,ConstantPool * cp)
 {
-printf("inside the Field constructor\n");
+//printf("inside the Field constructor\n");
 		constantPool = cp;
-printf("get the owner class from the constant pool\n");
+//printf("get the owner class from the constant pool\n");
 		myClass = constantPool->getOwnerClassData();
-printf("extract the acess flags\n");
+//printf("extract the acess flags\n");
 		accessFlags = ( ((u2)inputFile[*inputPtr]) <<8) +
 		inputFile[*inputPtr+1];
-printf("extract the filed name index\n");
+//printf("extract the filed name index\n");
 		nameIndex = ( ((u2)inputFile[*inputPtr+2]) <<8) +
 		inputFile[*inputPtr+3];
-printf("extract the filed descriptor index\n");
+//printf("extract the filed descriptor index\n");
 		descriptorIndex=( ((u2)inputFile[*inputPtr+4]) <<8)+
 		inputFile[*inputPtr+5];
 		/* get the number of attributes */
@@ -21,28 +21,28 @@ printf("extract the filed descriptor index\n");
 		inputFile[*inputPtr+7];
 		/* advance the input pointer */
 		*inputPtr += 8;
-printf("store tha constant value attribute if any\n");
+//printf("store tha constant value attribute if any\n");
 		/* store only the "ConstantValue Attribute" if any */
 		u2 attrNameIndex,attrLength;
 		u4 temp;
 		char * attrName;
-printf("perform a loop to check all attributes\n");
+//printf("perform a loop to check all attributes\n");
 		for(u2 i=0; i<attributesCount; i++)
 		{
-printf("get tha attribute's name index\n");
+//printf("get tha attribute's name index\n");
 			attrNameIndex = ( ((u2)inputFile[*inputPtr]) <<8)+
 			inputFile[*inputPtr+1];
 			temp = inputFile[*inputPtr+3];
-printf("get the attribute's length\n");
+//printf("get the attribute's length\n");
 			attrLength =( ((u4)inputFile[*inputPtr+2])<<24) +
 			(temp << 16) + ( ((u2)inputFile[*inputPtr+4])<<8)+
 			inputFile[*inputPtr+5];
-printf("get the attribute name from the constant pool using its index\n");
+//printf("get the attribute name from the constant pool using its index\n");
 			attrName = constantPool->getString(attrNameIndex);
 			/* ConstantValue Attribute */
 			if(strcmp(attrName,"ConstantValue")==0 )/*another function*/
 			{
-printf("the attribute has a ConstantValue --> store it\n");
+//printf("the attribute has a ConstantValue --> store it\n");
 			  constantValIndex=(((u2)inputFile[*inputPtr+6])<<8)
 			  +inputFile[*inputPtr+7];
 			}
@@ -57,8 +57,8 @@ Field::~Field()
 
 void Field::setDefaultValue(void)
 {
-printf("inside Field::setDefaultValue\n");
-printf("get the descriptor of this field\n");
+//printf("inside Field::setDefaultValue\n");
+//printf("get the descriptor of this field\n");
 	char * str = constantPool->getString(descriptorIndex);
 	switch(str[0])
 	{
@@ -213,8 +213,8 @@ if(staticValue == NULL)
 
 void Field::setInstanceVariableSize()
 {
-printf("inside Field::setInstanceVariableSize\n");
-printf("get the descriptor of this field\n");
+//printf("inside Field::setInstanceVariableSize\n");
+//printf("get the descriptor of this field\n");
 	char * str = constantPool->getString(descriptorIndex);
 	switch(str[0])
 	{
@@ -296,7 +296,7 @@ void Field:: setOffset(u2 offset)
 
 void Field::putStaticValue(u4 word1,u4 word2)
 {
-printf("inside Field::putStaticValue\n");
+//printf("inside Field::putStaticValue\n");
 	/* staticValue[0]=LSB (small indian)*/
 	switch(size)
 	{
@@ -339,7 +339,7 @@ printf("inside Field::putStaticValue\n");
 
 void Field:: getStaticValue(u4 &word1,u4 &word2)
 {
-printf("inside Field:: getStaticValue\n");
+//printf("inside Field:: getStaticValue\n");
 	/* staticValue[0]=LSB (small indian)*/
 	switch(size)
 	{
@@ -382,7 +382,7 @@ printf("inside Field:: getStaticValue\n");
 
 bool Field::isPublic(void)
 {
-printf("inside Field::isPublic\n");
+//printf("inside Field::isPublic\n");
 	if( ( accessFlags & ( (u2)1 ) ) == 0 )
 		return false;
 	return true;	
@@ -390,7 +390,7 @@ printf("inside Field::isPublic\n");
 
 bool Field::isPrivate(void)
 {
-printf("inside Field::isPrivate\n");
+//printf("inside Field::isPrivate\n");
 	if( ( accessFlags & ( (u2)1 )<<1 ) == 0 )
 		return false;
 	return true;	
@@ -398,7 +398,7 @@ printf("inside Field::isPrivate\n");
 
 bool Field::isProtected(void)
 {
-printf("inside Field::isProtected\n");
+//printf("inside Field::isProtected\n");
 	if( ( accessFlags & ( (u2)1 )<<2 ) == 0 )
 		return false;
 	return true;	
@@ -406,7 +406,7 @@ printf("inside Field::isProtected\n");
 
 bool Field::isStatic(void)
 {
-printf("inside Field::isStatic\n");
+//printf("inside Field::isStatic\n");
 	if( ( accessFlags & ( (u2)1 )<<3 ) == 0 )
 		return false;
 	return true;	
@@ -414,7 +414,7 @@ printf("inside Field::isStatic\n");
 
 bool Field::isFinal(void)
 {
-printf("inside Field::isFinal\n");
+//printf("inside Field::isFinal\n");
 	if( ( accessFlags & ( (u2)1 )<<4 ) == 0 )
 		return false;
 	return true;	
@@ -422,7 +422,7 @@ printf("inside Field::isFinal\n");
 
 bool Field::isVolatile(void)
 {
-printf("inside Field::isVolatile\n");
+//printf("inside Field::isVolatile\n");
 	if( ( accessFlags & ( (u2)1 )<<6 ) == 0 )
 		return false;
 	return true;	
@@ -430,7 +430,7 @@ printf("inside Field::isVolatile\n");
 
 bool Field::isTransient(void)
 {
-printf("inside Field::isTransient\n");
+//printf("inside Field::isTransient\n");
 	if( ( accessFlags & ( (u2)1 )<<7 ) == 0 )
 		return false;
 	return true;	
