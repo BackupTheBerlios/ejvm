@@ -31,7 +31,7 @@
   #define e_PROMOTE_STAK(type)  {op_stk_top += ( sizeof( typeof(type) )/ sizeof( typeof(op_stk_top) ) );}
   
 
-  #define e_PUSH_OPERAND_STACK(value) { e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(value) = value ;}; e_PROMOTE_STAK( value)  
+  #define e_PUSH_OPERAND_STACK(value) {  e_PROMOTE_STAK( value) ; e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(value) = value ;}  
   #define e_STORE_TO_LOCAL_AT_INDEX(value,indx) e_ACCESS_LOCAL_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(value ,indx) = value
  
   #define e_READ_FROM_STREAM_as_Then_Cast_as(stream,T1 ,T2) ( (T2) (*( (T1*) stream ) ) ) 
@@ -308,7 +308,7 @@ assert(sizeof( u1_t ) == 1 );
   locals = ((typeof(locals))  malloc( ((int)method->maxLocals)  * sizeof(e_j_word)));
     
   //Allocating Operand Stack
-  op_stk = ((typeof(op_stk))  malloc( ((int)method->maxStack)  * sizeof(e_j_word)));
+  op_stk = ((typeof(op_stk))  malloc( ((int)method->maxStack+1)  * sizeof(e_j_word)));
   
   
   
@@ -319,6 +319,7 @@ assert(sizeof( u1_t ) == 1 );
 	code_sofar=code;
 	pc = 0;
 	op_stk_top = (op_stk);
+	op_stk++;
 	
 
 /*

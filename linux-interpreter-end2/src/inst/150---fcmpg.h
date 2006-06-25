@@ -29,11 +29,13 @@
 
 #define e_CORE_fcmpg 	 \
 	 e_CORE_fcmpg_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
+         if( e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_float)  !=  e_ACCESS_OPERAND_STACK_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_float,1)){\
+         	e_ACCESS_OPERAND_STACK_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_integer,1) = 0;\
+          }else\
+          	  if( e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_float)  <  e_ACCESS_OPERAND_STACK_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_float,1)){\
+          		e_ACCESS_OPERAND_STACK_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_integer,1) = -1;\
+	         }else \
+	         	e_ACCESS_OPERAND_STACK_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_integer,1) = 1;\
+	  e_RETRACT_STAK(e_j_float);\
 	 e_CORE_fcmpg_END: \
 
