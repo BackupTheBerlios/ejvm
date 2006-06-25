@@ -29,7 +29,7 @@
 
 #define e_CORE_dload_3 	 \
 	 e_CORE_dload_3_START:   \
+	 		e_PROMOTE_STAK(e_j_double); \
 		e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_double) = e_ACCESS_LOCAL_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_double,3) ;\
-		e_PROMOTE_STAK(e_j_double); \
 	 e_CORE_dload_3_END: \
 

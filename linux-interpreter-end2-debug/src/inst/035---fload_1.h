@@ -29,7 +29,7 @@
 
 #define e_CORE_fload_1 	 \
 	 e_CORE_fload_1_START:   \
+	 e_PROMOTE_STAK(e_j_float); \
  	 	e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_float) = e_ACCESS_LOCAL_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_float,1) ;\
-		e_PROMOTE_STAK(e_j_float); \
 	 e_CORE_fload_1_END: \
 

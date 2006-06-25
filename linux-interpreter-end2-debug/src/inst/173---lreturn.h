@@ -29,11 +29,20 @@
 
 #define e_CORE_lreturn 	 \
 	 e_CORE_lreturn_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
+ 	 {\
+	 auto e_frame_t* temp ;\
+         pop(&java_stack ,(const void**) &temp);\
+         if (NULL == temp){\
+         	e_FREE_CURRENT_FRAME;\
+         	return 0;\
+         }else{\
+         	auto e_j_long ltemp = e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_long);\
+         	e_FREE_CURRENT_FRAME;\
+         	e_SET_CURRENT_FRAME(temp)\
+         	e_PUSH_OPERAND_STACK(ltemp);\
+         	free(temp);\
+         	goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];\
+         }\
+	 }\
 	 e_CORE_lreturn_END: \
 

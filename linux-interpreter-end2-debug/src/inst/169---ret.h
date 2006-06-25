@@ -29,11 +29,7 @@
 
 #define e_CORE_ret 	 \
 	 e_CORE_ret_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
+		code_sofar = e_ACCESS_LOCAL_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(typeof(code_sofar),e_READ_FROM_STREAM_as_Then_Cast_as((code_sofar+1),e_j_u_byte,e_j_u_byte) );\
+		goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];\
 	 e_CORE_ret_END: \
 

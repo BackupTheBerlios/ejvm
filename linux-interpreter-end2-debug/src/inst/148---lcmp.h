@@ -29,11 +29,14 @@
 
 #define e_CORE_lcmp 	 \
 	 e_CORE_lcmp_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
-	 e_CORE_lcmp_END: \
+         if( e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_long)  ^  e_ACCESS_OPERAND_STACK_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_long,2)){\
+         	e_ACCESS_OPERAND_STACK_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_integer,3) = 0;\
+          }else\
+          	  if( e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_long)  <  e_ACCESS_OPERAND_STACK_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_long,2)){\
+          		e_ACCESS_OPERAND_STACK_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_integer,3) = -1;\
+	         }else \
+	         	e_ACCESS_OPERAND_STACK_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_integer,3) = 1;\
+	  e_RETRACT_STAK(e_j_long);\
+	  e_RETRACT_STAK(e_j_integer);\
+          e_CORE_lcmp_END:
 

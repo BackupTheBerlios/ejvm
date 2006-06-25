@@ -28,12 +28,21 @@
 
 
 #define e_CORE_ireturn 	 \
-	 e_CORE_ireturn_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
+	 e_CORE_ireturn_START:\
+	 {\
+	 auto e_frame_t* temp ;\
+         pop(&java_stack ,(const void**) &temp);\
+         if (NULL == temp){\
+         	e_FREE_CURRENT_FRAME;\
+         	return 0;\
+         }else{\
+         	auto e_j_integer itemp = e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_integer);\
+         	e_FREE_CURRENT_FRAME;\
+         	e_SET_CURRENT_FRAME(temp)\
+         	e_PUSH_OPERAND_STACK(itemp);\
+         	free(temp);\
+         	goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];\
+         }\
+	 }\
 	 e_CORE_ireturn_END: \
 

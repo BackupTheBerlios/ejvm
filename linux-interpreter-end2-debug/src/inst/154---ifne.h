@@ -29,11 +29,14 @@
 
 #define e_CORE_ifne 	 \
 	 e_CORE_ifne_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
-	 e_CORE_ifne_END: \
+ 	if(! e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_integer) ){\
+		/*True*/\
+		e_RETRACT_STAK(e_j_integer);\
+		e_PROCEDE_TO(e_STEP_OF_ifeq);\
+	}else{\
+		/*False*/\
+		e_RETRACT_STAK(e_j_integer);\
+		e_PROCEDE_TO(e_READ_FROM__JAVA_BYTE_STREAM_16((code_sofar+1),e_j_short));\
+ 	}\
+ 	e_CORE_ifne_END: \
 

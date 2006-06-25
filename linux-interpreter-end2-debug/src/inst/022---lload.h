@@ -29,7 +29,6 @@
 
 #define e_CORE_lload 	 \
 	 e_CORE_lload_START:   \
- 	e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_long) = e_ACCESS_LOCAL_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_long,e_READ_FROM_STREAM_as_Then_Cast_as(code_sofar,e_j_u_byte , e_j_integer)) ;\
-		e_PROMOTE_STAK(e_j_long); \
+ 	e_PUSH_OPERAND_STACK((e_j_long)  e_ACCESS_LOCAL_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_long,e_READ_FROM_STREAM_as_Then_Cast_as(code_sofar,e_j_u_byte , e_j_integer))) ;\
 	 e_CORE_lload_END: \
 
