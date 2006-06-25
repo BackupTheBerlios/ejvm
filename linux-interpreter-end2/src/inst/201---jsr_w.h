@@ -29,11 +29,7 @@
 
 #define e_CORE_jsr_w 	 \
 	 e_CORE_jsr_w_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
+  		e_PUSH_OPERAND_STACK((code_sofar + e_STEP_OF_jsr_w  ));\
+ 		e_PROCEDE_TO( e_READ_FROM__JAVA_BYTE_STREAM_32((code_sofar+1),e_j_integer));\
 	 e_CORE_jsr_w_END: \
 

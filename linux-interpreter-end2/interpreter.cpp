@@ -36,7 +36,17 @@
   #define e_STORE_TO_LOCAL_AT_INDEX(value,indx) e_ACCESS_LOCAL_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(value ,indx) = value
  
   #define e_READ_FROM_STREAM_as_Then_Cast_as(stream,T1 ,T2) ( (T2) (*( (T1*) stream ) ) ) 
-  		  		
+  
+  #define e_READ_FROM__JAVA_BYTE_STREAM_16(start,type)\
+  	((e_READ_FROM_STREAM_as_Then_Cast_as(start , e_j_u_byte , type)<<8)|\
+  	e_READ_FROM_STREAM_as_Then_Cast_as((start+1) , e_j_u_byte , type))
+
+   #define e_READ_FROM__JAVA_BYTE_STREAM_32(start,type)\
+  	((e_READ_FROM_STREAM_as_Then_Cast_as(start , e_j_u_byte , type)<<24)|\
+  	(e_READ_FROM_STREAM_as_Then_Cast_as((start +1) , e_j_u_byte , type)<<16)|\
+  	(e_READ_FROM_STREAM_as_Then_Cast_as((start +2), e_j_u_byte , type)<<16)|\
+  	(e_READ_FROM_STREAM_as_Then_Cast_as((start +3), e_j_u_byte , type)))
+  
 
   #define e_FREE_CURRENT_FRAME \
   		free(locals);\
@@ -54,6 +64,8 @@
   #define e_PROCEDE_TO(offset)\
 	 code_sofar += offset  ;\
 	goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];
+	
+
   		
 
 

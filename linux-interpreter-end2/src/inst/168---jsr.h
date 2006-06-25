@@ -26,14 +26,13 @@
 //	 unsigned int*  	  locals ;    /* local variables   */	
 //	 e_byte_t*            code  ;    /*byte-code stream   */	
 
-
+/*
+ * push address of next on op stack
+ * d goto current+ siged 16 bit
+ * */
 #define e_CORE_jsr 	 \
 	 e_CORE_jsr_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
-	 e_CORE_jsr_END: \
+ 		e_PUSH_OPERAND_STACK((code_sofar + e_STEP_OF_jsr  ));\
+ 		e_PROCEDE_TO( e_READ_FROM__JAVA_BYTE_STREAM_16((code_sofar+1),e_j_short));\
+  	 e_CORE_jsr_END:
 

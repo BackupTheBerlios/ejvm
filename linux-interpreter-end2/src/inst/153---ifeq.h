@@ -36,7 +36,7 @@
 	}else{\
 		/*True*/\
 		e_RETRACT_STAK(e_j_integer);\
-		e_PROCEDE_TO(e_READ_FROM_STREAM_as_Then_Cast_as((code_sofar+1),e_j_short,e_j_integer));\
+		e_PROCEDE_TO(e_READ_FROM__JAVA_BYTE_STREAM_16((code_sofar+1),e_j_short));\
 	}\
 	e_CORE_ifeq_END: \
 
