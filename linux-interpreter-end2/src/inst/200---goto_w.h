@@ -29,11 +29,6 @@
 
 #define e_CORE_goto_w 	 \
 	 e_CORE_goto_w_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
+		e_PROCEDE_TO(e_READ_FROM_STREAM_as_Then_Cast_as((code_sofar+1),e_j_integer ,e_j_integer));\
 	 e_CORE_goto_w_END: \
 

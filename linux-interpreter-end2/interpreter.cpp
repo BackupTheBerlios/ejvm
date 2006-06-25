@@ -1,6 +1,7 @@
 #include"ByteCode.h"
 #include"ExecutionEng.h" 
 #include"./src/inst.h"
+#include"stk_operations.h"
 
 
 /*
@@ -41,6 +42,15 @@
   		free(locals);\
   		free(op_stk);
   		
+  		
+  #define e_SET_CURRENT_FRAME(temp)\
+  	  code = temp->code;\
+	  code_sofar = temp->code_sofar;\
+	  method = temp->method;\
+	  locals =  temp->locals;\
+	  op_stk = temp->op_stk;\
+	  op_stk_top = temp->op_stk_top;
+  	
   #define e_PROCEDE_TO(offset)\
 	 code_sofar += offset  ;\
 	goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];
@@ -291,7 +301,7 @@ assert(sizeof( u1_t ) == 1 );
 	e_j_word*  	  locals ;            /* 	local variables     		*/
 	e_j_u_byte* 	  code   ; 	  		  /* 	byte-code stream    		*/	
 	e_j_u_byte* 	  code_sofar   ; 	  /* 	current byte-code stream    */	
-	
+	gnrc_node_t*      java_stack   ;	
 
 
 /*
@@ -313,8 +323,11 @@ assert(sizeof( u1_t ) == 1 );
     
   //Allocating Operand Stack
   op_stk = ((typeof(op_stk))  malloc( ((int)method->maxStack+1)  * sizeof(e_j_word)));
+
+  java_stack = NULL;
   
-  
+
+ 
   
 /* Intiailization	
  * ==============
@@ -1856,7 +1869,7 @@ e_label_areturn :
 	e_console_log_end
 	e_TRACE_ANNOUNCE_INSTRUCTION(areturn) ;
 e_label_return :
-
+	
 	e_console_log_start(return)
 	e_CORE_return ;
 	e_console_log_end

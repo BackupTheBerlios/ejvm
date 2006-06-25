@@ -76,50 +76,30 @@ public:
 
 
 
- typedef
-
- typedef struct ConstantPool{};
 
 
- typedef struct method_t{
-  unsigned int operand_stack_length ;
-
-  unsigned int locals_length ;
-
-  unsigned int byteCodeLength ;
-
-  e_byte_t* code ;
-
-
- };
-
-
- typedef struct e_frame_t{
-  unsigned int pc ;
-
-  e_j_word* op_stk ;
-
-  e_j_word* op_stk_top;
-
-  e_j_word* locals ;
-
-  e_byte_t* code ;
-
-  e_byte_t* code_sofar ;
-
-  }e_frame_t;
+ typedef struct ConstantPool{}ConstantPool;
 
 class ExecutionEng{
 public: static int e_exexute(ConstantPool* const_pool,ByteCode* method);
 
 };
 
+typedef struct gnrc_node_t{
+  gnrc_node_t * nxt ;
+
+   void const* core ;
+
+   }gnrc_node_t;
+
+int push( gnrc_node_t ** list_ptr_ptr, void const* core);
+
+int pop( gnrc_node_t ** list_ptr_ptr, void const** core);
+
  void* e_Instruction_Label_Lookup[255];
 
  int ExecutionEng::e_exexute(ConstantPool* const_pool,ByteCode* method){
 e_TRACE_CREATE_TRACE_FILE("dd")
-
-
 e_Instruction_Label_Lookup[ e_VALUE_OF_nop ] = &&e_label_nop;
 
 e_Instruction_Label_Lookup[ e_VALUE_OF_aconst_null ] = &&e_label_aconst_null;
@@ -530,20 +510,11 @@ e_Instruction_Label_Lookup[ e_VALUE_OF_impdep1 ] = &&e_label_impdep1;
 
 e_Instruction_Label_Lookup[ e_VALUE_OF_impdep2 ] = &&e_label_impdep2;
 
-
-
-
 assert(sizeof( e_j_double ) == 8);
 
 assert(sizeof( e_byte_t ) < 2 );
 
 assert(sizeof( u1_t ) == 1 );
-
-
-
-
-
-
 
  unsigned int pc ;
 
@@ -557,9 +528,13 @@ assert(sizeof( u1_t ) == 1 );
 
  e_j_u_byte* code_sofar ;
 
+ gnrc_node_t* java_stack ;
+
   locals = ((typeof(locals)) malloc( ((int)method->maxLocals) * sizeof(e_j_word)));
 
   op_stk = ((typeof(op_stk)) malloc( ((int)method->maxStack+1) * sizeof(e_j_word)));
+
+  java_stack = NULL;
 
  code = method->code;
 
@@ -2976,7 +2951,7 @@ e_label_areturn :
 
 e_label_return :
  e_console_log_start(return)
- e_CORE_return_START: e_CORE_return_END: ;
+ ;
 
  e_console_log_end
  e_TRACE_ANNOUNCE_INSTRUCTION(return) ;
@@ -3224,7 +3199,10 @@ e_label_ifnonnull :
 
 e_label_goto_w :
  e_console_log_start(goto_w)
- e_CORE_goto_w_START: e_CORE_goto_w_END: ;
+ e_CORE_goto_w_START: code_sofar += ( (e_j_integer) (*( (e_j_integer*) (code_sofar+1) ) ) ) ;
+ goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];
+;
+ e_CORE_goto_w_END: ;
 
  e_console_log_end
  e_TRACE_ANNOUNCE_INSTRUCTION(goto_w) ;

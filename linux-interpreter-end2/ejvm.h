@@ -15,9 +15,6 @@
 
 
 
-typedef char ejvm_u1;
-typedef unsigned int count;
-
 
 
 

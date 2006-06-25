@@ -40,32 +40,19 @@
 	#endif
 	
 	
-	typedef 
 	
-	typedef struct ConstantPool{};	/**/
 	
-	typedef struct method_t{
-		unsigned int 	operand_stack_length    ;		/* operand stack length   */
-		unsigned int	locals_length  ;				/* local-variables length */
-		unsigned int	byteCodeLength ;				/* byteCodeStream length  */
-		e_byte_t* 		code ;							/* byteCodeStream		  */	
-	    
-	};
-	 
-	typedef struct e_frame_t{
-		unsigned int   	  pc     ;            /* 	program counter     		*/
-		e_j_word*   	  op_stk ;            /* 	operand stack       		*/
-		e_j_word*		  op_stk_top;         /* 	operand stack  top  		*/
-		e_j_word*  	      locals ;            /* 	local variables     		*/
-		e_byte_t* 		  code   ; 	  		  /* 	byte-code stream    		*/	
-		e_byte_t* 		  code_sofar   ; 	  /* 	current byte-code stream    */	
-		}e_frame_t; 
-		
+	typedef struct ConstantPool{}ConstantPool;
 
 
 
-	
-		
+
+
+
+
+
+
+
 /*
  * Routines declaration
  * ====================

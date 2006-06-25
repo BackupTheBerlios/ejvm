@@ -57,8 +57,9 @@
 		printf("\t\t local variables :\n");\
 		for(int i = 0 ; i < method->maxLocals  ;i++){\
 			printf("\t\t\t [%d]=%d\n",i,locals[i]);\
-		}}\	
+		}}	
 		
+
 
  #define e_console_log_end {\
 	printf("\t after :\n\t\toperand stack:\n");\

@@ -1,9 +1,11 @@
 ls -al 
 cd ..
-#cd  /root/Desktop/EclipseWrkSpc/linux\-interpreter\-end2/
+
+##cd  /root/Desktop/EclipseWrkSpc/linux\-interpreter\-end2/
+
 chmod  u=+r ExecutionEng.cpp
 
-#rm  ExecutionEng.cpp
+rm  ExecutionEng.cpp
 
 #gcc -E -P -CC -ointerpreter-1.cpp  interpreter.cpp
 gcc -E -P  -ointerpreter-1.cpp  interpreter.cpp
