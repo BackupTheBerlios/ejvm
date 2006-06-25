@@ -29,11 +29,14 @@
 
 #define e_CORE_ifnull 	 \
 	 e_CORE_ifnull_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
+	if(NULL == e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_refrence) ){\
+		/*True*/\
+		e_RETRACT_STAK(e_j_refrence);\
+		e_PROCEDE_TO(e_READ_FROM_STREAM_as_Then_Cast_as((code_sofar+1),e_j_short,e_j_integer));\
+	}else{\
+		/*False*/\
+		e_RETRACT_STAK(e_j_refrence);\
+		e_PROCEDE_TO(e_STEP_OF_ifeq);\
+	}\
 	 e_CORE_ifnull_END: \
 

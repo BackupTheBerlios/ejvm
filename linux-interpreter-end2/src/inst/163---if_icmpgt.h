@@ -29,11 +29,14 @@
 
 #define e_CORE_if_icmpgt 	 \
 	 e_CORE_if_icmpgt_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
+	if( e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_integer) > e_ACCESS_OPERAND_STACK_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_integer,1)){\
+		/*TRUE*/\
+		e_RETRACT_STAK(e_j_long);\
+		e_PROCEDE_TO(e_READ_FROM_STREAM_as_Then_Cast_as((code_sofar+1),e_j_short,e_j_integer));\
+	}else{\
+		/*FALSE*/\
+		e_RETRACT_STAK(e_j_long);\
+		e_PROCEDE_TO(e_STEP_OF_ifeq);\
+	}\
 	 e_CORE_if_icmpgt_END: \
 

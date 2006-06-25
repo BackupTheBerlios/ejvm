@@ -29,11 +29,14 @@
 
 #define e_CORE_ifgt 	 \
 	 e_CORE_ifgt_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
-	 e_CORE_ifgt_END: \
+	if(0 < e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_integer) ){\
+		/*True*/\
+		e_RETRACT_STAK(e_j_integer);\
+		e_PROCEDE_TO(e_READ_FROM_STREAM_as_Then_Cast_as((code_sofar+1),e_j_short,e_j_integer));\
+	}else{\
+		/*False*/\
+		e_RETRACT_STAK(e_j_integer);\
+		e_PROCEDE_TO(e_STEP_OF_ifeq);\
+	}\
+	e_CORE_ifgt_END:
 
