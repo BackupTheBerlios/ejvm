@@ -118,6 +118,8 @@ public: static int e_exexute(ConstantPool* const_pool,ByteCode* method);
 
  int ExecutionEng::e_exexute(ConstantPool* const_pool,ByteCode* method){
 e_TRACE_CREATE_TRACE_FILE("dd")
+
+
 e_Instruction_Label_Lookup[ e_VALUE_OF_nop ] = &&e_label_nop;
 
 e_Instruction_Label_Lookup[ e_VALUE_OF_aconst_null ] = &&e_label_aconst_null;
@@ -527,6 +529,8 @@ e_Instruction_Label_Lookup[ e_VALUE_OF_breakpoint ] = &&e_label_breakpoint;
 e_Instruction_Label_Lookup[ e_VALUE_OF_impdep1 ] = &&e_label_impdep1;
 
 e_Instruction_Label_Lookup[ e_VALUE_OF_impdep2 ] = &&e_label_impdep2;
+
+
 
 
 assert(sizeof( e_j_double ) == 8);
@@ -2661,7 +2665,13 @@ e_label_dcmpg :
 
 e_label_ifeq :
  e_console_log_start(ifeq)
- e_CORE_ifeq_START: e_CORE_ifeq_END: ;
+ e_CORE_ifeq_START: if( (*((typeof(e_j_integer)*) op_stk_top )) ){ code_sofar += e_STEP_OF_ifeq ;
+ goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];
+;
+ }else{ code_sofar += ( (e_j_integer) (*( (e_j_short*) (code_sofar+1) ) ) ) ;
+ goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];
+;
+ } e_CORE_ifeq_END: ;
 
  e_console_log_end
  e_TRACE_ANNOUNCE_INSTRUCTION(ifeq) ;

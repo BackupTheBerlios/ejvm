@@ -29,11 +29,12 @@
 
 #define e_CORE_ifeq 	 \
 	 e_CORE_ifeq_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
-	 e_CORE_ifeq_END: \
+	if( e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_integer) ){\
+		/*False*/\
+		e_PROCEDE_TO(e_STEP_OF_ifeq);\
+	}else{\
+		/*True*/\
+		e_PROCEDE_TO(e_READ_FROM_STREAM_as_Then_Cast_as((code_sofar+1),e_j_short,e_j_integer));\
+	}\
+	e_CORE_ifeq_END: \
 

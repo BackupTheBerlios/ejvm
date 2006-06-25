@@ -41,6 +41,10 @@
   		free(locals);\
   		free(op_stk);
   		
+  #define e_PROCEDE_TO(offset)\
+	 code_sofar += offset  ;\
+	goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];
+  		
 
 
 /*

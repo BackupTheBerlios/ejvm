@@ -34,8 +34,8 @@
 		#define  e_TRACE_ANNOUNCE_INSTRUCTION( inst ) \
 			data += sprintf(data ,"\t Instruction: " e_STRINGIFY(inst) " is Executed \n" ) ;
 		
-		//#define  e_TRACE_ANNOUNCE( thing  ) \
-			data += sprintf(data ,thing) ;
+		//#define  e_TRACE_ANNOUNCE( thing  ) 
+//			data += sprintf(data ,thing) ;
 	
 		#define  e_TRACE_ADD_TRACE_ENTRY( entry ) \
 				data += sprintf(data,e_STRINGIFY(( entry )"\n") ;
