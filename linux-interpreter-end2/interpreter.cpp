@@ -59,7 +59,18 @@
 	  method = temp->method;\
 	  locals =  temp->locals;\
 	  op_stk = temp->op_stk;\
-	  op_stk_top = temp->op_stk_top;
+	  op_stk_top = temp->op_stk_top;\
+	  constant_pool = temp->constant_pool;
+
+ #define e_SAVE_CURRENT_FRAME(temp)\
+ 	  temp->code = code;\
+	  temp->code_sofar = code_sofar;\
+	  temp->method = method;\
+	  temp->locals = locals;\
+	  temp->op_stk = op_stk;\
+	  temp->op_stk_top = op_stk_top;\
+	  temp->constant_pool = constant_pool;
+	  
   	
   #define e_PROCEDE_TO(offset)\
 	 code_sofar += offset  ;\
@@ -314,6 +325,7 @@ assert(sizeof( u1_t ) == 1 );
 	e_j_u_byte* 	  code   ; 	  		  /* 	byte-code stream    		*/	
 	e_j_u_byte* 	  code_sofar   ; 	  /* 	current byte-code stream    */	
 	gnrc_node_t*      java_stack   ;	
+	ConstantPool*     constant_pool;
 
 
 /*
@@ -336,7 +348,7 @@ assert(sizeof( u1_t ) == 1 );
   //Allocating Operand Stack
   op_stk = ((typeof(op_stk))  malloc( ((int)method->maxStack+1)  * sizeof(e_j_word)));
 
-  java_stack = NULL;
+ 
   
 
  
@@ -349,6 +361,11 @@ assert(sizeof( u1_t ) == 1 );
 	pc = 0;
 	op_stk_top = (op_stk);
 	op_stk++;
+	java_stack = NULL;
+	constant_pool = const_pool;
+	 
+	
+
 	
 
 /*
@@ -2129,8 +2146,46 @@ return 0;
 
 }
 
-
-
+/*************************************************************************************************/
+//
+//void ExecutionEng::calNumOfArg(char * p,unsigned int & argCount,unsigned int & opStackArgCount)
+//{
+//	argCount=0;
+//	opStackArgCount=0;
+//	p++;     /* skip start ( */    
+//	while(*p != ')')
+//	{                         
+//		if((*p == 'J') || (*p == 'D'))//arg is long or double
+//		{
+//			argCount++;
+//			opStackArgCount+=2;	
+//			p++;
+//		}
+//		else
+//		{
+//    		if(*p == '[') //array
+//       		{
+//        		//we will not increment the following 2 variables why?
+//        		//because if it is array, and when we will check the type of the array,
+//        		//we will increment them, so we will incremnet them twice and that is wrong
+//        		//argCount++;
+//        		//opStackArgCount++;
+//        		for(p++; *p == '['; p++);         
+//        	}
+//        
+//        	if(*p == 'L')//refrence
+//        	{
+//        		argCount++;  
+//        		opStackArgCount++;                       
+//           		while(*p++ != ';');
+//       		}
+//        	else //primitive types
+//        	{
+//        		argCount++;
+//        		opStackArgCount++;
+//        		p++;                                 
+//        	} 
+//
 
 
 

@@ -78,10 +78,15 @@ public:
 
 
 
- typedef struct ConstantPool{}ConstantPool;
+ typedef struct ConstantPool{int i;
+};
+
+ typedef struct ConstantPool ConstantPool;
 
 
  struct e_frame_t{
+ConstantPool* constant_pool;
+
 e_j_u_byte* code;
 
 e_j_u_byte* code_sofar;
@@ -548,11 +553,11 @@ assert(sizeof( u1_t ) == 1 );
 
  gnrc_node_t* java_stack ;
 
+ ConstantPool* constant_pool;
+
   locals = ((typeof(locals)) malloc( ((int)method->maxLocals) * sizeof(e_j_word)));
 
   op_stk = ((typeof(op_stk)) malloc( ((int)method->maxStack+1) * sizeof(e_j_word)));
-
-  java_stack = NULL;
 
  code = method->code;
 
@@ -563,6 +568,10 @@ assert(sizeof( u1_t ) == 1 );
  op_stk_top = (op_stk);
 
  op_stk++;
+
+ java_stack = NULL;
+
+ constant_pool = const_pool;
 
   goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];
 
@@ -2920,7 +2929,9 @@ e_label_jsr :
 
 e_label_ret :
  e_console_log_start(ret)
- e_CORE_ret_START: e_CORE_ret_END: ;
+ e_CORE_ret_START: code_sofar = ((*( ( typeof(typeof(code_sofar))* ) ( locals + ( (e_j_u_byte) (*( (e_j_u_byte*) (code_sofar+1) ) ) ) ) )));
+ goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];
+ e_CORE_ret_END: ;
 
  e_console_log_end
  e_TRACE_ANNOUNCE_INSTRUCTION(ret) ;
@@ -2957,6 +2968,7 @@ e_label_ireturn :
  locals = temp->locals;
  op_stk = temp->op_stk;
  op_stk_top = temp->op_stk_top;
+ constant_pool = temp->constant_pool;
  { {op_stk_top += ( sizeof( typeof(itemp) )/ sizeof( typeof(op_stk_top) ) );
 } ;
  (*((typeof(itemp)*) op_stk_top )) = itemp ;
@@ -2986,6 +2998,7 @@ e_label_lreturn :
  locals = temp->locals;
  op_stk = temp->op_stk;
  op_stk_top = temp->op_stk_top;
+ constant_pool = temp->constant_pool;
  { {op_stk_top += ( sizeof( typeof(ltemp) )/ sizeof( typeof(op_stk_top) ) );
 } ;
  (*((typeof(ltemp)*) op_stk_top )) = ltemp ;
@@ -3015,6 +3028,7 @@ e_label_freturn :
  locals = temp->locals;
  op_stk = temp->op_stk;
  op_stk_top = temp->op_stk_top;
+ constant_pool = temp->constant_pool;
  { {op_stk_top += ( sizeof( typeof(ftemp) )/ sizeof( typeof(op_stk_top) ) );
 } ;
  (*((typeof(ftemp)*) op_stk_top )) = ftemp ;
@@ -3044,6 +3058,7 @@ e_label_dreturn :
  locals = temp->locals;
  op_stk = temp->op_stk;
  op_stk_top = temp->op_stk_top;
+ constant_pool = temp->constant_pool;
  { {op_stk_top += ( sizeof( typeof(dtemp) )/ sizeof( typeof(op_stk_top) ) );
 } ;
  (*((typeof(dtemp)*) op_stk_top )) = dtemp ;
@@ -3073,6 +3088,7 @@ e_label_areturn :
  locals = temp->locals;
  op_stk = temp->op_stk;
  op_stk_top = temp->op_stk_top;
+ constant_pool = temp->constant_pool;
  { {op_stk_top += ( sizeof( typeof(atemp) )/ sizeof( typeof(op_stk_top) ) );
 } ;
  (*((typeof(atemp)*) op_stk_top )) = atemp ;
@@ -3101,6 +3117,7 @@ e_label_return :
  locals = temp->locals;
  op_stk = temp->op_stk;
  op_stk_top = temp->op_stk_top;
+ constant_pool = temp->constant_pool;
  goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];
  } } e_CORE_return_END: ;
 
