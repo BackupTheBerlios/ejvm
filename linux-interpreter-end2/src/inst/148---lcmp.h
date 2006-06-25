@@ -28,12 +28,11 @@
 
 
 #define e_CORE_lcmp 	 \
-	 e_CORE_lcmp_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
-	 e_CORE_lcmp_END: \
+	// e_CORE_lcmp_START:   \
+         if( e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_long)  ^  e_ACCESS_OPERAND_STACK_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_long,2){\
+         	e_ACCESS_OPERAND_STACK_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_integer,4) = 0;\
+          }else  if( e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_long)  <  e_ACCESS_OPERAND_STACK_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_long,2){\
+          	e_ACCESS_OPERAND_STACK_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_integer,4) = 0;\          	
+         // }\
+          e_CORE_lcmp_END: \
 
