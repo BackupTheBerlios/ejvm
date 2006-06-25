@@ -47,7 +47,7 @@
 
  struct e_frame_t{
 ConstantPool* constant_pool;
-e_j_u_byte*		code;
+e_j_u_byte*    code;
 e_j_u_byte*    code_sofar;
 ByteCode*     method ;
 e_j_word*     locals ;
