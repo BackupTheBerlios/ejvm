@@ -29,7 +29,7 @@
 
 #define e_CORE_aload_0 	 \
 	 e_CORE_aload_0_START:   \
-	 	e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_refrence) = e_ACCESS_LOCAL_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_refrence,0) ;\
 		e_PROMOTE_STAK(e_j_refrence); \
+		e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_refrence) = e_ACCESS_LOCAL_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_refrence,0) ;\
 	 e_CORE_aload_0_END: \
 

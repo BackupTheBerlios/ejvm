@@ -29,7 +29,6 @@
 
 #define e_CORE_iload_3 	 \
 	 e_CORE_iload_3_START:   \
- 	e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_integer) = e_ACCESS_LOCAL_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_integer,3) ;\
-		e_PROMOTE_STAK(e_j_integer); \
+ 	e_PUSH_OPERAND_STACK((e_j_integer)  e_ACCESS_LOCAL_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_integer,3)) ;\
 	 e_CORE_iload_3_END: \
 

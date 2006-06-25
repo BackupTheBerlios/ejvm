@@ -873,9 +873,10 @@ e_label_ldc2_w :
 
 e_label_iload :
  e_console_log_start(iload)
- e_CORE_iload_START: (*((typeof(e_j_integer)*) op_stk_top )) = ((*( ( typeof(e_j_integer)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_integer) )/ sizeof( typeof(op_stk_top) ) );
-};
+ e_CORE_iload_START: { {op_stk_top += ( sizeof( typeof((e_j_integer) ((*( ( typeof(e_j_integer)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) )))) )/ sizeof( typeof(op_stk_top) ) );
+} ;
+ (*((typeof((e_j_integer) ((*( ( typeof(e_j_integer)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) ))))*) op_stk_top )) = (e_j_integer) ((*( ( typeof(e_j_integer)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) ))) ;
+} ;
  e_CORE_iload_END: ;
 
  e_console_log_end
@@ -887,9 +888,10 @@ e_label_iload :
 
 e_label_lload :
  e_console_log_start(lload)
- e_CORE_lload_START: (*((typeof(e_j_long)*) op_stk_top )) = ((*( ( typeof(e_j_long)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
-};
+ e_CORE_lload_START: { {op_stk_top += ( sizeof( typeof((e_j_long) ((*( ( typeof(e_j_long)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) )))) )/ sizeof( typeof(op_stk_top) ) );
+} ;
+ (*((typeof((e_j_long) ((*( ( typeof(e_j_long)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) ))))*) op_stk_top )) = (e_j_long) ((*( ( typeof(e_j_long)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) ))) ;
+} ;
  e_CORE_lload_END: ;
 
  e_console_log_end
@@ -901,9 +903,10 @@ e_label_lload :
 
 e_label_fload :
  e_console_log_start(fload)
- e_CORE_fload_START: (*((typeof(e_j_float)*) op_stk_top )) = ((*( ( typeof(e_j_float)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_float) )/ sizeof( typeof(op_stk_top) ) );
-};
+ e_CORE_fload_START: { {op_stk_top += ( sizeof( typeof((e_j_float) ((*( ( typeof(e_j_float)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) )))) )/ sizeof( typeof(op_stk_top) ) );
+} ;
+ (*((typeof((e_j_float) ((*( ( typeof(e_j_float)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) ))))*) op_stk_top )) = (e_j_float) ((*( ( typeof(e_j_float)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) ))) ;
+} ;
  e_CORE_fload_END: ;
 
  e_console_log_end
@@ -915,9 +918,10 @@ e_label_fload :
 
 e_label_dload :
  e_console_log_start(dload)
- e_CORE_dload_START: (*((typeof(e_j_double)*) op_stk_top )) = ((*( ( typeof(e_j_double)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_double) )/ sizeof( typeof(op_stk_top) ) );
-};
+ e_CORE_dload_START: { {op_stk_top += ( sizeof( typeof((e_j_double) ((*( ( typeof(e_j_double)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) )))) )/ sizeof( typeof(op_stk_top) ) );
+} ;
+ (*((typeof((e_j_double) ((*( ( typeof(e_j_double)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) ))))*) op_stk_top )) = (e_j_double) ((*( ( typeof(e_j_double)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) ))) ;
+} ;
  e_CORE_dload_END: ;
 
  e_console_log_end
@@ -929,9 +933,10 @@ e_label_dload :
 
 e_label_aload :
  e_console_log_start(aload)
- e_CORE_aload_START: (*((typeof(e_j_refrence)*) op_stk_top )) = ((*( ( typeof(e_j_refrence)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_refrence) )/ sizeof( typeof(op_stk_top) ) );
-};
+ e_CORE_aload_START: { {op_stk_top += ( sizeof( typeof((e_j_refrence) ((*( ( typeof(e_j_refrence)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) )))) )/ sizeof( typeof(op_stk_top) ) );
+} ;
+ (*((typeof((e_j_refrence) ((*( ( typeof(e_j_refrence)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) ))))*) op_stk_top )) = (e_j_refrence) ((*( ( typeof(e_j_refrence)* ) ( locals + ( (e_j_integer) (*( (e_j_u_byte*) code_sofar ) ) ) ) ))) ;
+} ;
  e_CORE_aload_END: ;
 
  e_console_log_end
@@ -943,9 +948,10 @@ e_label_aload :
 
 e_label_iload_0 :
  e_console_log_start(iload_0)
- e_CORE_iload_0_START: (*((typeof(e_j_integer)*) op_stk_top )) = ((*( ( typeof(e_j_integer)* ) ( locals + 0 ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_integer) )/ sizeof( typeof(op_stk_top) ) );
-};
+ e_CORE_iload_0_START: { {op_stk_top += ( sizeof( typeof((e_j_integer) ((*( ( typeof(e_j_integer)* ) ( locals + 0 ) )))) )/ sizeof( typeof(op_stk_top) ) );
+} ;
+ (*((typeof((e_j_integer) ((*( ( typeof(e_j_integer)* ) ( locals + 0 ) ))))*) op_stk_top )) = (e_j_integer) ((*( ( typeof(e_j_integer)* ) ( locals + 0 ) ))) ;
+} ;
  e_CORE_iload_0_END: ;
 
  e_console_log_end
@@ -971,9 +977,10 @@ e_label_iload_1 :
 
 e_label_iload_2 :
  e_console_log_start(iload_2)
- e_CORE_iload_2_START: (*((typeof(e_j_integer)*) op_stk_top )) = ((*( ( typeof(e_j_integer)* ) ( locals + 2 ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_integer) )/ sizeof( typeof(op_stk_top) ) );
-};
+ e_CORE_iload_2_START: { {op_stk_top += ( sizeof( typeof((e_j_integer) ((*( ( typeof(e_j_integer)* ) ( locals + 2 ) )))) )/ sizeof( typeof(op_stk_top) ) );
+} ;
+ (*((typeof((e_j_integer) ((*( ( typeof(e_j_integer)* ) ( locals + 2 ) ))))*) op_stk_top )) = (e_j_integer) ((*( ( typeof(e_j_integer)* ) ( locals + 2 ) ))) ;
+} ;
  e_CORE_iload_2_END: ;
 
  e_console_log_end
@@ -985,9 +992,10 @@ e_label_iload_2 :
 
 e_label_iload_3 :
  e_console_log_start(iload_3)
- e_CORE_iload_3_START: (*((typeof(e_j_integer)*) op_stk_top )) = ((*( ( typeof(e_j_integer)* ) ( locals + 3 ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_integer) )/ sizeof( typeof(op_stk_top) ) );
-};
+ e_CORE_iload_3_START: { {op_stk_top += ( sizeof( typeof((e_j_integer) ((*( ( typeof(e_j_integer)* ) ( locals + 3 ) )))) )/ sizeof( typeof(op_stk_top) ) );
+} ;
+ (*((typeof((e_j_integer) ((*( ( typeof(e_j_integer)* ) ( locals + 3 ) ))))*) op_stk_top )) = (e_j_integer) ((*( ( typeof(e_j_integer)* ) ( locals + 3 ) ))) ;
+} ;
  e_CORE_iload_3_END: ;
 
  e_console_log_end
@@ -999,9 +1007,9 @@ e_label_iload_3 :
 
 e_label_lload_0 :
  e_console_log_start(lload_0)
- e_CORE_lload_0_START: (*((typeof(e_j_long)*) op_stk_top )) = ((*( ( typeof(e_j_long)* ) ( locals + 0 ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
+ e_CORE_lload_0_START: {op_stk_top += ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
 };
+ (*((typeof(e_j_long)*) op_stk_top )) = ((*( ( typeof(e_j_long)* ) ( locals + 0 ) ))) ;
  e_CORE_lload_0_END: ;
 
  e_console_log_end
@@ -1013,9 +1021,9 @@ e_label_lload_0 :
 
 e_label_lload_1 :
  e_console_log_start(lload_1)
- e_CORE_lload_1_START: (*((typeof(e_j_long)*) op_stk_top )) = ((*( ( typeof(e_j_long)* ) ( locals + 1 ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
+ e_CORE_lload_1_START: {op_stk_top += ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
 };
+ (*((typeof(e_j_long)*) op_stk_top )) = ((*( ( typeof(e_j_long)* ) ( locals + 1 ) ))) ;
  e_CORE_lload_1_END: ;
 
  e_console_log_end
@@ -1027,9 +1035,9 @@ e_label_lload_1 :
 
 e_label_lload_2 :
  e_console_log_start(lload_2)
- e_CORE_lload_2_START: (*((typeof(e_j_long)*) op_stk_top )) = ((*( ( typeof(e_j_long)* ) ( locals + 2 ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
+ e_CORE_lload_2_START: {op_stk_top += ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
 };
+ (*((typeof(e_j_long)*) op_stk_top )) = ((*( ( typeof(e_j_long)* ) ( locals + 2 ) ))) ;
  e_CORE_lload_2_END: ;
 
  e_console_log_end
@@ -1041,9 +1049,9 @@ e_label_lload_2 :
 
 e_label_lload_3 :
  e_console_log_start(lload_3)
- e_CORE_lload_3_START: (*((typeof(e_j_long)*) op_stk_top )) = ((*( ( typeof(e_j_long)* ) ( locals + 3 ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
+ e_CORE_lload_3_START: {op_stk_top += ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
 };
+ (*((typeof(e_j_long)*) op_stk_top )) = ((*( ( typeof(e_j_long)* ) ( locals + 3 ) ))) ;
  e_CORE_lload_3_END: ;
 
  e_console_log_end
@@ -1055,9 +1063,9 @@ e_label_lload_3 :
 
 e_label_fload_0 :
  e_console_log_start(fload_0)
- e_CORE_fload_0_START: (*((typeof(e_j_float)*) op_stk_top )) = ((*( ( typeof(e_j_float)* ) ( locals + 0 ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_float) )/ sizeof( typeof(op_stk_top) ) );
+ e_CORE_fload_0_START: {op_stk_top += ( sizeof( typeof(e_j_float) )/ sizeof( typeof(op_stk_top) ) );
 };
+ (*((typeof(e_j_float)*) op_stk_top )) = ((*( ( typeof(e_j_float)* ) ( locals + 0 ) ))) ;
  e_CORE_fload_0_END: ;
 
  e_console_log_end
@@ -1069,9 +1077,9 @@ e_label_fload_0 :
 
 e_label_fload_1 :
  e_console_log_start(fload_1)
- e_CORE_fload_1_START: (*((typeof(e_j_float)*) op_stk_top )) = ((*( ( typeof(e_j_float)* ) ( locals + 1 ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_float) )/ sizeof( typeof(op_stk_top) ) );
+ e_CORE_fload_1_START: {op_stk_top += ( sizeof( typeof(e_j_float) )/ sizeof( typeof(op_stk_top) ) );
 };
+ (*((typeof(e_j_float)*) op_stk_top )) = ((*( ( typeof(e_j_float)* ) ( locals + 1 ) ))) ;
  e_CORE_fload_1_END: ;
 
  e_console_log_end
@@ -1083,9 +1091,9 @@ e_label_fload_1 :
 
 e_label_fload_2 :
  e_console_log_start(fload_2)
- e_CORE_fload_2_START: (*((typeof(e_j_float)*) op_stk_top )) = ((*( ( typeof(e_j_float)* ) ( locals + 2 ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_float) )/ sizeof( typeof(op_stk_top) ) );
+ e_CORE_fload_2_START: {op_stk_top += ( sizeof( typeof(e_j_float) )/ sizeof( typeof(op_stk_top) ) );
 };
+ (*((typeof(e_j_float)*) op_stk_top )) = ((*( ( typeof(e_j_float)* ) ( locals + 2 ) ))) ;
  e_CORE_fload_2_END: ;
 
  e_console_log_end
@@ -1097,9 +1105,9 @@ e_label_fload_2 :
 
 e_label_fload_3 :
  e_console_log_start(fload_3)
- e_CORE_fload_3_START: (*((typeof(e_j_float)*) op_stk_top )) = ((*( ( typeof(e_j_float)* ) ( locals + 3 ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_float) )/ sizeof( typeof(op_stk_top) ) );
+ e_CORE_fload_3_START: {op_stk_top += ( sizeof( typeof(e_j_float) )/ sizeof( typeof(op_stk_top) ) );
 };
+ (*((typeof(e_j_float)*) op_stk_top )) = ((*( ( typeof(e_j_float)* ) ( locals + 3 ) ))) ;
  e_CORE_fload_3_END: ;
 
  e_console_log_end
@@ -1111,9 +1119,9 @@ e_label_fload_3 :
 
 e_label_dload_0 :
  e_console_log_start(dload_0)
- e_CORE_dload_0_START: (*((typeof(e_j_double)*) op_stk_top )) = ((*( ( typeof(e_j_double)* ) ( locals + 0 ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_double) )/ sizeof( typeof(op_stk_top) ) );
+ e_CORE_dload_0_START: {op_stk_top += ( sizeof( typeof(e_j_double) )/ sizeof( typeof(op_stk_top) ) );
 };
+ (*((typeof(e_j_double)*) op_stk_top )) = ((*( ( typeof(e_j_double)* ) ( locals + 0 ) ))) ;
  e_CORE_dload_0_END: ;
 
  e_console_log_end
@@ -1125,9 +1133,9 @@ e_label_dload_0 :
 
 e_label_dload_1 :
  e_console_log_start(dload_1)
- e_CORE_dload_1_START: (*((typeof(e_j_double)*) op_stk_top )) = ((*( ( typeof(e_j_double)* ) ( locals + 1 ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_double) )/ sizeof( typeof(op_stk_top) ) );
+ e_CORE_dload_1_START: {op_stk_top += ( sizeof( typeof(e_j_double) )/ sizeof( typeof(op_stk_top) ) );
 };
+ (*((typeof(e_j_double)*) op_stk_top )) = ((*( ( typeof(e_j_double)* ) ( locals + 1 ) ))) ;
  e_CORE_dload_1_END: ;
 
  e_console_log_end
@@ -1139,9 +1147,9 @@ e_label_dload_1 :
 
 e_label_dload_2 :
  e_console_log_start(dload_2)
- e_CORE_dload_2_START: (*((typeof(e_j_double)*) op_stk_top )) = ((*( ( typeof(e_j_double)* ) ( locals + 2 ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_double) )/ sizeof( typeof(op_stk_top) ) );
+ e_CORE_dload_2_START: {op_stk_top += ( sizeof( typeof(e_j_double) )/ sizeof( typeof(op_stk_top) ) );
 };
+ (*((typeof(e_j_double)*) op_stk_top )) = ((*( ( typeof(e_j_double)* ) ( locals + 2 ) ))) ;
  e_CORE_dload_2_END: ;
 
  e_console_log_end
@@ -1153,9 +1161,9 @@ e_label_dload_2 :
 
 e_label_dload_3 :
  e_console_log_start(dload_3)
- e_CORE_dload_3_START: (*((typeof(e_j_double)*) op_stk_top )) = ((*( ( typeof(e_j_double)* ) ( locals + 3 ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_double) )/ sizeof( typeof(op_stk_top) ) );
+ e_CORE_dload_3_START: {op_stk_top += ( sizeof( typeof(e_j_double) )/ sizeof( typeof(op_stk_top) ) );
 };
+ (*((typeof(e_j_double)*) op_stk_top )) = ((*( ( typeof(e_j_double)* ) ( locals + 3 ) ))) ;
  e_CORE_dload_3_END: ;
 
  e_console_log_end
@@ -1167,9 +1175,9 @@ e_label_dload_3 :
 
 e_label_aload_0 :
  e_console_log_start(aload_0)
- e_CORE_aload_0_START: (*((typeof(e_j_refrence)*) op_stk_top )) = ((*( ( typeof(e_j_refrence)* ) ( locals + 0 ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_refrence) )/ sizeof( typeof(op_stk_top) ) );
+ e_CORE_aload_0_START: {op_stk_top += ( sizeof( typeof(e_j_refrence) )/ sizeof( typeof(op_stk_top) ) );
 };
+ (*((typeof(e_j_refrence)*) op_stk_top )) = ((*( ( typeof(e_j_refrence)* ) ( locals + 0 ) ))) ;
  e_CORE_aload_0_END: ;
 
  e_console_log_end
@@ -1181,9 +1189,9 @@ e_label_aload_0 :
 
 e_label_aload_1 :
  e_console_log_start(aload_1)
- e_CORE_aload_1_START: (*((typeof(e_j_refrence)*) op_stk_top )) = ((*( ( typeof(e_j_refrence)* ) ( locals + 1 ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_refrence) )/ sizeof( typeof(op_stk_top) ) );
+ e_CORE_aload_1_START: {op_stk_top += ( sizeof( typeof(e_j_refrence) )/ sizeof( typeof(op_stk_top) ) );
 };
+ (*((typeof(e_j_refrence)*) op_stk_top )) = ((*( ( typeof(e_j_refrence)* ) ( locals + 1 ) ))) ;
  e_CORE_aload_1_END: ;
 
  e_console_log_end
@@ -1195,9 +1203,9 @@ e_label_aload_1 :
 
 e_label_aload_2 :
  e_console_log_start(aload_2)
- e_CORE_aload_2_START: (*((typeof(e_j_refrence)*) op_stk_top )) = ((*( ( typeof(e_j_refrence)* ) ( locals + 2 ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_refrence) )/ sizeof( typeof(op_stk_top) ) );
+ e_CORE_aload_2_START: {op_stk_top += ( sizeof( typeof(e_j_refrence) )/ sizeof( typeof(op_stk_top) ) );
 };
+ (*((typeof(e_j_refrence)*) op_stk_top )) = ((*( ( typeof(e_j_refrence)* ) ( locals + 2 ) ))) ;
  e_CORE_aload_2_END: ;
 
  e_console_log_end
@@ -1209,9 +1217,9 @@ e_label_aload_2 :
 
 e_label_aload_3 :
  e_console_log_start(aload_3)
- e_CORE_aload_3_START: (*((typeof(e_j_refrence)*) op_stk_top )) = ((*( ( typeof(e_j_refrence)* ) ( locals + 3 ) ))) ;
- {op_stk_top += ( sizeof( typeof(e_j_refrence) )/ sizeof( typeof(op_stk_top) ) );
+ e_CORE_aload_3_START: {op_stk_top += ( sizeof( typeof(e_j_refrence) )/ sizeof( typeof(op_stk_top) ) );
 };
+ (*((typeof(e_j_refrence)*) op_stk_top )) = ((*( ( typeof(e_j_refrence)* ) ( locals + 3 ) ))) ;
  e_CORE_aload_3_END: ;
 
  e_console_log_end
