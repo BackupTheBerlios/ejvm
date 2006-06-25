@@ -310,8 +310,13 @@ e_Instruction_Label_Lookup[ e_VALUE_OF_impdep2         ] = &&e_label_impdep2;
 
 //Assertions
 assert(sizeof( e_j_double ) == 8);
-assert(sizeof( e_byte_t ) < 2 );
-assert(sizeof( u1_t ) == 1 );
+assert(sizeof( e_byte_t ) ==1 );
+assert(sizeof( e_j_float ) == 4 );
+assert(sizeof( e_j_integer ) == 4 );
+assert(sizeof( e_j_long ) == 8 );
+assert(sizeof( e_j_char ) == 2 );
+assert(sizeof( e_j_short ) == 8 );
+
 	
 /*
  * Local Variables

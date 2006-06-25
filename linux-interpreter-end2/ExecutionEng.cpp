@@ -535,9 +535,17 @@ e_Instruction_Label_Lookup[ e_VALUE_OF_impdep2 ] = &&e_label_impdep2;
 
 assert(sizeof( e_j_double ) == 8);
 
-assert(sizeof( e_byte_t ) < 2 );
+assert(sizeof( e_byte_t ) ==1 );
 
-assert(sizeof( u1_t ) == 1 );
+assert(sizeof( e_j_float ) == 4 );
+
+assert(sizeof( e_j_integer ) == 4 );
+
+assert(sizeof( e_j_long ) == 8 );
+
+assert(sizeof( e_j_char ) == 2 );
+
+assert(sizeof( e_j_short ) == 8 );
 
  unsigned int pc ;
 
@@ -1941,7 +1949,7 @@ e_label_dadd :
 
 e_label_isub :
  e_console_log_start(isub)
- e_CORE_isub_START: (* ((e_j_integer *) ( op_stk_top - 1 ) )) = (*((typeof(e_j_integer)*) op_stk_top )) - (* ((e_j_integer *) ( op_stk_top - 1 ) ));
+ e_CORE_isub_START: (* ((e_j_integer *) ( op_stk_top - 1 ) )) = (* ((e_j_integer *) ( op_stk_top - 1 ) )) - (*((typeof(e_j_integer)*) op_stk_top )) ;
  {op_stk_top -= ( sizeof( typeof(e_j_integer) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_isub_END: ;
@@ -1955,7 +1963,7 @@ e_label_isub :
 
 e_label_lsub :
  e_console_log_start(lsub)
- e_CORE_lsub_START: (* ((e_j_long *) ( op_stk_top - 2 ) )) = (*((typeof(e_j_long)*) op_stk_top )) - (* ((e_j_long *) ( op_stk_top - 2 ) ));
+ e_CORE_lsub_START: (* ((e_j_long *) ( op_stk_top - 2 ) )) = (* ((e_j_long *) ( op_stk_top - 2 ) )) - (*((typeof(e_j_long)*) op_stk_top ));
  {op_stk_top -= ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_lsub_END: ;
@@ -1969,7 +1977,7 @@ e_label_lsub :
 
 e_label_fsub :
  e_console_log_start(fsub)
- e_CORE_fsub_START: (* ((e_j_float *) ( op_stk_top - 1 ) )) = (*((typeof(e_j_float)*) op_stk_top )) - (* ((e_j_float *) ( op_stk_top - 1 ) ));
+ e_CORE_fsub_START: (* ((e_j_float *) ( op_stk_top - 1 ) )) = (* ((e_j_float *) ( op_stk_top - 1 ) ))- (*((typeof(e_j_float)*) op_stk_top )) ;
  {op_stk_top -= ( sizeof( typeof(e_j_float) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_fsub_END: ;
@@ -1983,7 +1991,7 @@ e_label_fsub :
 
 e_label_dsub :
  e_console_log_start(dsub)
- e_CORE_dsub_START: (* ((e_j_double *) ( op_stk_top - 2 ) )) = (*((typeof(e_j_double)*) op_stk_top )) - (* ((e_j_double *) ( op_stk_top - 2 ) ));
+ e_CORE_dsub_START: (* ((e_j_double *) ( op_stk_top - 2 ) )) = (* ((e_j_double *) ( op_stk_top - 2 ) ))- (*((typeof(e_j_double)*) op_stk_top ));
  {op_stk_top -= ( sizeof( typeof(e_j_double) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_dsub_END: ;
@@ -2053,7 +2061,7 @@ e_label_dmul :
 
 e_label_idiv :
  e_console_log_start(idiv)
- e_CORE_idiv_START: (* ((e_j_integer *) ( op_stk_top - 1 ) )) = (*((typeof(e_j_integer)*) op_stk_top )) / (* ((e_j_integer *) ( op_stk_top - 1 ) ));
+ e_CORE_idiv_START: (* ((e_j_integer *) ( op_stk_top - 1 ) )) = (* ((e_j_integer *) ( op_stk_top - 1 ) ))/(*((typeof(e_j_integer)*) op_stk_top ));
  {op_stk_top -= ( sizeof( typeof(e_j_integer) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_idiv_END: ;
@@ -2067,7 +2075,7 @@ e_label_idiv :
 
 e_label_ldiv :
  e_console_log_start(ldiv)
- e_CORE_ldiv_START: (* ((e_j_long *) ( op_stk_top - 2 ) )) = (*((typeof(e_j_long)*) op_stk_top )) / (* ((e_j_long *) ( op_stk_top - 2 ) ));
+ e_CORE_ldiv_START: (* ((e_j_long *) ( op_stk_top - 2 ) )) = (* ((e_j_long *) ( op_stk_top - 2 ) ))/(*((typeof(e_j_long)*) op_stk_top ));
  {op_stk_top -= ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_ldiv_END: ;
@@ -2081,7 +2089,7 @@ e_label_ldiv :
 
 e_label_fdiv :
  e_console_log_start(fdiv)
- e_CORE_fdiv_START: (* ((e_j_float *) ( op_stk_top - 1 ) )) = (*((typeof(e_j_float)*) op_stk_top )) / (* ((e_j_float *) ( op_stk_top - 1 ) ));
+ e_CORE_fdiv_START: (* ((e_j_float *) ( op_stk_top - 1 ) )) = (* ((e_j_float *) ( op_stk_top - 1 ) )) / (*((typeof(e_j_float)*) op_stk_top )) ;
  {op_stk_top -= ( sizeof( typeof(e_j_float) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_fdiv_END: ;
@@ -2095,7 +2103,7 @@ e_label_fdiv :
 
 e_label_ddiv :
  e_console_log_start(ddiv)
- e_CORE_ddiv_START: (* ((e_j_double *) ( op_stk_top - 2 ) )) = (*((typeof(e_j_double)*) op_stk_top )) / (* ((e_j_double *) ( op_stk_top - 2 ) ));
+ e_CORE_ddiv_START: (* ((e_j_double *) ( op_stk_top - 2 ) )) = (* ((e_j_double *) ( op_stk_top - 2 ) ))/(*((typeof(e_j_double)*) op_stk_top ));
  {op_stk_top -= ( sizeof( typeof(e_j_double) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_ddiv_END: ;
@@ -2109,7 +2117,7 @@ e_label_ddiv :
 
 e_label_irem :
  e_console_log_start(irem)
- e_CORE_irem_START: (* ((e_j_integer *) ( op_stk_top - 1 ) )) = (*((typeof(e_j_integer)*) op_stk_top )) % (* ((e_j_integer *) ( op_stk_top - 1 ) ));
+ e_CORE_irem_START: (* ((e_j_integer *) ( op_stk_top - 1 ) )) = (* ((e_j_integer *) ( op_stk_top - 1 ) )) % (*((typeof(e_j_integer)*) op_stk_top )) ;
  {op_stk_top -= ( sizeof( typeof(e_j_integer) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_irem_END: ;
@@ -2123,7 +2131,7 @@ e_label_irem :
 
 e_label_lrem :
  e_console_log_start(lrem)
- e_CORE_lrem_START: (* ((e_j_long *) ( op_stk_top - 2 ) )) = (*((typeof(e_j_long)*) op_stk_top )) % (* ((e_j_long *) ( op_stk_top - 2 ) ));
+ e_CORE_lrem_START: (* ((e_j_long *) ( op_stk_top - 2 ) )) = (* ((e_j_long *) ( op_stk_top - 2 ) )) % (*((typeof(e_j_long)*) op_stk_top )) ;
  {op_stk_top -= ( sizeof( typeof(e_j_long) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_lrem_END: ;
@@ -2137,7 +2145,7 @@ e_label_lrem :
 
 e_label_frem :
  e_console_log_start(frem)
- e_CORE_frem_START: (* ((e_j_float *) ( op_stk_top - 1 ) )) = fmodf((*((typeof(e_j_float)*) op_stk_top )) , (* ((e_j_float *) ( op_stk_top - 1 ) )));
+ e_CORE_frem_START: (* ((e_j_float *) ( op_stk_top - 1 ) )) = fmodf( (* ((e_j_float *) ( op_stk_top - 1 ) )), (*((typeof(e_j_float)*) op_stk_top )));
  {op_stk_top -= ( sizeof( typeof(e_j_float) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_frem_END: ;
@@ -2151,7 +2159,7 @@ e_label_frem :
 
 e_label_drem :
  e_console_log_start(drem)
- e_CORE_drem_START: (* ((e_j_double *) ( op_stk_top - 2 ) )) = fmod( (*((typeof(e_j_double)*) op_stk_top )) , (* ((e_j_double *) ( op_stk_top - 2 ) )));
+ e_CORE_drem_START: (* ((e_j_double *) ( op_stk_top - 2 ) )) = fmod( (* ((e_j_double *) ( op_stk_top - 2 ) )) , (*((typeof(e_j_double)*) op_stk_top )));
  {op_stk_top -= ( sizeof( typeof(e_j_double) )/ sizeof( typeof(op_stk_top) ) );
 };
  e_CORE_drem_END: ;

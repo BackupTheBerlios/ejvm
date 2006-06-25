@@ -1,9 +1,0 @@
-	 Instruction: iconst_0 is Executed 
-	 Instruction: istore_1 is Executed 
-	 Instruction: iconst_0 is Executed 
-	 Instruction: istore_2 is Executed 
-	 Instruction: iload_1 is Executed 
-	 Instruction: iconst_1 is Executed 
-	 Instruction: iadd is Executed 
-	 Instruction: istore_2 is Executed 
-	 Instruction: return is Executed 
