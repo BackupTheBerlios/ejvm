@@ -18,7 +18,7 @@ int push( gnrc_node_t ** list_ptr_ptr, void const* core){
 
 int pop( gnrc_node_t ** list_ptr_ptr, void const** core){
 	assert(list_ptr_ptr !=NULL);
-	assert(core!= NULL);
+	//assert(core!= NULL);
 	if ( * list_ptr_ptr ==NULL){
 		*core = NULL;
 		return 0;

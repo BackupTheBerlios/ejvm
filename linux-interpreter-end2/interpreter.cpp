@@ -40,7 +40,7 @@
 
   #define e_FREE_CURRENT_FRAME \
   		free(locals);\
-  		free(op_stk);
+  		free((op_stk-1));
   		
   		
   #define e_SET_CURRENT_FRAME(temp)\
@@ -1871,9 +1871,12 @@ e_label_areturn :
 e_label_return :
 	
 	e_console_log_start(return)
+	e_TRACE_ANNOUNCE_INSTRUCTION(return);
+	e_TRACE_CLOSE( )
 	e_CORE_return ;
 	e_console_log_end
-	e_TRACE_ANNOUNCE_INSTRUCTION(return) ;
+	
+
 	e_TRACE_CLOSE( )
 	return 0;
 

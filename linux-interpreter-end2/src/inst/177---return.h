@@ -28,15 +28,16 @@
 
 
 #define e_CORE_return 	 \
-//	 e_CORE_return_START:   \
+	 e_CORE_return_START:{   \
 	 e_frame_t* temp ;\
-         pop(&java_stack , &temp);\
+         pop(&java_stack ,(const void**) &temp);\
          if (NULL == temp){\
          	e_FREE_CURRENT_FRAME;\
-         	return;\
+         	return 0;\
          }else{\
          	e_SET_CURRENT_FRAME(temp)\
          	goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];\
          }\
+	 }\
          e_CORE_return_END: 
 

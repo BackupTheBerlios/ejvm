@@ -44,7 +44,15 @@
 	
 	typedef struct ConstantPool{}ConstantPool;
 
-
+ struct e_frame_t{
+e_j_u_byte*		code;
+e_j_u_byte*    code_sofar;
+ByteCode*     method ;
+e_j_word*     locals ;
+e_j_word*      op_stk ;
+e_j_word* op_stk_top ;
+};
+typedef  struct e_frame_t e_frame_t;
 
 
 

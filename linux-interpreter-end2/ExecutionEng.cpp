@@ -80,6 +80,24 @@ public:
 
  typedef struct ConstantPool{}ConstantPool;
 
+
+ struct e_frame_t{
+e_j_u_byte* code;
+
+e_j_u_byte* code_sofar;
+
+ByteCode* method ;
+
+e_j_word* locals ;
+
+e_j_word* op_stk ;
+
+e_j_word* op_stk_top ;
+
+};
+
+typedef struct e_frame_t e_frame_t;
+
 class ExecutionEng{
 public: static int e_exexute(ConstantPool* const_pool,ByteCode* method);
 
@@ -98,8 +116,21 @@ int pop( gnrc_node_t ** list_ptr_ptr, void const** core);
 
  void* e_Instruction_Label_Lookup[255];
 
+
+
+
+
+
  int ExecutionEng::e_exexute(ConstantPool* const_pool,ByteCode* method){
+
+
+
 e_TRACE_CREATE_TRACE_FILE("dd")
+
+
+
+
+
 e_Instruction_Label_Lookup[ e_VALUE_OF_nop ] = &&e_label_nop;
 
 e_Instruction_Label_Lookup[ e_VALUE_OF_aconst_null ] = &&e_label_aconst_null;
@@ -510,11 +541,20 @@ e_Instruction_Label_Lookup[ e_VALUE_OF_impdep1 ] = &&e_label_impdep1;
 
 e_Instruction_Label_Lookup[ e_VALUE_OF_impdep2 ] = &&e_label_impdep2;
 
+
+
+
 assert(sizeof( e_j_double ) == 8);
 
 assert(sizeof( e_byte_t ) < 2 );
 
 assert(sizeof( u1_t ) == 1 );
+
+
+
+
+
+
 
  unsigned int pc ;
 
@@ -2951,11 +2991,25 @@ e_label_areturn :
 
 e_label_return :
  e_console_log_start(return)
- ;
+ e_TRACE_ANNOUNCE_INSTRUCTION(return);
+
+ e_TRACE_CLOSE( )
+ e_CORE_return_START:{ e_frame_t* temp ;
+ pop(&java_stack ,(const void**) &temp);
+ if (NULL == temp){ free(locals);
+ free((op_stk-1));
+;
+ return 0;
+ }else{ code = temp->code;
+ code_sofar = temp->code_sofar;
+ method = temp->method;
+ locals = temp->locals;
+ op_stk = temp->op_stk;
+ op_stk_top = temp->op_stk_top;
+ goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];
+ } } e_CORE_return_END: ;
 
  e_console_log_end
- e_TRACE_ANNOUNCE_INSTRUCTION(return) ;
-
  e_TRACE_CLOSE( )
  return 0;
 
