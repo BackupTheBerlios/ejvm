@@ -1,5 +1,5 @@
 #include"ejvm.h"
-#include"interpereter.h" 
+#include"ExecutionEng.h" 
 #include"ByteCode.h"
 
 void test( void){
@@ -14,6 +14,6 @@ method->codeLength=6;
 method->code=byte_code;
 method->exceptionTable=NULL;
 	
- Exec::e_exexute(NULL,method);
+ ExecutionEng::e_exexute(NULL,method);
 
 }

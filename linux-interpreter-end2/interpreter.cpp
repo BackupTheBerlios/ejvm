@@ -1,5 +1,5 @@
 #include"ByteCode.h"
-#include"interpereter.h" 
+#include"ExecutionEng.h" 
 #include"./src/inst.h"
 
 
@@ -54,7 +54,7 @@
  * e_exexute Body
  */
 
- int Exec::e_exexute(const_pool_t* const_pool,ByteCode* method){
+ int ExecutionEng::e_exexute(const_pool_t* const_pool,ByteCode* method){
 
 
 //Starting Logging
@@ -2092,6 +2092,12 @@ inst_impl_label:
 FAULT:
 e_TRACE_CLOSE( )
 	
-	return 0;
-	}
+return 0;
+
+}
+
+
+
+
+
 

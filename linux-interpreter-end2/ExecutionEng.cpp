@@ -109,14 +109,14 @@ public:
 
   }e_frame_t;
 
-class Exec{
+class ExecutionEng{
 public: static int e_exexute(const_pool_t* const_pool,ByteCode* method);
 
 };
 
  void* e_Instruction_Label_Lookup[255];
 
- int Exec::e_exexute(const_pool_t* const_pool,ByteCode* method){
+ int ExecutionEng::e_exexute(const_pool_t* const_pool,ByteCode* method){
 e_TRACE_CREATE_TRACE_FILE("dd")
 e_Instruction_Label_Lookup[ e_VALUE_OF_nop ] = &&e_label_nop;
 
@@ -3071,6 +3071,6 @@ e_label_impdep2 :
 
 FAULT:
 e_TRACE_CLOSE( )
- return 0;
+return 0;
 
- }
+}

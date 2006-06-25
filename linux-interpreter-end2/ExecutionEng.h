@@ -61,7 +61,9 @@
 		e_byte_t* 		  code_sofar   ; 	  /* 	current byte-code stream    */	
 		}e_frame_t; 
 		
-	
+
+
+
 	
 		
 /*
@@ -73,7 +75,7 @@
 
 //int e_exexute(const_pool_t* const_pool,method_t* method);
 //int e_exexute(const_pool_t* const_pool,ByteCode* method);
-class Exec{ 
+class ExecutionEng{ 
 public: static int e_exexute(const_pool_t* const_pool,ByteCode* method);
 
 };
