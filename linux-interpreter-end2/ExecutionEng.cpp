@@ -2956,35 +2956,145 @@ e_label_lookupswitch :
 
 e_label_ireturn :
  e_console_log_start(ireturn)
- e_CORE_ireturn_START: e_CORE_ireturn_END: ;
+ e_CORE_ireturn_START: { auto e_frame_t* temp ;
+ pop(&java_stack ,(const void**) &temp);
+ if (NULL == temp){ free(locals);
+ free((op_stk-1));
+;
+ return 0;
+ }else{ auto e_j_integer itemp = (*((typeof(e_j_integer)*) op_stk_top ));
+ free(locals);
+ free((op_stk-1));
+;
+ code = temp->code;
+ code_sofar = temp->code_sofar;
+ method = temp->method;
+ locals = temp->locals;
+ op_stk = temp->op_stk;
+ op_stk_top = temp->op_stk_top;
+ { {op_stk_top += ( sizeof( typeof(itemp) )/ sizeof( typeof(op_stk_top) ) );
+} ;
+ (*((typeof(itemp)*) op_stk_top )) = itemp ;
+};
+ free(temp);
+ goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];
+ } } e_CORE_ireturn_END: ;
 
  e_console_log_end
  e_TRACE_ANNOUNCE_INSTRUCTION(ireturn) ;
 
 e_label_lreturn :
  e_console_log_start(lreturn)
- e_CORE_lreturn_START: e_CORE_lreturn_END: ;
+ e_CORE_lreturn_START: { auto e_frame_t* temp ;
+ pop(&java_stack ,(const void**) &temp);
+ if (NULL == temp){ free(locals);
+ free((op_stk-1));
+;
+ return 0;
+ }else{ auto e_j_long ltemp = (*((typeof(e_j_long)*) op_stk_top ));
+ free(locals);
+ free((op_stk-1));
+;
+ code = temp->code;
+ code_sofar = temp->code_sofar;
+ method = temp->method;
+ locals = temp->locals;
+ op_stk = temp->op_stk;
+ op_stk_top = temp->op_stk_top;
+ { {op_stk_top += ( sizeof( typeof(ltemp) )/ sizeof( typeof(op_stk_top) ) );
+} ;
+ (*((typeof(ltemp)*) op_stk_top )) = ltemp ;
+};
+ free(temp);
+ goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];
+ } } e_CORE_lreturn_END: ;
 
  e_console_log_end
  e_TRACE_ANNOUNCE_INSTRUCTION(lreturn) ;
 
 e_label_freturn :
  e_console_log_start(freturn)
- e_CORE_freturn_START: e_CORE_freturn_END: ;
+ e_CORE_freturn_START: { auto e_frame_t* temp ;
+ pop(&java_stack ,(const void**) &temp);
+ if (NULL == temp){ free(locals);
+ free((op_stk-1));
+;
+ return 0;
+ }else{ auto e_j_float ftemp = (*((typeof(e_j_float)*) op_stk_top ));
+ free(locals);
+ free((op_stk-1));
+;
+ code = temp->code;
+ code_sofar = temp->code_sofar;
+ method = temp->method;
+ locals = temp->locals;
+ op_stk = temp->op_stk;
+ op_stk_top = temp->op_stk_top;
+ { {op_stk_top += ( sizeof( typeof(ftemp) )/ sizeof( typeof(op_stk_top) ) );
+} ;
+ (*((typeof(ftemp)*) op_stk_top )) = ftemp ;
+};
+ free(temp);
+ goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];
+ } } e_CORE_freturn_END: ;
 
  e_console_log_end
  e_TRACE_ANNOUNCE_INSTRUCTION(freturn) ;
 
 e_label_dreturn :
  e_console_log_start(dreturn)
- e_CORE_dreturn_START: e_CORE_dreturn_END: ;
+ e_CORE_dreturn_START: { auto e_frame_t* temp ;
+ pop(&java_stack ,(const void**) &temp);
+ if (NULL == temp){ free(locals);
+ free((op_stk-1));
+;
+ return 0;
+ }else{ auto e_j_double dtemp = (*((typeof(e_j_double)*) op_stk_top ));
+ free(locals);
+ free((op_stk-1));
+;
+ code = temp->code;
+ code_sofar = temp->code_sofar;
+ method = temp->method;
+ locals = temp->locals;
+ op_stk = temp->op_stk;
+ op_stk_top = temp->op_stk_top;
+ { {op_stk_top += ( sizeof( typeof(dtemp) )/ sizeof( typeof(op_stk_top) ) );
+} ;
+ (*((typeof(dtemp)*) op_stk_top )) = dtemp ;
+};
+ free(temp);
+ goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];
+ } } e_CORE_dreturn_END: ;
 
  e_console_log_end
  e_TRACE_ANNOUNCE_INSTRUCTION(dreturn) ;
 
 e_label_areturn :
  e_console_log_start(areturn)
- e_CORE_areturn_START: e_CORE_areturn_END: ;
+ e_CORE_areturn_START: { auto e_frame_t* temp ;
+ pop(&java_stack ,(const void**) &temp);
+ if (NULL == temp){ free(locals);
+ free((op_stk-1));
+;
+ return 0;
+ }else{ auto e_j_refrence atemp = (*((typeof(e_j_refrence)*) op_stk_top ));
+ free(locals);
+ free((op_stk-1));
+;
+ code = temp->code;
+ code_sofar = temp->code_sofar;
+ method = temp->method;
+ locals = temp->locals;
+ op_stk = temp->op_stk;
+ op_stk_top = temp->op_stk_top;
+ { {op_stk_top += ( sizeof( typeof(atemp) )/ sizeof( typeof(op_stk_top) ) );
+} ;
+ (*((typeof(atemp)*) op_stk_top )) = atemp ;
+};
+ free(temp);
+ goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];
+ } } e_CORE_areturn_END: ;
 
  e_console_log_end
  e_TRACE_ANNOUNCE_INSTRUCTION(areturn) ;
