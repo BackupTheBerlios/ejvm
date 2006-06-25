@@ -351,7 +351,8 @@ void ExecutionEng::interpret(Thread * thread)
 					u4 word;
 					constantPool->getWord(index,word);
 					currentFrame->push(word);
-					cout<<"LDC: value="<<computFloat(word)<<endl;
+					cout<<"LDC: Ivalue="<<word<<endl;
+					printf("Fvalue=%.1f\n",computFloat(word));
 				}
 				pc+=2;
 				break;
@@ -362,7 +363,8 @@ void ExecutionEng::interpret(Thread * thread)
 					u4 word;
 					constantPool->getWord(((indexbyte1 << 8) | indexbyte2),word);
 					currentFrame->push(word);
-					cout<<"LDC_w: value="<<computFloat(word)<<endl;
+					cout<<"LDC_W: Ivalue="<<word<<endl;
+					printf("Fvalue=%.1f\n",computFloat(word));
 				}
 				pc+=3;
 				break;
@@ -418,7 +420,7 @@ void ExecutionEng::interpret(Thread * thread)
 					u1 index = *(pc+1);
 					u4 word = currentFrame->getAtIndex(index);
 					currentFrame->push(word);
-					cout<<"ILOAD: theIndex="<<(int)index<<"  theValueAtTheTopOfTheStack="<<computFloat(word)<<endl;
+					printf("FLOAD: theIndex=%d  theValueAtTheTopOfTheStack=%.1f\n",index,computFloat(word));
 				}
 				pc+=2;
 				break;
@@ -481,8 +483,8 @@ void ExecutionEng::interpret(Thread * thread)
 					u4 temp=currentFrame->getAtIndex(*pc - FLOAD_0);
 					currentFrame->push(temp);
 					u4 * ptr=& temp;
-					cout<<"FLOAD_"<<(*pc - FLOAD_0)<<": value at the top of the Stack"<<*(float *)ptr<<endl;
-					cout<<computFloat(temp)<<endl;
+					cout<<"FLOAD_"<<(*pc - FLOAD_0)<<": value at the top of the Stack=";
+					printf("%.1f\n",computFloat(temp));
 				}
 				pc++;
 				break;
@@ -571,7 +573,7 @@ void ExecutionEng::interpret(Thread * thread)
 					u1 index = *(pc+1);
 					u4 word = currentFrame->pop();
 					currentFrame->setAtIndex(index,word);
-					cout<<"FSTORE: theIndex="<<(int)index<<" theValue="<<computFloat(word)<<endl;
+					printf("FSTORE: theIndex=%d  theValueAtTheTopOfTheStack=%.1f\n",index,computFloat(word));
 				}
 				pc+=2;
 				break;      
@@ -630,7 +632,7 @@ void ExecutionEng::interpret(Thread * thread)
 					//localVariable[index+1]=word2
 					currentFrame->setAtIndex((*pc - LSTORE_0 ),word1);
 					currentFrame->setAtIndex(((*pc - LSTORE_0)+1),word2);
-					cout<<"LSTORE_"<<(*pc - LSTORE_0 )<<": theLongValue-"<<*(long long *)longValue<<endl;
+					cout<<"LSTORE_"<<(*pc - LSTORE_0 )<<": theLongValue="<<*(long long *)longValue<<endl;
 				}
 				pc++;
 				break;
@@ -642,8 +644,8 @@ void ExecutionEng::interpret(Thread * thread)
 					u4 u4num=currentFrame->pop();
 					u4 * ptr = & u4num;
 					currentFrame->setAtIndex((*pc - FSTORE_0 ),u4num);
-					cout<<"FSTORE_"<<(*pc - FSTORE_0 )<<": "<<"value Poped="<<*(float*)ptr<<endl;
-					cout<<computFloat(u4num)<<endl;
+					cout<<"FSTORE_"<<(*pc - FSTORE_0 )<<": value Poped=";
+					printf("%.1f\n",computFloat(u4num));
 				}
 				pc++;
 				break;
@@ -706,6 +708,30 @@ void ExecutionEng::interpret(Thread * thread)
 					u4 temp=currentFrame->getTopOpStack();
 					currentFrame->push(temp);
 					cout<<"DUP: "<<"TopOfStack="<<currentFrame->getTopOpStack()<<endl;
+				}
+				pc++;
+				break;
+			case DUP_X1:
+				{
+					u4 value1=currentFrame->pop();
+					u4 value2=currentFrame->pop();
+					currentFrame->push(value1);
+					currentFrame->push(value2);
+					currentFrame->push(value1);
+					cout<<"DUP_X1: "<<"TopOfStack="<<currentFrame->getTopOpStack()<<endl;
+				}
+				pc++;
+				break;
+			case DUP_X2:
+				{
+					u4 value1=currentFrame->pop();
+					u4 value2=currentFrame->pop();
+					u4 value3=currentFrame->pop();
+					currentFrame->push(value1);
+					currentFrame->push(value3);
+					currentFrame->push(value2);
+					currentFrame->push(value1);
+					cout<<"DUP_X2: "<<"TopOfStack="<<currentFrame->getTopOpStack()<<endl;
 				}
 				pc++;
 				break;
@@ -773,7 +799,7 @@ void ExecutionEng::interpret(Thread * thread)
 					u4 * ptr=&result;
 					*(float *)ptr= fresult;
 					currentFrame->push(*ptr);
-					cout<<"FADD: Value1="<<value1<<" Value2="<<value2<<" Result="<<fresult<<endl;
+					printf("FADD: Value1=%.1f Value2=%.1f  Result=%.1f\n",value1,value2,*(float *)ptr);
 				}
 				pc++;
 				break;
@@ -839,7 +865,7 @@ void ExecutionEng::interpret(Thread * thread)
 					u4 * pResult = &result;
 					*(float *)pResult = fresult;
 					currentFrame->push(*pResult);
-					cout<<"FSUB: Value1="<<fValue1<<" Value2="<<fValue2<<" Result="<<*(float *)pResult<<endl;
+					printf("FSUB: Value1=%.1f Value2=%.1f  Result=%.1f\n",fValue1,fValue2,*(float *)pResult);
 				}
 				pc++;
 				break;
@@ -904,7 +930,7 @@ void ExecutionEng::interpret(Thread * thread)
 					u4 * pResult = &result;
 					*(float *)pResult = fresult;
 					currentFrame->push(*pResult);
-					cout<<"FMUL: Value1="<<fValue1<<" Value2="<<fValue2<<" Result="<<*(float *)pResult<<endl;
+					printf("FMUL: Value1=%.1f Value2=%.1f  Result=%.1f\n",fValue1,fValue2,*(float *)pResult);
 				}
 				pc++;
 				break;
@@ -973,8 +999,7 @@ void ExecutionEng::interpret(Thread * thread)
 					currentFrame->push(*pResult);
 					//cout<<"FDIV: Value1="<<*(float *)pValue1<<" Value2="<<*(float *)pValue2<<" Result="<<*(float *)pResult<<endl;
 					//cout<<"REsult in u4="<<*pResult<<endl;
-					cout<<"FDIV: Value1="<<fValue1<<" Value2="<<fValue2<<" Result="<<*(float *)pResult<<endl;
-					
+					printf("FDIV: Value1=%.1f Value2=%.1f  Result=%.1f\n",fValue1,fValue2,*(float *)pResult);
 				}
 				pc++;
 				break;
@@ -1072,6 +1097,101 @@ void ExecutionEng::interpret(Thread * thread)
 					pc = currentFrame->PC;
 					
 					cout<<"IRETURN: return Int="<<currentFrame->getTopOpStack()<<endl<<endl;
+					cout<<"continue: "<<method->getName()<<"\t"<<method->getDesc()<<endl;
+				}
+				break;
+			case LRETURN:
+				{
+					//pop the current frame from the stack,the current frame is held in the currentfarme variable
+					mainThread->getStack()->pop();
+					Frame * invokingFrame = mainThread->getStack()->getTopFrame();
+					//pop the return valus from the operand stack of the invoked method 
+					//and push it in the operand stack of the invoking method
+					u4 word2=currentFrame->pop();
+					u4 word1=currentFrame->pop();
+					invokingFrame->push(word1);
+					invokingFrame->push(word2);
+					u4 result[2];
+					result[0]=word1;
+					result[1]=word2;
+					
+					delete currentFrame;
+					currentFrame = invokingFrame;
+					method = currentFrame->getMethod();
+					byteCode = method->getByteCode();
+					constantPool = method->getConstantPool();
+					code = byteCode->getCode();
+					pc = currentFrame->PC;
+					cout<<"LRETURN: return long="<<*(long long *)result<<endl<<endl;
+					cout<<"continue: "<<method->getName()<<"\t"<<method->getDesc()<<endl;
+				}
+				break;
+			case FRETURN:
+				{
+					//pop the current frame from the stack,the current frame is held in the currentfarme variable
+					mainThread->getStack()->pop();
+					Frame * invokingFrame = mainThread->getStack()->getTopFrame();
+					//pop the return valus from the operand stack of the invoked method 
+					//and push it in the operand stack of the invoking method
+					invokingFrame->push(currentFrame->pop());
+					//free up the memory occupied by the invoked method 
+					delete currentFrame;
+					
+					currentFrame = invokingFrame;
+					method = currentFrame->getMethod();
+					byteCode = method->getByteCode();
+					constantPool = method->getConstantPool();
+					code = byteCode->getCode();
+					pc = currentFrame->PC;
+					printf("FRETURN: return float=%.1f\n\n",computFloat(currentFrame->getTopOpStack()));
+					cout<<"continue: "<<method->getName()<<"\t"<<method->getDesc()<<endl;
+				}
+				break;
+			case DRETURN:
+				{
+					//pop the current frame from the stack,the current frame is held in the currentfarme variable
+					mainThread->getStack()->pop();
+					Frame * invokingFrame = mainThread->getStack()->getTopFrame();
+					//pop the return valus from the operand stack of the invoked method 
+					//and push it in the operand stack of the invoking method
+					u4 word2=currentFrame->pop();
+					u4 word1=currentFrame->pop();
+					invokingFrame->push(word1);
+					invokingFrame->push(word2);
+					
+					
+					delete currentFrame;
+					currentFrame = invokingFrame;
+					method = currentFrame->getMethod();
+					byteCode = method->getByteCode();
+					constantPool = method->getConstantPool();
+					code = byteCode->getCode();
+					pc = currentFrame->PC;
+					printf("DRETURN: return Double=%.1lf\n\n",computDouble(word1,word2));
+					cout<<"continue: "<<method->getName()<<"\t"<<method->getDesc()<<endl;
+				}
+				break;
+			case ARETURN:
+				{
+					//pop the current frame from the stack,the current frame is held in the currentfarme variable
+					mainThread->getStack()->pop();
+					Frame * invokingFrame = mainThread->getStack()->getTopFrame();
+					
+					//pop the return valus from the operand stack of the invoked method 
+					//and push it in the operand stack of the invoking method
+					invokingFrame->push(currentFrame->pop());
+					
+					//free up the memory occupied by the invoked method 
+					delete currentFrame;
+					
+					currentFrame = invokingFrame;
+					method = currentFrame->getMethod();
+					byteCode = method->getByteCode();
+					constantPool = method->getConstantPool();
+					code = byteCode->getCode();
+					pc = currentFrame->PC;
+					
+					cout<<"ARETURN: returnRefrence="<<(Object *)currentFrame->getTopOpStack()<<endl<<endl;
 					cout<<"continue: "<<method->getName()<<"\t"<<method->getDesc()<<endl;
 				}
 				break;

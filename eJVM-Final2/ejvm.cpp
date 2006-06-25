@@ -104,12 +104,11 @@ int main(int argc, char** argv){
 		Loader::deleteLoader();
 		Heap::deleteHeap();
 		ExecutionEng::deleteExec();
-	/*int * j=NULL;
+/*	int * j=NULL;
 	cout<<u4(j)<<"\t"<<j<<endl;
 	int i=-1000000;
 	vArg(12,123.777,-1,'a',false,&i);*/
-	
-	
+
 }
 
 
@@ -126,6 +125,7 @@ void vArg(int a,...){
 	//read
 	printf("%f \n",*(float*)vPtr);
 	j=*vPtr;
+	
 	
 	vPtr=&j;
 	cout<<*(float*)vPtr<<endl;

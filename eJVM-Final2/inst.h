@@ -132,7 +132,10 @@
 #define GOTO						167
 
 #define IRETURN					172
-
+#define LRETURN					173
+#define FRETURN					174
+#define DRETURN					175
+#define ARETURN					176 	 
 #define RETURN                     177
 #define GETSTATIC					178
 #define PUTSTATIC					179
