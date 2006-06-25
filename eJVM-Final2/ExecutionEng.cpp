@@ -1334,7 +1334,7 @@ void ExecutionEng::interpret(Thread * thread)
 //					actualMethod=nonActualMethod;
 					actualMethod = CLASS->lookupMethod(nonActualMethod->getName(),nonActualMethod->getDesc());
 					
-					cout<<"INVOKEVIRTUAL: "<<actualMethod->getName()<<"\t"<<actualMethod->getDesc()<<endl<<endl;
+					cout<<"INVOKEVIRTUAL: "<<actualMethod->getName()<<"\t"<<actualMethod->getDesc()<<"\t"<<actualMethod->getOwnerClassData()->getFQName()<<endl<<endl;
 
 					Frame * newFrame = new Frame(false,actualMethod);
 					if(newFrame == NULL)
@@ -1361,23 +1361,23 @@ void ExecutionEng::interpret(Thread * thread)
 					u1 indexbyte1 = *(pc+1);
 					u1 indexbyte2 = *(pc+2);
 					Method * actualMethod=NULL;
-					if(((indexbyte1 << 8) | indexbyte2) == 12)
+					/*if(((indexbyte1 << 8) | indexbyte2) == 12)
 					{
 						currentFrame->pop();
 						cout<<"INVOKESPECIAL: OBJECT"<<endl;
 						pc+=3;
 						break;
-					}
+					}*/
 					Method * nonActualMethod = constantPool->getMethodData((indexbyte1 << 8) | indexbyte2);
 					ClassData * nonActualMethodClass = nonActualMethod->getOwnerClassData();
-					if(strcmp(nonActualMethod->getName(),"<init>")==0//check if this the <init> of the object
+					/*if(strcmp(nonActualMethod->getName(),"<init>")==0//check if this the <init> of the object
 						&& nonActualMethodClass->getSuperClassData()==NULL)
 					{
 						cout<<"INVOKESPECIAL: "<<nonActualMethod->getName()<<"\t"<<nonActualMethod->getDesc()<<endl<<endl;
 						currentFrame->pop();
 						pc+=3;
 						break;
-					}
+					}*/
 					ClassData * currentClass = method->getOwnerClassData();
 					
 					/*if(currentClass->treatSuperMethodsSpecially()&&
@@ -1390,7 +1390,7 @@ void ExecutionEng::interpret(Thread * thread)
 					else*/
 						actualMethod = nonActualMethod;
 
-					cout<<"INVOKESPECIAL: "<<actualMethod->getName()<<"\t"<<actualMethod->getDesc()<<endl<<endl;
+					cout<<"INVOKESPECIAL: "<<actualMethod->getName()<<"\t"<<actualMethod->getDesc()<<"\t"<<nonActualMethodClass->getFQName()<<endl<<endl;
 					Frame * newFrame = new Frame(false,actualMethod);
 					if(newFrame == NULL)
 					{

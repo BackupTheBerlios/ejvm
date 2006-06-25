@@ -80,15 +80,16 @@ ClassData::ClassData(const char *name, const byte inputFile [])
 		
 		/* to load and resolve the super class */
 //printf("load and resolve the super class NOW COMMENTED IN CODE\n");
-		if(strcmp(constantPool->getClassName(superClass),"java/lang/Object")!=0)//it is not  the java/lang/Object.class Class
+		//if(strcmp(constantPool->getClassName(superClass),"java/lang/Object")!=0)//it is not  the java/lang/Object.class Class
+		if(superClass!=0)//dont load superclass if it is java/lang/Object
 		{
 		  	constantPool-> getClassData(superClass);
-		}
+	//	}
 		/* to load and resolve the superInterfaces */
 //printf("load and resolve the super interfaces NOW COMMENTED IN CODE\n");
 		for( i=0 ; i < interfacesCount ; i++)
 			constantPool-> getClassData(interfaces[i]);
-		
+		}
 }
 /*****************ARRAY USAGE**********************/
 /*****************ARRAY USAGE**********************/
@@ -121,7 +122,8 @@ void ClassData:: prepare(void)
 {
 //printf("the preparation phase of the class\n");
 	/* get the size of an object of the parent class */
-	if(strcmp(constantPool->getClassName(superClass),"java/lang/Object")==0)
+//	if(strcmp(constantPool->getClassName(superClass),"java/lang/Object")==0)
+	if(superClass==0)//the object size of the Class java/lang/Object = 0
 		objectSize=0;
 	else
 	{
@@ -161,7 +163,8 @@ void ClassData:: initialize(void)
 	ClassData * myParent;
 	Method * clInit=NULL;
 	u2 i;
-	if(strcmp(constantPool->getClassName(superClass),"java/lang/Object")!=0)
+//	if(strcmp(constantPool->getClassName(superClass),"java/lang/Object")!=0)
+	if(superClass!=0)
 	{
 		myParent = constantPool->getClassData(superClass);
 		if( !(myParent->isInitialized()) )
@@ -423,7 +426,8 @@ ClassData* ClassData::getSuperClassData()
 {
 //printf("Get super class data --> it returns NULL so far\n");
 //printf("--------------->if U reached here the error is a call to getSuperClassData\n");
-	if(strcmp(constantPool->getClassName(superClass),"java/lang/Object") ==0)
+	//if(strcmp(constantPool->getClassName(superClass),"java/lang/Object") ==0)
+	if(superClass!=0)
 		return NULL;
 	else
 	{
