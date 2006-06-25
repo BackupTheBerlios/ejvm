@@ -1,5 +1,5 @@
-#include"ByteCode.h"
-#include"ExceptionTable.h"
+#include "ByteCode.h"
+#include "ExceptionTable.h"
 #include<stdio.h>
 
 ByteCode::ByteCode(byte inputFile[], int inPtr,

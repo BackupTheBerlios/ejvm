@@ -54,7 +54,7 @@
  * e_exexute Body
  */
 
- int ExecutionEng::e_exexute(const_pool_t* const_pool,ByteCode* method){
+ int ExecutionEng::e_exexute(ConstantPool* const_pool,ByteCode* method){
 
 
 //Starting Logging

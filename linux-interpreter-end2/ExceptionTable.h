@@ -10,7 +10,7 @@ private:
 	u2 numOfEntries;
 	ExceptionTableEntry ** theTable;
 public:
-	ExceptionTable(byte inputFile [],int inPtr, u2 numOfEntries);
+	ExceptionTable(const byte inputFile [],int inPtr, u2 numOfEntries);
 	virtual ~ExceptionTable();
 };
 

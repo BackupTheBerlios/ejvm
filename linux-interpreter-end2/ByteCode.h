@@ -7,7 +7,7 @@ class ExceptionTable;
 class ByteCode
 {
 public:	
-	u2 nameIndex;
+    u2 nameIndex;
     u4 length;
     u2 maxStack;
     u2 maxLocals;
@@ -16,8 +16,9 @@ public:
     ExceptionTable * exceptionTable;
 	
 public:
-	ByteCode(){};	
-	ByteCode(byte inputFile [],int inPtr,u2 nameIndex, u4 length);
+	ByteCode(byte inputFile [],int inPtr,
+	u2 nameIndex, u4 length);
+	ByteCode(){};
 	virtual ~ByteCode();
 };
 

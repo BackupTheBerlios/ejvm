@@ -17,7 +17,7 @@ class ExceptionTable;
 class ByteCode
 {
 public:
- u2 nameIndex;
+    u2 nameIndex;
 
     u4 length;
 
@@ -32,9 +32,10 @@ public:
     ExceptionTable * exceptionTable;
 
 public:
- ByteCode(){};
+ ByteCode(byte inputFile [],int inPtr,
+ u2 nameIndex, u4 length);
 
- ByteCode(byte inputFile [],int inPtr,u2 nameIndex, u4 length);
+ ByteCode(){};
 
  virtual ~ByteCode();
 
@@ -75,10 +76,9 @@ public:
 
 
 
-
  typedef
 
- typedef struct const_pool_t{};
+ typedef struct ConstantPool{};
 
 
  typedef struct method_t{
@@ -110,13 +110,13 @@ public:
   }e_frame_t;
 
 class ExecutionEng{
-public: static int e_exexute(const_pool_t* const_pool,ByteCode* method);
+public: static int e_exexute(ConstantPool* const_pool,ByteCode* method);
 
 };
 
  void* e_Instruction_Label_Lookup[255];
 
- int ExecutionEng::e_exexute(const_pool_t* const_pool,ByteCode* method){
+ int ExecutionEng::e_exexute(ConstantPool* const_pool,ByteCode* method){
 e_TRACE_CREATE_TRACE_FILE("dd")
 e_Instruction_Label_Lookup[ e_VALUE_OF_nop ] = &&e_label_nop;
 
@@ -2573,7 +2573,7 @@ e_label_i2s :
 
 e_label_lcmp :
  e_console_log_start(lcmp)
- e_CORE_lcmp_START: e_CORE_lcmp_END: ;
+ ;
 
  e_console_log_end
  e_TRACE_ANNOUNCE_INSTRUCTION(lcmp) ;

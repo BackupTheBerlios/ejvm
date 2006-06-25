@@ -2,7 +2,7 @@
 	#define interpreter_H_
 
 #include"ByteCode.h"
-
+#include"ConstantPool.h"
 
 /*
  * Type Definintions
@@ -42,7 +42,7 @@
 	
 	typedef 
 	
-	typedef struct const_pool_t{};	/**/
+	typedef struct ConstantPool{};	/**/
 	
 	typedef struct method_t{
 		unsigned int 	operand_stack_length    ;		/* operand stack length   */
@@ -76,7 +76,7 @@
 //int e_exexute(const_pool_t* const_pool,method_t* method);
 //int e_exexute(const_pool_t* const_pool,ByteCode* method);
 class ExecutionEng{ 
-public: static int e_exexute(const_pool_t* const_pool,ByteCode* method);
+public: static int e_exexute(ConstantPool* const_pool,ByteCode* method);
 
 };
 
