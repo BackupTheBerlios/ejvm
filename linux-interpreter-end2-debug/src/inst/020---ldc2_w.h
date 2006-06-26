@@ -29,11 +29,10 @@
 
 #define e_CORE_ldc2_w 	 \
 	 e_CORE_ldc2_w_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
+	 {\
+	 	auto e_j_u_integer word1, word2;\
+		constant_pool->get2Words(e_READ_FROM__JAVA_BYTE_STREAM_16((code_sofar+1),e_j_char), word1 , word2);\
+		e_PUSH_OPERAND_STACK( ( ((e_j_u_long) word1)<<32)|((e_j_u_long) word2) );\
+	 }\
 	 e_CORE_ldc2_w_END: \
 

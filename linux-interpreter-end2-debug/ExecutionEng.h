@@ -1,8 +1,8 @@
 #ifndef interpreter_H_
 	#define interpreter_H_
 
-#include"ByteCode.h"
-#include"ConstantPool.h"
+//#include"ByteCode.h"
+//#include"ConstantPool.h"
 
 /*
  * Type Definintions
@@ -11,14 +11,14 @@
  */
 	#define e_j_NULL 	    NULL
 	typedef unsigned char          e_byte_t,u1_t,e_j_u_byte;		/*Java byte   */
-	typedef unsigned int           e_j_u_integer;
-	typedef unsigned short         e_j_char;
-	typedef unsigned long long     e_j_u_long;
+	typedef unsigned int           e_j_u_integer ;
+	typedef unsigned short         e_j_char ;
+	typedef unsigned long long     e_j_u_long ;
 	
 	typedef char              e_j_byte; 
 	typedef short             e_j_short;
 	typedef int     	  e_j_integer;  		/*Java integer */
-	typedef int     	  e_j_word;			/*Java word    */
+	typedef unsigned int   	  e_j_word;			/*Java word    */
 	typedef float   	  e_j_float;			/*Java float   */
 	
 	typedef double  	  e_j_double; 			/*Java double  */
@@ -28,7 +28,8 @@
 
 	typedef int               e_j_refrence;
 	typedef int64_t           e_j_long_long;
-	
+	//typedef uint64_t          e_j_u_long_long;
+		
 	#ifndef WIDE
 		typedef char              e_j_wide_byte; 
 		typedef short             e_j_wide_short;
@@ -40,32 +41,29 @@
 	#endif
 	
 	
-	typedef 
 	
-//	typedef struct ConstantPool{};	/**/
 	
-	typedef struct method_t{
-		unsigned int 	operand_stack_length    ;		/* operand stack length   */
-		unsigned int	locals_length  ;				/* local-variables length */
-		unsigned int	byteCodeLength ;				/* byteCodeStream length  */
-		e_byte_t* 		code ;							/* byteCodeStream		  */	
-	    
-	};
-	 
-	typedef struct e_frame_t{
-		unsigned int   	  pc     ;            /* 	program counter     		*/
-		e_j_word*   	  op_stk ;            /* 	operand stack       		*/
-		e_j_word*		  op_stk_top;         /* 	operand stack  top  		*/
-		e_j_word*  	      locals ;            /* 	local variables     		*/
-		e_byte_t* 		  code   ; 	  		  /* 	byte-code stream    		*/	
-		e_byte_t* 		  code_sofar   ; 	  /* 	current byte-code stream    */	
-		}e_frame_t; 
-		
+//	typedef struct ConstantPool{int i;};
+//	typedef struct ConstantPool ConstantPool;
+
+ struct e_frame_t{
+ConstantPool* constant_pool;
+e_j_u_byte*    code;
+e_j_u_byte*    code_sofar;
+ByteCode*     method ;
+e_j_word*     locals ;
+e_j_word*      op_stk ;
+e_j_word* op_stk_top ;
+};
+typedef  struct e_frame_t e_frame_t;
 
 
 
-	
-		
+
+
+
+
+
 /*
  * Routines declaration
  * ====================

@@ -29,11 +29,9 @@
 
 #define e_CORE_new 	 \
 	 e_CORE_new_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
+ 		ClassData * cl = constant_pool->getClassData(e_READ_FROM__JAVA_BYTE_STREAM_16((code_sofar+1),e_j_char));\
+		Heap * heap = Heap::getInstance();\
+		Object * object = heap->createObject(cl);\
+		e_PUSH_OPERAND_STACK(object);\
 	 e_CORE_new_END: \
 

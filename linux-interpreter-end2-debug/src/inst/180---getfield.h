@@ -29,11 +29,21 @@
 
 #define e_CORE_getfield 	 \
 	 e_CORE_getfield_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
+	 {\
+ 		auto u4 word1,word2;\
+		Field * field = constant_pool->getFieldData(e_READ_FROM__JAVA_BYTE_STREAM_16((code_sofar+1) , e_j_char));\
+		char * p = field->getDesc();\
+		Object * object = (Object *) e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_refrence);\
+		e_RETRACT_STAK(e_j_refrence);\
+		object->getField(field,word1,word2);\
+		if((*p == 'J') || (*p == 'D'))\
+		{\
+ 		e_PUSH_OPERAND_STACK( (((e_j_u_long) word1)<<32)|((e_j_u_long) word2) );\
+		}\
+		else\
+		{\
+			e_PUSH_OPERAND_STACK(word1);\
+		}\
+	 }\
 	 e_CORE_getfield_END: \
 

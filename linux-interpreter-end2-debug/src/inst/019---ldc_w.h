@@ -29,11 +29,10 @@
 
 #define e_CORE_ldc_w 	 \
 	 e_CORE_ldc_w_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
-	 e_CORE_ldc_w_END: \
+	{\
+	 	auto e_j_u_integer word;\
+		constant_pool->getWord(e_READ_FROM__JAVA_BYTE_STREAM_16((code_sofar+1),e_j_char),word);\
+		e_PUSH_OPERAND_STACK((e_j_u_integer) word);\
+	}\
+	 e_CORE_ldc_w_END: 
 

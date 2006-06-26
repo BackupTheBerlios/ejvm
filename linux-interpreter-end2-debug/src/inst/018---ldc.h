@@ -29,11 +29,10 @@
 
 #define e_CORE_ldc 	 \
 	 e_CORE_ldc_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
+	 	{\
+	 	auto e_j_u_integer word;\
+		constant_pool->getWord(e_READ_FROM_STREAM_as_Then_Cast_as((code_sofar+1),e_j_u_byte,e_j_char),word);\
+		e_PUSH_OPERAND_STACK(word);\
+	 	}\
 	 e_CORE_ldc_END: \
 

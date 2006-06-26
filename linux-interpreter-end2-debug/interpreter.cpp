@@ -1,6 +1,6 @@
-#include"ByteCode.h"
 #include"ExecutionEng.h" 
 #include"./src/inst.h"
+
 
 
 /*
@@ -31,15 +31,51 @@
   #define e_PROMOTE_STAK(type)  {op_stk_top += ( sizeof( typeof(type) )/ sizeof( typeof(op_stk_top) ) );}
   
 
-  #define e_PUSH_OPERAND_STACK(value) { e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(value) = value ;}; e_PROMOTE_STAK( value)  
+  #define e_PUSH_OPERAND_STACK(value) {  e_PROMOTE_STAK( value) ; e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(value) = value ;}  
   #define e_STORE_TO_LOCAL_AT_INDEX(value,indx) e_ACCESS_LOCAL_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(value ,indx) = value
  
   #define e_READ_FROM_STREAM_as_Then_Cast_as(stream,T1 ,T2) ( (T2) (*( (T1*) stream ) ) ) 
-  		  		
+  
+  #define e_READ_FROM__JAVA_BYTE_STREAM_16(start,type)\
+  	((e_READ_FROM_STREAM_as_Then_Cast_as(start , e_j_u_byte , type)<<8)|\
+  	e_READ_FROM_STREAM_as_Then_Cast_as((start+1) , e_j_u_byte , type))
+
+   #define e_READ_FROM__JAVA_BYTE_STREAM_32(start,type)\
+  	((e_READ_FROM_STREAM_as_Then_Cast_as(start , e_j_u_byte , type)<<24)|\
+  	(e_READ_FROM_STREAM_as_Then_Cast_as((start +1) , e_j_u_byte , type)<<16)|\
+  	(e_READ_FROM_STREAM_as_Then_Cast_as((start +2), e_j_u_byte , type)<<16)|\
+  	(e_READ_FROM_STREAM_as_Then_Cast_as((start +3), e_j_u_byte , type)))
+  
 
   #define e_FREE_CURRENT_FRAME \
   		free(locals);\
-  		free(op_stk);
+  		free((op_stk-1));
+  		
+  		
+  #define e_SET_CURRENT_FRAME(temp)\
+  	  code = temp->code;\
+	  code_sofar = temp->code_sofar;\
+	  method = temp->method;\
+	  locals =  temp->locals;\
+	  op_stk = temp->op_stk;\
+	  op_stk_top = temp->op_stk_top;\
+	  constant_pool = temp->constant_pool;
+
+ #define e_SAVE_CURRENT_FRAME(temp)\
+ 	  temp->code = code;\
+	  temp->code_sofar = code_sofar;\
+	  temp->method = method;\
+	  temp->locals = locals;\
+	  temp->op_stk = op_stk;\
+	  temp->op_stk_top = op_stk_top;\
+	  temp->constant_pool = constant_pool;
+	  
+  	
+  #define e_PROCEDE_TO(offset)\
+	 code_sofar += offset  ;\
+	goto *e_Instruction_Label_Lookup[ *( e_j_u_byte* ) code_sofar ];
+	
+
   		
 
 
@@ -273,8 +309,13 @@ e_Instruction_Label_Lookup[ e_VALUE_OF_impdep2         ] = &&e_label_impdep2;
 
 //Assertions
 assert(sizeof( e_j_double ) == 8);
-assert(sizeof( e_byte_t ) < 2 );
-assert(sizeof( u1_t ) == 1 );
+assert(sizeof( e_byte_t ) ==1 );
+assert(sizeof( e_j_float ) == 4 );
+assert(sizeof( e_j_integer ) == 4 );
+assert(sizeof( e_j_long ) == 8 );
+assert(sizeof( e_j_char ) == 2 );
+assert(sizeof( e_j_short ) == 2 );
+
 	
 /*
  * Local Variables
@@ -287,7 +328,8 @@ assert(sizeof( u1_t ) == 1 );
 	e_j_word*  	  locals ;            /* 	local variables     		*/
 	e_j_u_byte* 	  code   ; 	  		  /* 	byte-code stream    		*/	
 	e_j_u_byte* 	  code_sofar   ; 	  /* 	current byte-code stream    */	
-	
+	gnrc_node_t*      java_stack   ;	
+	ConstantPool*     constant_pool;
 
 
 /*
@@ -308,9 +350,12 @@ assert(sizeof( u1_t ) == 1 );
   locals = ((typeof(locals))  malloc( ((int)method->maxLocals)  * sizeof(e_j_word)));
     
   //Allocating Operand Stack
-  op_stk = ((typeof(op_stk))  malloc( ((int)method->maxStack)  * sizeof(e_j_word)));
+  op_stk = ((typeof(op_stk))  malloc( ((int)method->maxStack+1)  * sizeof(e_j_word)));
+
+ 
   
-  
+
+ 
   
 /* Intiailization	
  * ==============
@@ -319,6 +364,12 @@ assert(sizeof( u1_t ) == 1 );
 	code_sofar=code;
 	pc = 0;
 	op_stk_top = (op_stk);
+	op_stk++;
+	java_stack = NULL;
+	constant_pool = const_pool;
+	 
+	
+
 	
 
 /*
@@ -1851,11 +1902,14 @@ e_label_areturn :
 	e_console_log_end
 	e_TRACE_ANNOUNCE_INSTRUCTION(areturn) ;
 e_label_return :
-
+	
 	e_console_log_start(return)
+	e_TRACE_ANNOUNCE_INSTRUCTION(return);
+	e_TRACE_CLOSE( )
 	e_CORE_return ;
 	e_console_log_end
-	e_TRACE_ANNOUNCE_INSTRUCTION(return) ;
+	
+
 	e_TRACE_CLOSE( )
 	return 0;
 
@@ -2096,8 +2150,46 @@ return 0;
 
 }
 
-
-
+/*************************************************************************************************/
+//
+//void ExecutionEng::calNumOfArg(char * p,unsigned int & argCount,unsigned int & opStackArgCount)
+//{
+//	argCount=0;
+//	opStackArgCount=0;
+//	p++;     /* skip start ( */    
+//	while(*p != ')')
+//	{                         
+//		if((*p == 'J') || (*p == 'D'))//arg is long or double
+//		{
+//			argCount++;
+//			opStackArgCount+=2;	
+//			p++;
+//		}
+//		else
+//		{
+//    		if(*p == '[') //array
+//       		{
+//        		//we will not increment the following 2 variables why?
+//        		//because if it is array, and when we will check the type of the array,
+//        		//we will increment them, so we will incremnet them twice and that is wrong
+//        		//argCount++;
+//        		//opStackArgCount++;
+//        		for(p++; *p == '['; p++);         
+//        	}
+//        
+//        	if(*p == 'L')//refrence
+//        	{
+//        		argCount++;  
+//        		opStackArgCount++;                       
+//           		while(*p++ != ';');
+//       		}
+//        	else //primitive types
+//        	{
+//        		argCount++;
+//        		opStackArgCount++;
+//        		p++;                                 
+//        	} 
+//
 
 
 

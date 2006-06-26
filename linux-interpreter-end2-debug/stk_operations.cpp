@@ -4,6 +4,55 @@
 
 
 
+int push( gnrc_node_t ** list_ptr_ptr, void const* core){
+	assert(list_ptr_ptr !=NULL);
+	assert(core!= NULL);
+	
+	gnrc_node_t* temp = ( (gnrc_node_t*) malloc( sizeof(gnrc_node_t) ) );
+	temp->core = core;
+	temp->nxt = *list_ptr_ptr;
+	*list_ptr_ptr = temp; 
+	
+	return 0;
+}
+
+int pop( gnrc_node_t ** list_ptr_ptr, void const** core){
+	assert(list_ptr_ptr !=NULL);
+	//assert(core!= NULL);
+	if ( * list_ptr_ptr ==NULL){
+		*core = NULL;
+		return 0;
+	}
+	*core=(*list_ptr_ptr)->core;
+	gnrc_node_t* temp=*list_ptr_ptr;
+	*list_ptr_ptr=(*list_ptr_ptr)->nxt;
+	free(temp);
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
 //Satck pop
 int stk_pop(const e_gnrc_stk_node_t  **  stk_ptr_ptr, const void * new_object){
 	
@@ -31,3 +80,4 @@ int stk_push(const e_gnrc_stk_node_t** const stk_ptr_ptr,const void** stk_top_pt
 		free(stk_ptr_ptr);
 		return 0;
 }
+*/

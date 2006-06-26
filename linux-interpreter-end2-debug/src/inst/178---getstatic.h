@@ -29,11 +29,23 @@
 
 #define e_CORE_getstatic 	 \
 	 e_CORE_getstatic_START:   \
- 					 \
- 					 \
-					 \
- 					 \
- 					 \
-					 \
-	 e_CORE_getstatic_END: \
+	{\
+		auto u4 word1,word2;\
+		Field * field = constant_pool->getFieldData(e_READ_FROM__JAVA_BYTE_STREAM_16((code_sofar+1),e_j_char ));\
+		char * p = field->getDesc();\
+		ClassData * cl = field->getOwnerClass();\
+		if(!cl->isInitialized())\
+			cl->initialize();\
+			\
+		field->getStaticValue(word1,word2);\
+		if((*p == 'J') || (*p == 'D'))\
+		{\
+		e_PUSH_OPERAND_STACK( (((e_j_u_long) word1)<<32)|((e_j_u_long) word2) );\
+		}\
+		else\
+		{\
+		e_PUSH_OPERAND_STACK(word1);\
+		}\
+	}\
+	 e_CORE_getstatic_END: 
 

@@ -10,11 +10,16 @@
 #include<fcntl.h>
 #include<unistd.h>
 #include"./src/const.h"
+#include"./src/step.h"
+#include"Field.h"
+//#include"ConstantPool.h"
+#include"Heap.h"
+#include"stk_operations.h"
+#include"ByteCode.h"
 
 
 
-typedef char ejvm_u1;
-typedef unsigned int count;
+
 
 
 
