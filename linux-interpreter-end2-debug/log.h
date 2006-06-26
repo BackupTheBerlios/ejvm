@@ -52,11 +52,11 @@
   	printf("\n" e_STRINGIFY(inst) "\n");\
   	printf("\t before :\n\t\toperand stack:\n");\
 		for(int i = (op_stk_top -op_stk) ; i >= 0  ;i --){\
-			printf("\t\t\t [%d]=%d \t\t [%d]=%f \n",i,op_stk[i],i,((float*)op_stk)[i]);\
+			printf("\t\t\t [%d]=%-10d \t\t [%d]=%-32.4f \t\t [%d]=%lf \n",i,op_stk[i],i,((float*)op_stk)[i],i,*((double*)(op_stk+i)));\
 		}\
 		printf("\t\t local variables :\n");\
 		for(int i = 0 ; i < method->maxLocals  ;i++){\
-			printf("\t\t\t [%d]=%d \t\t [%d]=%f\n",i,locals[i],i,((float*)locals)[i]);\
+			printf("\t\t\t [%d]=%-10d \t\t [%d]=%-32.4f \t\t [%d]=%lf \n",i,locals[i],i,((float*)locals)[i],i,*((double*)(locals+i)));\
 		}}	
 		
 
@@ -64,12 +64,13 @@
  #define e_console_log_end {\
 	printf("\t after :\n\t\toperand stack:\n");\
 		for(int i = (op_stk_top -op_stk) ; i >= 0  ;i --){\
-			printf("\t\t\t [%d]=%d \t\t [%d]=%f \n",i,op_stk[i],i,((float*)op_stk)[i]);\
+			printf("\t\t\t [%d]=%-10d \t\t [%d]=%-32.4f \t\t [%d]=%lf \n",i,op_stk[i],i,((float*)op_stk)[i],i,*((double*)(op_stk+i)));\
 		}\
 		printf("\t\t local variables :\n");\
 		for(int i = 0 ; i < method->maxLocals  ;i++){\
-			printf("\t\t\t [%d]=%d \t\t [%d]=%f\n",i,locals[i],i,((float*)locals)[i]);\
-		}}
+			printf("\t\t\t [%d]=%-10d \t\t [%d]=%-32.4f \t\t [%d]=%lf \n",i,locals[i],i,((float*)locals)[i],i,*((double*)(locals+i)));\
+		}}	
+		
 		
 #endif //e_TRACE_EXEC_ENG
 

@@ -29,7 +29,7 @@
 
 #define e_CORE_astore 	 \
 	 e_CORE_astore_START:   \
-		 e_STORE_TO_LOCAL_AT_INDEX(e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_refrence) ,e_READ_FROM_STREAM_as_Then_Cast_as(code_sofar,e_j_u_byte , e_j_integer)); \
+		 e_STORE_TO_LOCAL_AT_INDEX(e_ACCESS_TOP_OF_OPERAND_STACK_AND_RETURN_AS_LEFT_VALUE(e_j_refrence) ,e_READ_FROM_STREAM_as_Then_Cast_as((code_sofar+1),e_j_u_byte , e_j_integer)); \
 		 e_RETRACT_STAK(e_j_refrence);\
 	 e_CORE_astore_END: \
 

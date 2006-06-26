@@ -29,6 +29,6 @@
 
 #define e_CORE_aload 	 \
 	 e_CORE_aload_START:   \
-	 	e_PUSH_OPERAND_STACK((e_j_refrence) e_ACCESS_LOCAL_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_refrence,e_READ_FROM_STREAM_as_Then_Cast_as(code_sofar,e_j_u_byte , e_j_integer))) ;\
+	 	e_PUSH_OPERAND_STACK((e_j_refrence) e_ACCESS_LOCAL_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(e_j_refrence,e_READ_FROM_STREAM_as_Then_Cast_as((code_sofar+1),e_j_u_byte , e_j_u_byte))) ;\
 	 e_CORE_aload_END: \
 

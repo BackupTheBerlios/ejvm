@@ -23,7 +23,7 @@
   
   //#define e_ACCESS_SUB_SUB_TOP_OF_OPERAND_STK_AND_RETURN_AS_LV(T1,T2)  ( * ((T2*)( ( ( typeof(T1)* ) op_stk_top) - 2 )) )
   
-  #define e_ACCESS_LOCAL_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(value,indx) ((*( ( typeof(value)* )  ( locals + indx ) )))
+  #define e_ACCESS_LOCAL_AT_INDEX_AND_RETURN_AS_LEFT_VALUE(value,indx) (*( ( typeof(value)* )  ( locals + indx ) ))
   
 
   #define e_RETRACT_STAK(type)  {op_stk_top -= ( sizeof( typeof(type) )/ sizeof( typeof(op_stk_top) ) );}
