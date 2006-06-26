@@ -1,0 +1,21 @@
+%elkalam%%%%%%%%>>>>>>>>>>>>>>>>>>>>
+\paragraph {}
+Connected devices\footnote{PDAs, Pagers, iPods...} are getting deeply involved in the daily routine. Unfortunately they exist in a very wide diversity slowing down programmers' innovations and programms' delivery time. Thus, providing a hardware neutral execution enviroment, like Java\texttrademark virtual machine, with acceptable performance shall benefit the developers as well as the consumers. For developers, it would break the burden of targetting wide variety of platforms letting them focus on the application. For consumers, it would widen the existing software packages to choose from and no one is left behind with out dated devices.
+\section{Proposed project}
+\paragraph{}
+The aim of our project is to design and implement a light-weight interpreter-based Java virtual machine for an embedded environment that needs to handle carefully its processing resources (power consumption and limited memory) and provides a secure sand box execution environment.
+\section{Organization of chapters}
+\paragraph{}
+This section describes the organization of the rest of the documentation.
+\begin{itemize}
+\item Chapter 2 "Background" contains information about the embedded systems and their architecture variety. Also, it contains a description of the JVM (Java Virtual Machine).
+\item Chapter 3 "JVM Architecture" describes the architecture of the JVM using UML notation. 
+\item Chapter 4 "Design and Implementation of the EJVM" can be considered an extension of the previous chapter. It will include description of the main modules and flowcharts or pseudo code for advanced algorithms used.
+\item Chapter 5 "Tools" contains a description of the tools used during development.
+\item Chapter 6 "Relevant Works" introduces some relevant works. It introduces two opensource 
+Java virtual machines, jamVM and Kafee, also a previous graduation project that was about implementing 
+a Java Card Virtual Machine.
+\item Chapter 7 "Performance Evaluation" contains the results of tests performed on our system and comparisons between our system and other existing applications.
+\item Chapter 8 "Conclusions and Future Work" we describe the future work needed to extend our project and enumerate any limitation in our design or implementation.
+\item appendices
+\end{itemize}
