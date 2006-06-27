@@ -46,48 +46,48 @@ int main(int argc, char** argv){
 	Method * m = NULL;
 	ByteCode * b= NULL;
 	
-		cout<<"Enter calssName: ";
+		//cout<<"Enter calssName: ";
 		//cin>> className;
 		strcpy(className,argv[1]);
 		
 		cptr = l->getClassData(className);
 		cptr->prepare();
-		cout<<"Class name is: "<<cptr->getFQName()<<endl;
+		//cout<<"Class name is: "<<cptr->getFQName()<<endl;
 		
-		cout<<"Initialize the class"<<endl;
+		//cout<<"Initialize the class"<<endl;
 		cptr->initialize();
 		
-	/*	cout<<"Hash size: "<<h->HashSize()<<endl;
+	/*	//cout<<"Hash size: "<<h->HashSize()<<endl;
 		
 		m=cptr->lookupMethod("<clinit>","()V");
 		
-		cout<<"method name: "<<m->getName()<<endl<<"describtor :"<<m->getDesc()<<endl;
+		//cout<<"method name: "<<m->getName()<<endl<<"describtor :"<<m->getDesc()<<endl;
 		
 		exec->executeMethod(NULL,m);*/
 		
 		m=cptr->lookupMethod("main","()V");
 		
-		cout<<endl<<endl<<"method name: "<<m->getName()<<endl<<"describtor :"<<m->getDesc()<<endl;
+		//cout<<endl<<endl<<"method name: "<<m->getName()<<endl<<"describtor :"<<m->getDesc()<<endl;
 		
 	/*	b=m->getByteCode();
 		
 		for(int i =0 ; i<b->codeLength;i++)
 		{
-			cout<<(int)b->code[i]<<endl;
+			//cout<<(int)b->code[i]<<endl;
 		}*/
 		
 		
 		exec->executeMethod(NULL,m);
 		
 		
-		/*-cout<<"Enter calssName: ";
+		/*-//cout<<"Enter calssName: ";
 		cin>> className;
 		
 		cptr = l->getClassData(className);
 		
-		cout<<"Class name is: "<<cptr->getFQName()<<endl;
+		//cout<<"Class name is: "<<cptr->getFQName()<<endl;
 		
-		cout<<"Hash size: "<<h->HashSize()<<endl;*/
+		//cout<<"Hash size: "<<h->HashSize()<<endl;*/
 
 	/*	u4 word1,word2;
 	int index [1];
@@ -105,7 +105,7 @@ int main(int argc, char** argv){
 		Heap::deleteHeap();
 		ExecutionEng::deleteExec();
 /*	int * j=NULL;
-	cout<<u4(j)<<"\t"<<j<<endl;
+	//cout<<u4(j)<<"\t"<<j<<endl;
 	int i=-1000000;
 	vArg(12,123.777,-1,'a',false,&i);*/
 
@@ -123,30 +123,30 @@ void vArg(int a,...){
 	//write
 	*(float*)vPtr = va_arg(args,double);
 	//read
-	printf("%f \n",*(float*)vPtr);
+//	printf("%f \n",*(float*)vPtr);
 	j=*vPtr;
 	
 	
 	vPtr=&j;
-	cout<<*(float*)vPtr<<endl;
+	//cout<<*(float*)vPtr<<endl;
 	
 	vPtr=&i;
 	
 	*vPtr = va_arg(args,int);
-	cout<<*(int*)vPtr<<endl;
+	//cout<<*(int*)vPtr<<endl;
 	
 	*vPtr = va_arg(args,u4);
-	cout<<*(char*)vPtr<<endl;
+	//cout<<*(char*)vPtr<<endl;
 	
 	*vPtr = va_arg(args,u4);
-	cout<<*(bool *)vPtr<<endl;
+	//cout<<*(bool *)vPtr<<endl;
 	
 	*vPtr = va_arg(args,u4);
-	cout<<*(int *)(*vPtr)<<endl;
+	//cout<<*(int *)(*vPtr)<<endl;
 	j=*vPtr;
 	
 	vPtr=&j;
-	cout<<*(int *)(*vPtr)<<endl;
+	//cout<<*(int *)(*vPtr)<<endl;
 	
 	va_end(args);
 }

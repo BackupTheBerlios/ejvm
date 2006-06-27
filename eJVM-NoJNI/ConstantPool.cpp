@@ -22,7 +22,7 @@ int * inputPtr, ClassData * myClass)
 //printf("creating the pointer table in the constant pool constructor\n");
 		pointerTable = Heap:: createPointerTable(CPCount);
 
-fprintf(stdout,"fill the constant pool entries\n");
+////fprintf(stdout,"fill the constant pool entries\n");
 
 		/* fill the constant pool entries */
 		for(int i=1 ; i < CPCount ; i++)
@@ -37,13 +37,13 @@ fprintf(stdout,"fill the constant pool entries\n");
 			switch(tag)
 			{
 				case 7:  infoCount = 2; 
-fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Class\n",i);
+//fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Class\n",i);
 					break;  /* CONSTANT_Class  */
 				/*
 				 * CONSTANT_Class_info {u1 tag;	u2 name_index;}
 				 * */
 				case 9:	 infoCount = 4; 
-fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Fieldref_info\n",i);
+//fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Fieldref_info\n",i);
 					break;  /* CONSTANT_Fieldref  */
 				/*
 				 * CONSTANT_Fieldref_info {
@@ -53,7 +53,7 @@ fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Fieldref_info\n"
     			 *	}
 				 * */
 				case 10: infoCount = 4; 
-fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Methodref_info\n",i);
+//fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Methodref_info\n",i);
 					break;  /* CONSTANT_Methodref  */
 				/*
 				 * CONSTANT_Methodref_info {
@@ -63,7 +63,7 @@ fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Methodref_info\n
 				 *   }	
 				 **/
 				case 11: infoCount = 4;
-fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_InterfaceMethodref_info\n",i);
+//fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_InterfaceMethodref_info\n",i);
 				 break;  /* CONSTANT_InterfaceMethodref  */
 				/**CONSTANT_InterfaceMethodref_info {
     			*		u1 tag;
@@ -72,7 +72,7 @@ fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_InterfaceMethodr
     			*	}
 				**/
 				case 8:  infoCount = 2; 
-fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_String_info\n",i);						
+//fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_String_info\n",i);						
 				break;  /* CONSTANT_String  */
 				/** CONSTANT_String_info {
     			 *		u1 tag;
@@ -80,7 +80,7 @@ fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_String_info\n",i
     			 *	}
 				 * */
 				case 3:	 infoCount = 4; 
-fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Integer_info\n",i);
+//fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Integer_info\n",i);
 					break;  /* CONSTANT_Integer  */
 				/**
 				 * CONSTANT_Integer_info {u1 tag; u4 bytes; }
@@ -88,21 +88,21 @@ fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Integer_info\n",
 				 * 
 				 * */
 				case 4:  infoCount = 4; 
-fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Float_info\n",i);								
+//fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Float_info\n",i);								
 				break;  /* CONSTANT_Float  */
 				case 5:	 infoCount = 8;
-fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Long_info\n",i);
+//fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Long_info\n",i);
 					 break;  /* CONSTANT_Long  */
 				/*
 				 *  CONSTANT_Long_info {u1 tag;	u4 high_bytes;u4 low_bytes; }
 			    	CONSTANT_Double_info {u1 tag;u4 high_bytes;u4 low_bytes;}
 			    	**/
 				case 6:	 infoCount = 8; 
-fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Double_info\n",i);
+//fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_Double_info\n",i);
 					break;  /* CONSTANT_Double  */
 				
 				case 12: infoCount = 4; 
-fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_NameAndType_info\n",i);
+//fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_NameAndType_info\n",i);
 					break;  /* CONSTANT_NameAndType  */
 	/*
 	 *  CONSTANT_NameAndType_info {	u1 tag;u2 name_index;u2 descriptor_index;}
@@ -110,7 +110,7 @@ fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_NameAndType_info
 				case 1: 						/* CONSTANT_Utf8 */
 				{
 				   infoCount = 2 + (((u2)inputFile[*inputPtr+1])<<8) + inputFile[*inputPtr+2];
-fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_utf8_info\n",i);
+//fprintf(stdout,"entry no. %d in the constant pool is a CONSTANT_utf8_info\n",i);
 				   break;
 				}
 			}

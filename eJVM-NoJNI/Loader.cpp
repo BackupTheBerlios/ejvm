@@ -35,14 +35,14 @@ byte * Loader::makeArrayInCPP(char * fileName)
 	void * classFile;
 	if((stream = fopen(fileName, "rb")) == NULL)
 	{
-		cout<<"File Not Found"<<endl;
+		//cout<<"File Not Found"<<endl;
 		exit(1);
 	}
 	stat(fileName,&len);
 	int size = len.st_size;
 	classFile = new byte[size];
 	size_t bytesRead =fread(classFile,1,(size_t)size,stream);
-	cout<<bytesRead<<" bytes read\n";
+	//cout<<bytesRead<<" bytes read\n";
 	fclose(stream);
 	
 	/*char ch;
@@ -51,7 +51,7 @@ byte * Loader::makeArrayInCPP(char * fileName)
 	
 	if(!fin)
 	{
-		cout<<"Cannot open the file";
+		//cout<<"Cannot open the file";
 		return NULL;
 	}
 	
@@ -67,7 +67,7 @@ byte * Loader::makeArrayInCPP(char * fileName)
 	
 	fin.read((char *)pData,length);
 	//see how many bytes have beed read
-	cout<<fin.gcount()<<" bytes read\n";
+	//cout<<fin.gcount()<<" bytes read\n";
 	
 	fin.close();
 	
@@ -76,7 +76,7 @@ byte * Loader::makeArrayInCPP(char * fileName)
 	
 	fout.write((char *)pData,length);
 	//see how many bytes have beed written
-	cout<<fin.gcount()<<" bytes written\n";
+	//cout<<fin.gcount()<<" bytes written\n";
 	fout.close();*/
 	
 	//return pData ;

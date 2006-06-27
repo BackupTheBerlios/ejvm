@@ -24,7 +24,7 @@ Method::Method(const byte inputFile [],int * inputPtr,ConstantPool * cp)
 		inputFile[*inputPtr+7];
 		/* advance the input pointer */
 		*inputPtr += 8;
-		cout<<"Method Name:"<<this->getName()<<"\tDescriptor: "<<this->getDesc()<<endl;
+		//cout<<"Method Name:"<<this->getName()<<"\tDescriptor: "<<this->getDesc()<<endl;
 //********************************************************************************
 		/* store only the "Code Attribute" if any */
 		u2 attrNameIndex,attrLength;
@@ -50,7 +50,7 @@ Method::Method(const byte inputFile [],int * inputPtr,ConstantPool * cp)
 			  byteCode = new ByteCode(inputFile,*inputPtr+6,  attrNameIndex,attrLength);
 	if(byteCode == NULL)
 	{
-		printf("NULL pointer encountered when trying to create a new byte code\n");
+		//printf("NULL pointer encountered when trying to create a new byte code\n");
 		exit(1);
 	}
 			}

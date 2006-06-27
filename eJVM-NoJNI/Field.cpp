@@ -68,7 +68,7 @@ void Field::setDefaultValue(void)
 			staticValue = new byte[1];
 if(staticValue == NULL)
 {
-	printf("NULL pointer encountered in Field::setDefaultValue\n");
+//	printf("NULL pointer encountered in Field::setDefaultValue\n");
 	exit(1);
 }
 			staticValue[0]=0;
@@ -81,7 +81,7 @@ if(staticValue == NULL)
 			staticValue = new byte[2];
 if(staticValue == NULL)
 {
-	printf("NULL pointer encountered in Field::setDefaultValue\n");
+//	printf("NULL pointer encountered in Field::setDefaultValue\n");
 	exit(1);
 }
 
@@ -94,7 +94,7 @@ if(staticValue == NULL)
 			staticValue = new byte[8];
 if(staticValue == NULL)
 {
-	printf("NULL pointer encountered in Field::setDefaultValue\n");
+//	printf("NULL pointer encountered in Field::setDefaultValue\n");
 	exit(1);
 }
 
@@ -111,7 +111,7 @@ if(staticValue == NULL)
 			staticValue = new byte[4];
 if(staticValue == NULL)
 {
-	printf("NULL pointer encountered in Field::setDefaultValue\n");
+//	printf("NULL pointer encountered in Field::setDefaultValue\n");
 	exit(1);
 }
 
@@ -126,7 +126,7 @@ if(staticValue == NULL)
 			staticValue = new byte[4];
 if(staticValue == NULL)
 {
-	printf("NULL pointer encountered in Field::setDefaultValue\n");
+//	printf("NULL pointer encountered in Field::setDefaultValue\n");
 	exit(1);
 }
 
@@ -141,7 +141,7 @@ if(staticValue == NULL)
 			staticValue = new byte[8];
 if(staticValue == NULL)
 {
-	printf("NULL pointer encountered in Field::setDefaultValue\n");
+//	printf("NULL pointer encountered in Field::setDefaultValue\n");
 	exit(1);
 }
 
@@ -158,7 +158,7 @@ if(staticValue == NULL)
 			staticValue = new byte[4];
 if(staticValue == NULL)
 {
-	printf("NULL pointer encountered in Field::setDefaultValue\n");
+//	printf("NULL pointer encountered in Field::setDefaultValue\n");
 	exit(1);
 }
 
@@ -173,7 +173,7 @@ if(staticValue == NULL)
 			staticValue = new byte[2];
 if(staticValue == NULL)
 {
-	printf("NULL pointer encountered in Field::setDefaultValue\n");
+//	printf("NULL pointer encountered in Field::setDefaultValue\n");
 	exit(1);
 }
 
@@ -186,7 +186,7 @@ if(staticValue == NULL)
 			staticValue = new byte[1];
 if(staticValue == NULL)
 {
-	printf("NULL pointer encountered in Field::setDefaultValue\n");
+//	printf("NULL pointer encountered in Field::setDefaultValue\n");
 	exit(1);
 }
 
@@ -200,7 +200,7 @@ if(staticValue == NULL)
 			staticValue = new byte[4];
 if(staticValue == NULL)
 {
-	printf("NULL pointer encountered in Field::setDefaultValue\n");
+//s	printf("NULL pointer encountered in Field::setDefaultValue\n");
 	exit(1);
 }
 

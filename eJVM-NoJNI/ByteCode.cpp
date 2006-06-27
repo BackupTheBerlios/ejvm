@@ -9,10 +9,10 @@ ByteCode::ByteCode(const byte inputFile[], int inPtr,
 	this->nameIndex = nameIndex;
 	this->length = length;
 	maxStack = ( ((u2)inputFile[inPtr])<<8) + inputFile[inPtr+1];
-    printf("maxStack = %d\n",maxStack);
+    //printf("maxStack = %d\n",maxStack);
     inPtr+=2;
 	maxLocals = ( ((u2)inputFile[inPtr])<<8) + inputFile[inPtr+1];
-    printf("maxLoc = %d\n",maxLocals);
+    //printf("maxLoc = %d\n",maxLocals);
 	inPtr+=2;
     //int x;
     //scanf("%d",&x);
@@ -25,7 +25,7 @@ ByteCode::ByteCode(const byte inputFile[], int inPtr,
 	code = NULL;	
 	code = new u1 [codeLength];
 	if(code == NULL){
-		printf("Null in allocating code[]\n\r");
+		//printf("Null in allocating code[]\n\r");
 		exit(1);
 	}
 	for(u4 i=0; i<codeLength; i++)

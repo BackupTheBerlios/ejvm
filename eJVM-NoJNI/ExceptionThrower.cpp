@@ -77,12 +77,12 @@ void ExceptionThrower::printPendingException()
 {
 //print the class name of the pending exception if any, for now	
 	if(exceptionObject==NULL)
-		printf("No pending Exception\n");
+		//printf("No pending Exception\n");
 	else
 	{
-			printf("Exception of type: ");
-			printf((exceptionObject->getClassData())->getFQName());
-			printf("is pending\n");
+			//printf("Exception of type: ");
+			//printf((exceptionObject->getClassData())->getFQName());
+			//printf("is pending\n");
 	}
 	exceptionObject=NULL;
 }
