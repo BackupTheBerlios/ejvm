@@ -335,6 +335,14 @@ void ExecutionEng::interpret(Thread * thread)
 				}
 				pc++;
 				break;
+			case BIPUSH:
+				{
+					int value = *(pc+1);
+					currentFrame->push(value);
+					cout<<"BIPUSH: theVlaue="<<currentFrame->getTopOpStack()<<endl;
+				}
+				pc+=2;
+				break;
 			case SIPUSH:
 				{
 					u1 	byte1 = *(pc+1);
