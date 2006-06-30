@@ -56,7 +56,7 @@ int main(int argc, char** argv){
 		
 		cptr = l->getClassData(className);
 	//	cptr->prepare();
-		cout<<"Class name is: "<<cptr->getFQName()<<endl;
+	//	cout<<"Class name is: "<<cptr->getFQName()<<endl;
 		
 // 		cout<<"Initialize the class"<<endl;
 //		cptr->initialize();
