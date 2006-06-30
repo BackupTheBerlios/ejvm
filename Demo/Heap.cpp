@@ -104,7 +104,7 @@ ClassData * Heap::createArrayClassData (const char*name)
 Heap::Heap():
 	objectCount(0)
 {
-	this->object = new Object * [3];
+	this->object = new Object * [20];
 	if(this->object == NULL)
 	{
 		//cout<<"Heap:Heap: NO Sufficient Memory "<<endl;

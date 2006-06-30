@@ -1470,7 +1470,8 @@ void ExecutionEng::interpret(Thread * thread)
 							{
 								char c;
 								cout<<"enter char:";
-								cin>>c;
+								//cin>>c;
+								c=getchar();
 								currentFrame->push(c);
 								cout<<"The char is:"<<(char)currentFrame->getTopOpStack()<<endl;
 							}
