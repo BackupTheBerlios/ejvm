@@ -1,8 +1,9 @@
 #include "ExecutionEng.h"
 #include "JNIManager.h"
+#include "stringLib.h"
 using std::cout;  
 using std::endl;
-//-------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------
 ExecutionEng::ExecutionEng()
 {
 	this->mainThread = new Thread();
@@ -1029,6 +1030,16 @@ void ExecutionEng::interpret(Thread * thread)
 				}
 				pc++;
 				break;
+			case IREM:
+				{
+					int value2=currentFrame->pop();
+					int value1=currentFrame->pop();
+					int result = value1 - (value1 / value2) * value2;
+					currentFrame->push(result);
+					cout<<"IREM: value1="<<value1<<" value2="<<value2<<" result="<<result<<endl;
+				}
+				pc++;
+				break;
 			case IINC:
 				{
 					u1 index= *(pc+1);
@@ -1441,8 +1452,57 @@ void ExecutionEng::interpret(Thread * thread)
 						jniMngr->callNativeMethod(m,currentFrame->getOperandStack(),2);
 						pc+=3;
 					}
-					else{
-					
+					else
+					{
+						ClassData * cd = m->getOwnerClassData();
+						if(strcmp(cd->getFQName(),"OurAPI") == 0)//check if this the OurAPI class
+						{
+							if(strcmp(m->getName(),"readInt")==0)
+							{
+								int i;
+								cout<<"enter int:";
+								cin>>i;
+								currentFrame->push(i);
+								cout<<"The integer Value read="<<currentFrame->getTopOpStack()<<endl;
+							}
+							else if (strcmp(m->getName(),"readChar")==0)
+							{
+								char c;
+								cout<<"enter char:";
+								cin>>c;
+								currentFrame->push(c);
+								cout<<"The char is:"<<(char)currentFrame->getTopOpStack()<<endl;
+							}
+							else if(strcmp(m->getName(),"writeInt")==0)
+							{
+								int i = currentFrame->pop();
+								//cout<<i<<endl;
+								cout<<"the int to be printed="<<i<<endl;
+							}
+							else if(strcmp(m->getName(),"writeChar")==0)
+							{
+								char c = (char)currentFrame->pop();
+								//cout<<c<<endl;
+								cout<<"the char to be printed="<<c<<endl;
+							}
+							else if(strcmp(m->getName(),"writeString")==0)
+							{
+								Object * string =(Object *) currentFrame->pop();
+								char * str=stringObjectToArrayOfCChars(string);
+								cout<<"The string to be printed:"<<str<<endl;
+							}
+							else if(strcmp(m->getName(),"isDigit")==0)
+							{
+								char c =(char)currentFrame->pop();
+								if(isdigit(c))
+									currentFrame->push(1);
+								else
+									currentFrame->push(0);
+								cout<<"the test is:"<<currentFrame->getTopOpStack()<<endl;
+							}
+							pc+=3;
+						}
+					    else{
 					
 						//create a new frame for the invoked method and put the resolved method in it
 						//and put false to indicate that this frame is not in the top of java invocation
@@ -1467,7 +1527,7 @@ void ExecutionEng::interpret(Thread * thread)
 						code = byteCode->getCode();
 						pc = code;
 						//push the new frame in the stack	
-						mainThread->getStack()->push(currentFrame);
+						mainThread->getStack()->push(currentFrame);}
 					}
 				}
 				break;

@@ -12,6 +12,7 @@
 #include "jni.h"
 #include "Loader.h"
 #include <cmath>
+#include <cctype>
 class ExecutionEng
 {
 public:

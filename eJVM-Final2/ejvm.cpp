@@ -57,13 +57,13 @@ int main(int argc, char** argv){
  		cout<<"Initialize the class"<<endl;
 		cptr->initialize();
 		
-		ConstantPool * cp = cptr->constantPool;
-		
-		Object * string = cp->getStringObject(17);
-		
-		char * str=stringObjectToArrayOfCChars(string);
-		
-		cout<<str<<endl;
+//		ConstantPool * cp = cptr->constantPool;
+//		
+//		Object * string = cp->getStringObject(17);
+//		
+//		char * str=stringObjectToArrayOfCChars(string);
+//		
+//		cout<<str<<endl;
 		
 	/*	cout<<"Hash size: "<<h->HashSize()<<endl;
 		
@@ -73,9 +73,9 @@ int main(int argc, char** argv){
 		
 		exec->executeMethod(NULL,m);*/
 		
-//		m=cptr->lookupMethod("main","()V");
-//		
-//		cout<<endl<<endl<<"method name: "<<m->getName()<<endl<<"describtor :"<<m->getDesc()<<endl;
+		m=cptr->lookupMethod("main","()V");
+		
+		cout<<endl<<endl<<"method name: "<<m->getName()<<endl<<"describtor :"<<m->getDesc()<<endl;
 		
 	/*	b=m->getByteCode();
 		
@@ -85,7 +85,7 @@ int main(int argc, char** argv){
 		}*/
 		
 		
-//		exec->executeMethod(NULL,m);
+		exec->executeMethod(NULL,m);
 		
 		
 		/*-cout<<"Enter calssName: ";

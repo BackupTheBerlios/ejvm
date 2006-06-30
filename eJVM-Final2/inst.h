@@ -113,6 +113,7 @@
 #define LDIV						109
 #define FDIV						110
 #define DDIV						111
+#define IREM						112
 
 #define IINC						132
 

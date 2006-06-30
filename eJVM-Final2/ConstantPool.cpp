@@ -510,6 +510,13 @@ ClassData * ConstantPool:: getOwnerClassData(void)
 void ConstantPool:: getWord(u2 index,u4 &word)
 {
 //printf("inside ConstantPool-- getWord\n");
+	//CONSTANT_String_info
+	if(entryTable[index][0]== 8)
+	{
+		Object * string =getStringObject(index);
+		word = (u4) string;
+		return;
+	}
 	/* CONSTANT_Integer_info */
 	if(entryTable[index][0]!=3&&entryTable[index][0]!=4)
 	/* exception(); */ ;
