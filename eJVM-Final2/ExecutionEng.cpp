@@ -1,6 +1,7 @@
 #include "ExecutionEng.h"
 #include "JNIManager.h"
 #include "stringLib.h"
+#include "stdlib.h"
 using std::cout;  
 using std::endl;
 //-------------------------------------------------------------------------------------------------
@@ -1476,14 +1477,14 @@ void ExecutionEng::interpret(Thread * thread)
 							else if(strcmp(m->getName(),"writeInt")==0)
 							{
 								int i = currentFrame->pop();
-								//cout<<i<<endl;
-								cout<<"the int to be printed="<<i<<endl;
+								cout<<i;
+//								cout<<"the int to be printed="<<i<<endl;
 							}
 							else if(strcmp(m->getName(),"writeChar")==0)
 							{
 								char c = (char)currentFrame->pop();
-								//cout<<c<<endl;
-								cout<<"the char to be printed="<<c<<endl;
+								cout<<c<<endl;
+//								cout<<"the char to be printed="<<c<<endl;
 							}
 							else if(strcmp(m->getName(),"writeString")==0)
 							{
@@ -1499,6 +1500,20 @@ void ExecutionEng::interpret(Thread * thread)
 								else
 									currentFrame->push(0);
 								cout<<"the test is:"<<currentFrame->getTopOpStack()<<endl;
+							}
+							else if(strcmp(m->getName(),"toDiagit")==0)
+							{
+								char c=(char) currentFrame->pop();
+								int digit =(int) c - 48;
+								currentFrame->push(digit);
+								cout<<"the digit is="<<currentFrame->getTopOpStack()<<endl;
+							}
+							else if(strcmp(m->getName(),"getRand")==0)
+							{
+								int x = currentFrame->pop();
+								int random = rand()%x;
+								currentFrame->push(random);
+								cout<<"the random="<<currentFrame->getTopOpStack()<<endl;
 							}
 							pc+=3;
 						}

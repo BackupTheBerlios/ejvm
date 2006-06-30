@@ -19,6 +19,7 @@
 #include "Loader.h"
 #include "ExecutionEng.h"
 #include"stringLib.h"
+#include "stdlib.h"
 
 void testJNI(void);
 
@@ -47,6 +48,9 @@ int main(int argc, char** argv){
 	ByteCode * b= NULL;
 	
 		cout<<"Enter calssName: ";
+//		char c='1';
+//		cout<<(int)c<<endl;
+		srand(time(0));
 		//cin>> className;
 		strcpy(className,argv[1]);
 		
