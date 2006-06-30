@@ -1501,7 +1501,7 @@ void ExecutionEng::interpret(Thread * thread)
 									currentFrame->push(0);
 								cout<<"the test is:"<<currentFrame->getTopOpStack()<<endl;
 							}
-							else if(strcmp(m->getName(),"toDiagit")==0)
+							else if(strcmp(m->getName(),"toDigit")==0)
 							{
 								char c=(char) currentFrame->pop();
 								int digit =(int) c - 48;
