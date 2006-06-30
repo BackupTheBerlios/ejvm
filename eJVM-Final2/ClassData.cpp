@@ -90,6 +90,8 @@ ClassData::ClassData(const char *name, const byte inputFile [])
 		for( i=0 ; i < interfacesCount ; i++)
 			constantPool-> getClassData(interfaces[i]);
 		}
+		//call prepare 
+		this->prepare();
 }
 /*****************ARRAY USAGE**********************/
 /*****************ARRAY USAGE**********************/

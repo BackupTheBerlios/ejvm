@@ -210,10 +210,11 @@ numOfDims = dims;
 		data = Heap:: createByteArray(length*entrySize);
 		Object * arr;
 		int arrInt;
+		lengths++;
 		for(int i = 0; i<length*entrySize ;i+=entrySize)
 		{
 //printf("initialize the array's entry number %d  to an array of dim = %d\n",i,dims-1);			
-			arr = Heap:: createArrayObject(dims-1,++lengths,type,myClass,classType);
+			arr = Heap:: createArrayObject(dims-1,lengths,type,myClass,classType);
 			arrInt = (int)arr;
 			data[i]   = (byte)arrInt;
 			data[i+1] = (byte)(arrInt>>8);

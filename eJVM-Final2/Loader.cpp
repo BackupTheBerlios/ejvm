@@ -108,6 +108,7 @@ ClassData * Loader::getClassData(const char * className)
 	 
 	 if(cdata == NULL)//Class not loaded
 	 {
+	 	cout<<endl<<className<<endl<<endl;
 	 	if(*className == '[')
 	 	{
 	 		cdata = heap->createArrayClassData(className);
